@@ -1,0 +1,3 @@
+.task-dialog-content .cSimpleValidationHeader{
+	-moz-binding: url(binding:modules.task.cTaskDialog#cSimpleValidationHeader);
+}

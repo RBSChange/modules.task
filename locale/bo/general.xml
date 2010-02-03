@@ -1,0 +1,120 @@
+<?xml version="1.0" encoding="utf-8"?>
+<localization>
+  <entity id="module-name">
+    <locale lang="fr">tâches</locale>
+    <locale lang="en">tasks</locale>
+    <locale lang="de">Vorgänge</locale>
+  </entity>
+  <entity id="tree-root-name">
+    <locale lang="fr">tâches</locale>
+    <locale lang="en">tasks</locale>
+    <locale lang="de">Vorgänge</locale>
+  </entity>
+  <entity id="system-folder-name">
+    <locale lang="fr">tâches</locale>
+    <locale lang="en">tasks</locale>
+    <locale lang="de">Vorgänge</locale>
+  </entity>
+  <entity id="tab-execute-task">
+    <locale lang="fr">exécuter la tâche</locale>
+    <locale lang="en">execute task</locale>
+    <locale lang="de">Vorgang ausführen</locale>
+  </entity>
+  <entity id="tab-general-informations">
+    <locale lang="fr">informations générales</locale>
+    <locale lang="en">general informations</locale>
+    <locale lang="de">allgemeine Informationen</locale>
+  </entity>
+  <entity id="tab-notifications">
+    <locale lang="fr">notifications</locale>
+    <locale lang="en">notifications</locale>
+    <locale lang="de">Benachrichtigungen</locale>
+  </entity>
+  <entity id="your-pending-tasks">
+    <locale lang="fr">vos tâches en attente</locale>
+    <locale lang="en">your pending tasks</locale>
+    <locale lang="de">Ihre Vorgänge in der Warteschlange</locale>
+  </entity>
+  <entity id="user-task-help">
+    <locale lang="fr">
+			il vous est demandé de valider ou de refuser le contenu ci-dessous. Après avoir entré un commentaire qui justifie votre décision, veuillez cliquer sur le bouton "Accepter" pour accepter le document ou sur "Refuser" pour le refuser. L'acceptation publiera le document sur le site web et
+			sera ainsi visible par tous les internautes.
+		</locale>
+    <locale lang="en">you have been asked to accept or refuse the content below. Type in a commentary to justify your decision and click on the "Accept" button to accept the document or on the "Refuse" button to refuse it. Acceptation will publish the document on the website.</locale>
+    <locale lang="de">Sie werden gebeten folgenden Inhalt freizugeben oder abzulehnen. Nach dem Einfügen eines Kommentars um Ihre Entscheidung 
+		zu begründen, clicken Sie bitte den Knopf "Freigeben" um das Dokument freizugeben, oder "Ablehnen" um das Dokument abzulehnen. Die Freigabe 
+		veröffentlicht das Dokument auf der Webseite und macht es für alle Benutzer sichtbar.</locale>
+  </entity>
+  <entity id="user-task-decision-commentary">
+    <locale lang="fr">commentaire justifiant la décision</locale>
+    <locale lang="en">commentary justifying the decision</locale>
+    <locale lang="de">Kommentar zur Begründung der Entscheidung</locale>
+  </entity>
+  <entity id="details">
+    <locale lang="fr">voir informations</locale>
+    <locale lang="en">view details</locale>
+    <locale lang="de">Informationen ansehen</locale>
+  </entity>
+  <entity id="accept">
+    <locale lang="fr">accepter</locale>
+    <locale lang="en">accept</locale>
+    <locale lang="de">freigeben</locale>
+  </entity>
+  <entity id="refuse">
+    <locale lang="fr">refuser</locale>
+    <locale lang="en">refuse</locale>
+    <locale lang="de">ablehnen</locale>
+  </entity>
+  <entity id="close">
+    <locale lang="fr">fermer</locale>
+    <locale lang="en">close</locale>
+    <locale lang="de">schliessen</locale>
+  </entity>
+  <entity id="commentary">
+    <locale lang="fr">commentaire (facutatif)</locale>
+    <locale lang="en">commentary (optionnal)</locale>
+  </entity>
+  <entity id="author-comment">
+    <locale lang="fr">commentaire du demandeur ({author})</locale>
+    <locale lang="en">author's comment ({author})</locale>
+  </entity>
+  <entity id="synchro-scroll">
+    <locale lang="fr">Synchroniser le déroulement</locale>
+    <locale lang="en">Synchonize flow</locale>
+  </entity>
+  <entity id="tab.properties">
+    <locale lang="fr">propriétés</locale>
+    <locale lang="en">properties</locale>
+  </entity>
+  <entity id="tab.preview">
+    <locale lang="fr">prévisualisation</locale>
+    <locale lang="en">preview</locale>
+  </entity>
+  <entity id="document-informations-to-validate">
+    <locale lang="fr">informations à valider</locale>
+    <locale lang="en">information to be validated</locale>
+    <locale lang="de">Informationen, die zu bestätigen sind</locale>
+  </entity>
+  <entity id="original-document-informations">
+    <locale lang="fr">informations de la version actuellement publiée</locale>
+    <locale lang="en">information of the currently published version</locale>
+    <locale lang="de">Informationen der im Moment publizierte Version</locale>
+  </entity>
+  <entity id="user-task-title">
+    <locale lang="fr">validation d'un document</locale>
+    <locale lang="en">document validation</locale>
+    <locale lang="de">Freigabe eines Dokuments</locale>
+  </entity>
+  <entity id="column.isrunning">
+    <locale lang="fr">Tâche en cours</locale>
+    <locale lang="en">Is Running</locale>
+  </entity>
+  <entity id="column.lastrundate">
+    <locale lang="fr">Dernière exécution</locale>
+    <locale lang="en">Last execution</locale>
+  </entity>
+  <entity id="column.nextrundate">
+    <locale lang="fr">Prochaine exécution</locale>
+    <locale lang="en">Next execution</locale>
+  </entity>
+</localization>

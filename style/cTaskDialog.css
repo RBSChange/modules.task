@@ -1,0 +1,28 @@
+
+
+[anonid="commentary"]{
+	margin-bottom: 2px;
+}
+.document-box-title,.document-box-synchro-checkbox{
+	height: 20px;
+	margin: 0px;
+	padding-left: 15px;
+	background: black;
+	font-weight: bold;
+	color: white;
+}
+.document-box-title{
+	height: 20px;
+}
+[span="high"].document-box-title{
+	height: 45px;
+}
+.document-box-synchro-checkbox{
+	height: 25px;
+}
+scrollbox{
+	overflow: auto;
+}
+row[differs="true"]>:first-child{
+	color: #f00;
+}

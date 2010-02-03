@@ -1,0 +1,64 @@
+<?xml version="1.0"?>
+<perspective>
+	<models>
+		<model name="modules_generic/rootfolder">
+			<children>
+				<child model="modules_generic/systemfolder" />
+				<child model="modules_task/usertask" />
+			</children>
+			<contextactions>
+				<contextaction name="edit" />
+			</contextactions>
+		</model>
+		<model name="modules_generic/folder">
+			<children>
+				<child model="modules_generic/usertask" />
+			</children>
+			<contextactions>
+				<contextaction name="edit" />
+				<contextaction name="openFolder" />
+			</contextactions>
+		</model>
+		<model name="modules_generic/systemfolder">
+			<children>
+				<child model="modules_task/plannedtask" />
+			</children>
+			<columns>
+				<column name="isrunning" label="isrunning" flex="1" />
+				<column name="lastrundate" label="lastrundate" flex="3" />
+				<column name="nextrundate" label="nextrundate" flex="3" />
+			</columns>
+			<contextactions>
+				<contextaction name="openFolder" />
+			</contextactions>
+		</model>
+		<model name="modules_task/usertask">
+			<contextactions>
+				<contextaction name="edit" />
+				<contextaction name="performUsertask" />
+			</contextactions>
+		</model>
+		<model name="modules_task/plannedtask">
+			<contextactions>
+				<contextaction name="edit" />
+				<contextaction name="unlockplannedtask" />
+				<contextaction name="reactivate" />
+				<contextaction name="deactivated" />
+			</contextactions>
+		</model>
+	</models>
+	<toolbar>
+		<toolbarbutton name="edit" />
+		<toolbarbutton name="reactivate" />
+		<toolbarbutton name="deactivated" />
+	</toolbar>
+	<actions>
+		<action name="refresh" single="true" icon="refresh" label="&amp;modules.uixul.bo.actions.Refresh;" />
+		<action name="edit" single="true" permission="Load" icon="edit" label="&amp;modules.uixul.bo.actions.Edit;" />
+		<action name="openFolder" icon="folder_into" label="&amp;modules.uixul.bo.actions.OpenFolder;" />
+		<action name="performUsertask" single="true" icon="task-execute" label="&amp;modules.task.bo.actions.Perform-Usertask;" />
+		<action name="unlockplannedtask" single="true" icon="unlock" label="&amp;modules.task.bo.actions.Unlockplannedtask;" />
+		<action name="reactivate" permission="ReActivate" icon="reactivate" label="&amp;modules.uixul.bo.actions.ReActivate;" />
+		<action name="deactivated" permission="Deactivated" icon="deactivated" label="&amp;modules.uixul.bo.actions.Deactivate;" />
+	</actions>
+</perspective>

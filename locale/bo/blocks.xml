@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="utf-8"?>
+<localization>
+	<entity id="dashboardpendingtasks.title">
+		<locale lang="fr">vos tâches en attente</locale>
+		<locale lang="en">your pending tasks</locale>
+	</entity>
+</localization>

@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="utf-8"?>
+<localization>
+  <entity id="Perform-Usertask">
+    <locale lang="fr">Traiter la tâche</locale>
+    <locale lang="en">Perform task</locale>
+    <locale lang="de">Vorgang bearbeiten</locale>
+  </entity>
+  <entity id="Create-Plannedtask">
+    <locale lang="fr">Create plannedtask</locale>
+    <locale lang="en">Create plannedtask</locale>
+    <locale lang="de">Create plannedtask</locale>
+  </entity>
+  <entity id="unlockplannedtask">
+    <locale lang="fr">débloquer la tâche</locale>
+    <locale lang="en">unlock task</locale>
+    <locale lang="de">Vorgang entsperren</locale>
+  </entity>
+  <entity id="UnlockplannedtaskConfirm">
+    <locale lang="fr">Débloquer une tâche peut entrainer des dysfonctionnements de certaines fonctionnalités. Cette action ne devrait être effectué que si vous êtes certain qu'une tâche est réellement bloquée. Voulez-vous vraiment continuer?</locale>
+    <locale lang="en">Unlocking a tack might cause unexpected problems in some functionnalities. This action should only be performed if you are sure a task is really locked. Do you want to continue?</locale>
+    <locale lang="de">Einen Vorgang zu entsperren kann Funktionsstörungen einiger Funktionen mit sich führen. Diese Aktion sollte ausschliesslich 
+	ausgeführt werden, wenn Sie sich sicher sind, dass eine Vorgang wirklich gesperrt ist. Möchten Sie wirklich fortfahren?</locale>
+  </entity>
+</localization>

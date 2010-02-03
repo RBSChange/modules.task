@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<localization>
+	<entity id="property.additionalinfo">
+		<locale lang="fr">intitulé du workflow</locale>
+		<locale lang="en">workflow label</locale>
+	</entity>
+	<entity id="property.lastrundate">
+		<locale lang="fr">date de la dernière exécution</locale>
+		<locale lang="en">last execution date</locale>
+	</entity>
+	<entity id="property.nextrundate">
+		<locale lang="fr">date de la prochaine exécution</locale>
+		<locale lang="en">next execution date</locale>
+	</entity>
+	<entity id="property.isrunning">
+		<locale lang="fr">en cours d'exécution</locale>
+		<locale lang="en">currently running</locale>
+	</entity>
+</localization>

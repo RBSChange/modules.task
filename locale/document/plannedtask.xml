@@ -1,0 +1,121 @@
+<?xml version="1.0" encoding="utf-8"?>
+<localization>
+  <entity id="document-name">
+    <locale lang="fr">tâche plannifié</locale>
+    <locale lang="de">geplanter Vorgang</locale>
+  </entity>
+  <entity id="edition-form-title">
+    <locale lang="fr">propriétés de la tâche plannifié</locale>
+    <locale lang="de">Eigenschaften geplanter Vorgang</locale>
+  </entity>
+  <entity id="label">
+    <locale lang="fr">nom</locale>
+    <locale lang="en">label</locale>
+    <locale lang="de">Name</locale>
+  </entity>
+  <entity id="label-help">
+    <locale lang="fr">nom</locale>
+    <locale lang="en">label</locale>
+    <locale lang="de">Name</locale>
+  </entity>
+  <entity id="minute">
+    <locale lang="fr">minute</locale>
+    <locale lang="en">minute</locale>
+    <locale lang="de">Minute</locale>
+  </entity>
+  <entity id="minute-help">
+    <locale lang="fr">minute</locale>
+    <locale lang="en">minute</locale>
+    <locale lang="de">Minute</locale>
+  </entity>
+  <entity id="hour">
+    <locale lang="fr">heure</locale>
+    <locale lang="en">hour</locale>
+    <locale lang="de">Stunde</locale>
+  </entity>
+  <entity id="hour-help">
+    <locale lang="fr">heure</locale>
+    <locale lang="en">hour</locale>
+    <locale lang="de">Stunde</locale>
+  </entity>
+  <entity id="dayofmonth">
+    <locale lang="fr">jour du mois</locale>
+    <locale lang="en">day of month</locale>
+    <locale lang="de">Tag des Monats</locale>
+  </entity>
+  <entity id="dayofmonth-help">
+    <locale lang="fr">jour du mois</locale>
+    <locale lang="en">day of month</locale>
+    <locale lang="de">Tag des Monats</locale>
+  </entity>
+  <entity id="monthofyear">
+    <locale lang="fr">mois de l'année</locale>
+    <locale lang="en">month of year</locale>
+    <locale lang="de">Monat des Jahres</locale>
+  </entity>
+  <entity id="monthofyear-help">
+    <locale lang="fr">mois de l'année</locale>
+    <locale lang="en">month of year</locale>
+    <locale lang="de">Monat des Jahres</locale>
+  </entity>
+  <entity id="year">
+    <locale lang="fr">année</locale>
+    <locale lang="en">year</locale>
+    <locale lang="de">Jahr</locale>
+  </entity>
+  <entity id="year-help">
+    <locale lang="fr">année</locale>
+    <locale lang="en">year</locale>
+    <locale lang="de">Jahr</locale>
+  </entity>
+  <entity id="nextrundate">
+    <locale lang="fr">prochaine execution</locale>
+    <locale lang="en">next run date</locale>
+    <locale lang="de">nächste Ausführung</locale>
+  </entity>
+  <entity id="nextrundate-help">
+    <locale lang="fr">prochaine execution</locale>
+    <locale lang="en">next run date</locale>
+    <locale lang="de">nächste Ausführung</locale>
+  </entity>
+  <entity id="lastrundate">
+    <locale lang="fr">dernière execution</locale>
+    <locale lang="en">last run date</locale>
+    <locale lang="de">letzte Ausführung</locale>
+  </entity>
+  <entity id="lastrundate-help">
+    <locale lang="fr">dernière execution</locale>
+    <locale lang="en">last run date</locale>
+    <locale lang="de">letzte Ausführung</locale>
+  </entity>
+  <entity id="isrunning">
+    <locale lang="fr">en cours d'execution</locale>
+    <locale lang="en">is running</locale>
+    <locale lang="de">Ausführung läuft</locale>
+  </entity>
+  <entity id="isrunning-help">
+    <locale lang="fr">en cours d'execution</locale>
+    <locale lang="en">is running</locale>
+    <locale lang="de">Ausführung läuft</locale>
+  </entity>
+  <entity id="parameters">
+    <locale lang="fr">parameters</locale>
+    <locale lang="en">parameters</locale>
+    <locale lang="de">Parameter</locale>
+  </entity>
+  <entity id="parameters-help">
+    <locale lang="fr">parameters</locale>
+    <locale lang="en">parameters</locale>
+    <locale lang="de">Parameter</locale>
+  </entity>
+  <entity id="yes">
+    <locale lang="fr">oui</locale>
+    <locale lang="en">yes</locale>
+    <locale lang="de">JA</locale>
+  </entity>
+  <entity id="no">
+    <locale lang="fr">non</locale>
+    <locale lang="en">no</locale>
+    <locale lang="de">NEIN</locale>
+  </entity>
+</localization>

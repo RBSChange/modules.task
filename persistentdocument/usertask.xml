@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<document xmlns="http://www.rbs.fr/schema/change-document/1.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://www.rbs.fr/schema/change-document/1.0 http://www.rbschange.fr/static/schema/change-document/1.0.xsd" 
+	model-version="1.0" icon="task" has-url="false" 
+	linked-to-root-module="true" publish-on-day-change="false">
+  <properties>
+    <add name="user" type="modules_users/user" min-occurs="0" max-occurs="1" />
+    <add name="workitem" type="modules_workflow/workitem" min-occurs="0" max-occurs="1" inverse="true" />
+    <add name="creationnotification" type="modules_notification/notification" min-occurs="0" max-occurs="1" />
+    <add name="terminationnotification" type="modules_notification/notification" min-occurs="0" max-occurs="1" />
+    <add name="cancellationnotification" type="modules_notification/notification" min-occurs="0" max-occurs="1" />
+    <add name="description" type="LongString" min-occurs="0" max-occurs="1" />
+  	<add name="commentary" type="LongString" min-occurs="0" max-occurs="1" />
+  </properties>
+
+  <statuses default="ACTIVE" />
+</document>

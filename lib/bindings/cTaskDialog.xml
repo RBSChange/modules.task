@@ -1,0 +1,378 @@
+<?xml version="1.0" encoding="utf-8"?>
+<bindings xmlns="http://www.mozilla.org/xbl" xmlns:xul="http://www.mozilla.org/keymaster/gatekeeper/there.is.only.xul" xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#" xmlns:xbl="http://www.mozilla.org/xbl">
+
+	<binding id="cTaskDialog" extends="core.wDialog#wDialog">
+		<resources>
+			<stylesheet src="modules.task.cTaskDialog" />
+		</resources>
+		<implementation>
+			<field name="taskId">null</field>
+			<field name="title">''</field>
+			<field name="description">''</field>
+			<field name="loadDataModule">''</field>
+			<field name="loadDataAction">''</field>
+			<field name="documentSectionClass">''</field>
+			<field name="allowEmptyCommentary">true</field>
+
+			<field name="mScrollSynchronizationInitialized">false</field>
+
+			<constructor><![CDATA[
+				wCore.debug("cTaskDialog.constructor");
+			]]></constructor>
+
+			<method name="onInitialize">
+				<body><![CDATA[
+					this.resizeTo(window.innerWidth-100, window.innerHeight-100);
+					this.taskId = this.parameters.taskId;
+					this.initializeScrollInchronization();
+					
+					var node = document.getAnonymousElementByAttribute(this, 'anonid', 'header');
+					node.dialog = this;
+					node.setAttribute('title', this.title);
+					if (node.firstChild)
+					{
+						node.replaceChild(document.createTextNode(this.description), node.firstChild);
+					}
+					else
+					{
+						node.appendChild(document.createTextNode(this.description));
+					}
+					node.allowEmptyCommentary = this.allowEmptyCommentary;
+					
+					var result = wCore.executeJSON(this.loadDataModule, this.loadDataAction, {taskId: this.taskId}, null, true);
+					if (result.status != 'OK')
+					{	
+						alert(result.contents.errorMessage);
+						this.closeDialog(false);
+					}
+					else
+					{
+						this.initializeAuthorComment(result.contents);
+						
+						var workDocumentNode = document.getAnonymousElementByAttribute(this, 'anonid', 'workDocument');
+						workDocumentNode.setAttribute('class', this.documentSectionClass);
+						this.setDocumentData(result.contents.workDocument, workDocumentNode);
+						if ('previewUrl' in result.contents.workDocument)
+						{
+							var workIframeNode = document.getAnonymousElementByAttribute(this, 'anonid', 'current-preview-iframe');
+							workIframeNode.setAttribute('src', result.contents.workDocument.previewUrl);
+							
+							var tabsNode = document.getAnonymousElementByAttribute(this, 'anonid', 'tabs');
+							tabsNode.removeAttribute('collapsed');
+						}
+						else
+						{
+							var tabsNode = document.getAnonymousElementByAttribute(this, 'anonid', 'tabs');
+							tabsNode.setAttribute('collapsed', 'true');
+						}
+						
+						var originalDocumentBox = document.getAnonymousElementByAttribute(this, 'anonid', 'originalDocument-box');
+						var originalPreviewBox = document.getAnonymousElementByAttribute(this, 'anonid', 'originalDocument-preview-box');
+						var titleNode = document.getAnonymousElementByAttribute(this, 'anonid', 'workDocument-title');
+						var previewTitleNode = document.getAnonymousElementByAttribute(this, 'anonid', 'workDocument-preview-title');
+						if ('originalDocument' in result.contents)
+						{
+							originalDocumentBox.removeAttribute('collapsed');
+							originalPreviewBox.removeAttribute('collapsed');
+							titleNode.setAttribute('span', 'high');
+							previewTitleNode.setAttribute('span', 'high');
+							var originalDocumentNode = document.getAnonymousElementByAttribute(this, 'anonid', 'originalDocument');
+							originalDocumentNode.className = this.documentSectionClass;
+							this.setDocumentData(result.contents.originalDocument, originalDocumentNode);
+							if ('previewUrl' in result.contents.originalDocument)
+							{
+								var workIframeNode = document.getAnonymousElementByAttribute(this, 'anonid', 'original-preview-iframe');
+								workIframeNode.setAttribute('src', result.contents.originalDocument.previewUrl);
+							}
+						}
+						else
+						{
+							originalDocumentBox.setAttribute('collapsed', 'true');
+							originalPreviewBox.setAttribute('collapsed', 'true');
+							titleNode.removeAttribute('span');
+							previewTitleNode.removeAttribute('span');
+						}
+						
+						this.highlightDifferences(result.contents);
+					}
+				]]></body>
+			</method>
+
+			<method name="initializeAuthorComment">
+				<parameter name="contents" />
+				<body><![CDATA[
+					var taskCommentBox = document.getAnonymousElementByAttribute(this, 'anonid', 'task-comment-box');
+					if (contents.taskComment)
+					{
+						var locale = new wServerLocale('modules.task.bo.general.Author-commentLabel');
+						locale.setAttribute('author', contents.taskDescription);
+						var taskCommentLabelNode = document.getAnonymousElementByAttribute(this, 'anonid', 'task-comment-label');
+						taskCommentLabelNode.setAttribute('value', locale.toString());
+						
+						var taskCommentNode = document.getAnonymousElementByAttribute(this, 'anonid', 'task-comment');
+						taskCommentNode.setAttribute('value', contents.taskComment);
+						
+						taskCommentBox.removeAttribute('collapsed');
+					}
+					else
+					{
+						taskCommentBox.setAttribute('collapsed', 'true');
+					}
+				]]></body>
+			</method>
+
+			<method name="initializeScrollInchronization">
+				<body><![CDATA[
+					if (!this.mScrollSynchronizationInitialized)
+					{
+						var scrollboxElementDataPageToValidate = document.getAnonymousElementByAttribute(this, 'anonid', 'current-data-scrollbox');
+						var scrollboxElementDataPageInProduction = document.getAnonymousElementByAttribute(this, 'anonid', 'original-data-scrollbox');
+						var scrollboxElementContentPageToValidate = document.getAnonymousElementByAttribute(this, 'anonid', 'current-preview-scrollbox');
+						var scrollboxElementContentPageInProduction = document.getAnonymousElementByAttribute(this, 'anonid', 'original-preview-scrollbox');
+			
+						var checkboxData = document.getAnonymousElementByAttribute(this, 'anonid', 'synchronize-data-checkbox');
+						checkboxData.checked = true;
+						var checkboxContent = document.getAnonymousElementByAttribute(this, 'anonid', 'synchronize-preview-checkbox');
+						checkboxContent.checked = true;
+			
+						scrollboxElementDataPageToValidate.addEventListener('scroll', function() {
+							if (checkboxData.checked == true)
+							{
+								var scrollPosition = wToolkit.getScrollPosition(this);
+								wToolkit.getScrollBoxObject(scrollboxElementDataPageInProduction).scrollTo(scrollPosition.x, scrollPosition.y);
+							}
+						}, false);
+			
+						scrollboxElementDataPageInProduction.addEventListener('scroll', function() {
+							if (checkboxData.checked == true)
+							{
+								var scrollPosition = wToolkit.getScrollPosition(this);
+								wToolkit.getScrollBoxObject(scrollboxElementDataPageToValidate).scrollTo(scrollPosition.x, scrollPosition.y);
+							}
+						}, false);
+			
+						scrollboxElementContentPageToValidate.addEventListener('scroll', function() {
+							if (checkboxContent.checked == true)
+							{
+								var scrollPosition = wToolkit.getScrollPosition(this);
+								wToolkit.getScrollBoxObject(scrollboxElementContentPageInProduction).scrollTo(scrollPosition.x, scrollPosition.y);
+							}
+						}, false);
+			
+						scrollboxElementContentPageInProduction.addEventListener('scroll', function() {
+							if (checkboxContent.checked == true)
+							{
+								var scrollPosition = wToolkit.getScrollPosition(this);
+								wToolkit.getScrollBoxObject(scrollboxElementContentPageToValidate).scrollTo(scrollPosition.x, scrollPosition.y);
+							}
+						}, false);
+				    	
+				    	this.mScrollSynchronizationInitialized = true;
+				    }
+				]]></body>
+			</method>
+
+			<method name="setDocumentData">
+				<parameter name="data" />
+				<parameter name="section" />
+				<body><![CDATA[
+					for (var name in data)
+					{
+						section.setAttribute(name, data[name]);
+						if (data[name] && data[name] != '')
+						{
+							section.removeAttribute(name+'Hidden');
+						}
+						else
+						{
+							section.setAttribute(name+'Hidden', true);
+						}
+					}
+				]]></body>
+			</method>
+
+			<method name="highlightDifferences">
+				<parameter name="contents" />
+				<body><![CDATA[
+					if ('differences' in contents)
+					{
+						differencies = contents['differences'];
+						var section = document.getAnonymousElementByAttribute(this, 'anonid', 'workDocument');
+						for (var name in differencies)
+						{
+							if (differencies[name])
+							{
+								section.setAttribute(name+'Differs', true);
+							}
+							else
+							{
+								section.removeAttribute(name+'Differs');
+							}
+						}
+					}
+				]]></body>
+			</method>
+
+			<method name="submitDecision">
+				<parameter name="decision" />
+				<parameter name="commentary" />
+				<body><![CDATA[
+					var parameters = {
+						cmpref: this.taskId, 
+						decision: decision, 
+						commentary: commentary
+					};
+					var result = wCore.executeJSON("task", "RunUserTaskJSON", parameters, null, true);
+					if (result.status != 'OK')
+					{	
+						alert(result.contents.errorMessage);
+					}
+					else
+					{
+						this.closeDialog(true);
+					}
+				]]></body>
+			</method>
+
+			<method name="closeDialog">
+				<parameter name="refesh" />
+				<body><![CDATA[
+					this.controller.closeModalDialog(true);
+					if (refesh && this.sender && 'refresh' in this.sender)
+					{
+						this.sender.refresh();	
+					}
+				]]></body>
+			</method>
+		</implementation>
+		<content>
+			<xul:vbox flex="1" class="task-dialog-content">
+				<xul:vbox class="cSimpleValidationHeader" anonid="header" />
+				<xul:vbox anonid="task-comment-box">
+					<xul:label anonid="task-comment-label" />
+					<xul:label anonid="task-comment" />
+				</xul:vbox>
+				<xul:tabbox flex="1">
+					<xul:tabs anonid="tabs" collapsed="true">
+						<xul:tab label="&amp;modules.task.bo.general.tab.PropertiesSpaced;" image="{HttpHost}/icons/small/information.png" />
+						<xul:tab label="&amp;modules.task.bo.general.tab.PreviewSpaced;" image="{HttpHost}/icons/small/preview.png" />
+					</xul:tabs>
+					<xul:tabpanels flex="1">
+						<xul:tabpanel flex="1">
+							<xul:hbox flex="1">
+								<xul:vbox flex="1" anonid="workDocument-box">
+									<xul:hbox class="document-box-title" anonid="workDocument-title">
+										<xul:label value="&amp;modules.task.bo.general.Document-informations-to-validate;" />
+									</xul:hbox>
+									<xul:scrollbox flex="1" orient="vertical" anonid="current-data-scrollbox">
+										<xul:grid class="preview" flex="1">
+											<xul:columns>
+												<xul:column />
+												<xul:column flex="1" />
+											</xul:columns>
+											<xul:rows anonid="workDocument"/>
+										</xul:grid>
+									</xul:scrollbox>
+								</xul:vbox>
+								<xul:vbox flex="1" anonid="originalDocument-box" collapsed="true">
+									<xul:hbox class="document-box-title">
+										<xul:label value="&amp;modules.task.bo.general.Original-document-informations;" />
+									</xul:hbox>
+									<xul:hbox class="document-box-synchro-checkbox">
+										<xul:checkbox anonid="synchronize-data-checkbox" label="&amp;modules.task.bo.general.Synchro-scroll;" />
+									</xul:hbox>
+									<xul:scrollbox flex="1" orient="vertical" anonid="original-data-scrollbox">
+										<xul:grid class="preview" flex="1">
+											<xul:columns>
+												<xul:column />
+												<xul:column flex="1" />
+											</xul:columns>
+											<xul:rows anonid="originalDocument"/>
+										</xul:grid>
+									</xul:scrollbox>
+								</xul:vbox>
+							</xul:hbox>
+						</xul:tabpanel>
+						<xul:tabpanel flex="1">
+							<xul:hbox flex="1">
+								<xul:vbox flex="1" anonid="workDocument-preview-box">
+									<xul:hbox class="document-box-title" anonid="workDocument-preview-title">
+										<xul:label value="&amp;modules.task.bo.general.Document-informations-to-validate;" />
+									</xul:hbox>
+									<xul:scrollbox flex="1" anonid="current-preview-scrollbox" orient="vertical">
+										<xul:iframe flex="1" anonid="current-preview-iframe" style="overflow: hidden !important; border: 0px none; min-width: 1050px; min-height: 8192px;" />
+									</xul:scrollbox>
+								</xul:vbox>
+								<xul:vbox flex="1" anonid="originalDocument-preview-box">
+									<xul:hbox class="document-box-title">
+										<xul:label value="&amp;modules.task.bo.general.Original-document-informations;" />
+									</xul:hbox>
+									<xul:hbox class="document-box-synchro-checkbox">
+										<xul:checkbox anonid="synchronize-preview-checkbox" label="&amp;modules.task.bo.general.Synchro-scroll;" />
+									</xul:hbox>
+									<xul:scrollbox flex="1" anonid="original-preview-scrollbox" orient="vertical">
+										<xul:iframe flex="1" anonid="original-preview-iframe" style="overflow: hidden !important; border: 0px none; min-width: 1050px; min-height: 8192px;" />
+									</xul:scrollbox>
+								</xul:vbox>
+							</xul:hbox>
+						</xul:tabpanel>
+					</xul:tabpanels>
+				</xul:tabbox>
+			</xul:vbox>
+		</content>
+	</binding>
+
+	<binding id="cSimpleValidationHeader">
+		<implementation>
+			<field name="dialog">null</field>
+			<field name="allowEmptyCommentary">true</field>
+
+			<method name="submitDecision">
+				<parameter name="decision" />
+				<body><![CDATA[
+					var commentary = document.getAnonymousElementByAttribute(this, 'anonid', 'commentary').value;
+					this.dialog.submitDecision(decision, commentary);
+				]]></body>
+			</method>
+
+			<method name="closeDialog">
+				<parameter name="refesh" />
+				<body><![CDATA[
+					this.dialog.closeDialog(refesh);
+				]]></body>
+			</method>
+
+			<method name="onCommentaryChange">
+				<body><![CDATA[
+					if (!this.allowEmptyCommentary)
+					{
+						var disabled = document.getElementById('commentary').value.length == 0;
+						document.getElementById('acceptButton').disabled = disabled;
+						document.getElementById('refuseButton').disabled = disabled;
+					}
+				]]></body>
+			</method>
+		</implementation>
+
+		<content>
+			<xul:vbox flex="1">
+				<xul:hbox class="dialog-header">
+					<xul:label anonid="title" xbl:inherits="value=title" class="dialog-title" />
+					<xul:spacer flex="1" />
+					<xul:vbox pack="center">
+						<xul:toolbarbutton height="16" width="16" change:icon="delete/small" oncommand="onCancel();" tooltiptexts="&amp;modules.uixul.bo.dialog.Cancel;" />
+					</xul:vbox>
+				</xul:hbox>
+				<xul:description>
+					<xbl:children />
+				</xul:description>
+				<xul:label control="commentary" value="&amp;modules.task.bo.general.CommentaryLabel;" />
+				<xul:textbox multiline="true" anonid="commentary" flex="1" rows="3" oninput="onCommentaryChange()" />
+				<xul:hbox pack="end">
+					<xul:toolbarbutton anonid="acceptButton" oncommand="submitDecision('ACCEPTED')" label="&amp;modules.task.bo.general.AcceptSpaced;" image="{HttpHost}/icons/small/check.png" />
+					<xul:toolbarbutton anonid="refuseButton" oncommand="submitDecision('REFUSED')" label="&amp;modules.task.bo.general.RefuseSpaced;" image="{HttpHost}/icons/small/reject.png" />
+				</xul:hbox>
+			</xul:vbox>
+		</content>
+	</binding>
+</bindings>
