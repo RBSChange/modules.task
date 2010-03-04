@@ -31,14 +31,13 @@
     	]]></body>
 	</action>
 
-
 	<action name="unlockplannedtask">
 		<parameter name="listWidget" />
 		<body><![CDATA[
 			if (confirm("&amp;modules.task.bo.actions.UnlockplannedtaskConfirm;"))
 			{
 				var item = listWidget.getSelectedItems()[0];
-		    	this.execute('task', 'UnlockPlannedTask', {cmpref: item.id, lang: lang}, this);
+		    	this.execute('task', 'UnlockPlannedTask', {cmpref: item.id}, this);
 		   		listWidget.refresh();
 		   	}
 		]]></body>
