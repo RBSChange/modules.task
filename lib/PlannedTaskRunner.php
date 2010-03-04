@@ -1,15 +1,15 @@
 <?php
-
+/**
+ * @package modules.task
+ */
 class task_PlannedTaskRunner
 {
 	/**
 	 * @param task_persistentdocument_plannedtask $runnableTask
-	 *  
 	 */
 	static function executeSystemTask($runnableTask)
 	{
 		$taskService = task_PlannedtaskService::getInstance();
-		$failed = true;
 		$logMessages = array();
 		try
 		{
@@ -35,6 +35,7 @@ class task_PlannedTaskRunner
 		catch (Exception $e)
 		{
 			$logMessages[] = $e->getMessage();
+			$failed = true;
 		}
 		
 		if ($failed === true)
@@ -65,6 +66,7 @@ class task_PlannedTaskRunner
 	}
 	
 	/**
+	 * @return void
 	 */
 	static function main()
 	{
