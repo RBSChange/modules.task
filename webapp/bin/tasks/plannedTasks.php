@@ -1,27 +1,34 @@
 <?php
-/**
- * @package framework.builder.webapp.bin.tasks
- */
-define('WEBEDIT_HOME', realpath(dirname(__FILE__) . DIRECTORY_SEPARATOR . '..' . DIRECTORY_SEPARATOR . '..' . DIRECTORY_SEPARATOR  . '..' . DIRECTORY_SEPARATOR));
-chdir(WEBEDIT_HOME);
-if (!file_exists(WEBEDIT_HOME . DIRECTORY_SEPARATOR . 'webapp' . DIRECTORY_SEPARATOR . 'www' . DIRECTORY_SEPARATOR . 'site_is_disabled'))
-{
-	require_once WEBEDIT_HOME . "/framework/Framework.php";
-	
-	Controller::newInstance("controller_ChangeController");
+// In apache user's crontab, please add:
+// # run hourChange task every hour
+// */5 * * * * php ${WEBEDIT_HOME}/webapp/bin/tasks/plannedTasks.php
 
-	if ($_SERVER['argc'] == 2)
-	{
-		$taskId = $_SERVER['argv'][1];
-		$runnableTask = DocumentHelper::getDocumentInstance(intval($taskId));
-		task_PlannedTaskRunner::executeSystemTask($runnableTask);
-	}
-	else
-	{
-		task_PlannedTaskRunner::main();
-	}
-}
-else 
+require_once("BaseTask.php");
+
+class f_tasks_PlannedTasksTask extends f_tasks_BaseTask
 {
-	echo('WARNING: Planned tasks skipped: '.time()." (site disabled)\n"); 
+	function __construct()
+	{
+		parent::__construct("plannedTasks");
+	}
+
+	protected function execute($previousRunTime)
+	{
+		$this->loadFramework();
+		Controller::newInstance("controller_ChangeController");
+
+		if ($_SERVER['argc'] == 2)
+		{
+			$taskId = $_SERVER['argv'][1];
+			$runnableTask = DocumentHelper::getDocumentInstance(intval($taskId));
+			task_PlannedTaskRunner::executeSystemTask($runnableTask);
+		}
+		else
+		{
+			task_PlannedTaskRunner::main();
+		}
+	}
 }
+
+$task = new f_tasks_PlannedTasksTask();
+$task->start();
