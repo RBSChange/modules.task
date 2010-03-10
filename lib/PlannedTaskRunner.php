@@ -80,7 +80,7 @@ class task_PlannedTaskRunner
 
 		foreach ($runnableTasks as $runnableTask)
 		{
-			$processHandle = popen("php " . f_util_FileUtils::buildWebappPath('bin' , 'tasks', 'plannedTasks.php' . ' ' . $runnableTask->getId()), 'r');
+			$processHandle = popen("php " . f_util_FileUtils::buildWebappPath('bin' , 'tasks', 'runner.php' . ' ' . $runnableTask->getId()), 'r');
 			while(($string = fread($processHandle, 1024)))
 			{
 				echo $string;

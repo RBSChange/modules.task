@@ -16,17 +16,7 @@ class f_tasks_PlannedTasksTask extends f_tasks_BaseTask
 	{
 		$this->loadFramework();
 		Controller::newInstance("controller_ChangeController");
-
-		if ($_SERVER['argc'] == 2)
-		{
-			$taskId = $_SERVER['argv'][1];
-			$runnableTask = DocumentHelper::getDocumentInstance(intval($taskId));
-			task_PlannedTaskRunner::executeSystemTask($runnableTask);
-		}
-		else
-		{
-			task_PlannedTaskRunner::main();
-		}
+		task_PlannedTaskRunner::main();
 	}
 }
 
