@@ -172,6 +172,19 @@ class task_UsertaskService extends f_persistentdocument_DocumentService
 	public function getResume($document, $forModuleName, $allowedSections)
 	{
 		$data = parent::getResume($document, $forModuleName, $allowedSections);
+		
+		// Affected user.
+		$user = $document->getUser();
+		if ($user !== null)
+		{
+			$data['properties']['affecteduser'] = $user->getFullName() . '  (' . f_Locale::translate($user->getPersistentModel()->getLabel()) . ')';
+		}
+		else 
+		{
+			$data['properties']['affecteduser'] = 'NO USER!';
+		}
+		
+		// Task description.
 		$workitem = $document->getWorkitem();
 		$additionalInfo = $workitem->getLabel();
 		try 
