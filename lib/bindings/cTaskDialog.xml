@@ -254,8 +254,8 @@
 				</xul:vbox>
 				<xul:tabbox flex="1">
 					<xul:tabs anonid="tabs" collapsed="true">
-						<xul:tab label="&amp;modules.task.bo.general.tab.PropertiesSpaced;" image="{HttpHost}/icons/small/information.png" />
-						<xul:tab label="&amp;modules.task.bo.general.tab.PreviewSpaced;" image="{HttpHost}/icons/small/preview.png" />
+						<xul:tab label="&amp;modules.task.bo.general.tab.PropertiesSpaced;" image="{IconsBase}/small/information.png" />
+						<xul:tab label="&amp;modules.task.bo.general.tab.PreviewSpaced;" image="{IconsBase}/small/preview.png" />
 					</xul:tabs>
 					<xul:tabpanels flex="1">
 						<xul:tabpanel flex="1">
@@ -369,8 +369,8 @@
 				<xul:label control="commentary" value="&amp;modules.task.bo.general.CommentaryLabel;" />
 				<xul:textbox multiline="true" anonid="commentary" flex="1" rows="3" oninput="onCommentaryChange()" />
 				<xul:hbox pack="end">
-					<xul:toolbarbutton anonid="acceptButton" oncommand="submitDecision('ACCEPTED')" label="&amp;modules.task.bo.general.AcceptSpaced;" image="{HttpHost}/icons/small/check.png" />
-					<xul:toolbarbutton anonid="refuseButton" oncommand="submitDecision('REFUSED')" label="&amp;modules.task.bo.general.RefuseSpaced;" image="{HttpHost}/icons/small/reject.png" />
+					<xul:toolbarbutton anonid="acceptButton" oncommand="submitDecision('ACCEPTED')" label="&amp;modules.task.bo.general.AcceptSpaced;" image="{IconsBase}/small/check.png" />
+					<xul:toolbarbutton anonid="refuseButton" oncommand="submitDecision('REFUSED')" label="&amp;modules.task.bo.general.RefuseSpaced;" image="{IconsBase}/small/reject.png" />
 				</xul:hbox>
 			</xul:vbox>
 		</content>

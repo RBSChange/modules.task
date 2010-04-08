@@ -1,9 +1,9 @@
 treechildren::-moz-tree-image(modules_task_usertask){
-	list-style-image: url(/icons/small/task.png) ;
+	list-style-image: url(/changeicons/small/task.png) ;
 }
 treechildren::-moz-tree-image(modules_task_plannedtask){
-	list-style-image: url(/icons/small/plannedtask.png) ;
+	list-style-image: url(/changeicons/small/plannedtask.png) ;
 }
 wdialog[template="ValidateComment"] .dialog-header{
-	background: url(/icons/small/check.png) transparent center  left no-repeat!important;
+	background: url(/changeicons/small/check.png) transparent center  left no-repeat!important;
 }
