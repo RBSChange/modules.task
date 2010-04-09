@@ -166,7 +166,7 @@ class task_UsertaskService extends f_persistentdocument_DocumentService
 	 *
 	 * @param task_persistentdocument_usertask $document
 	 * @param string $forModuleName
-	 * @param unknown_type $allowedSections
+	 * @param array $allowedSections
 	 * @return array
 	 */
 	public function getResume($document, $forModuleName, $allowedSections)

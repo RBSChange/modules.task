@@ -247,7 +247,7 @@ class task_PlannedtaskService extends f_persistentdocument_DocumentService
 	 *
 	 * @param task_persistentdocument_plannedtask $document
 	 * @param string $forModuleName
-	 * @param unknown_type $allowedSections
+	 * @param array $allowedSections
 	 * @return array
 	 */
 	public function getResume($document, $forModuleName, $allowedSections)
