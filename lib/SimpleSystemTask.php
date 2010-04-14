@@ -3,6 +3,12 @@ class task_SimpleSystemTask implements task_SystemTask
 {
 	private $parametersArray = array();
 	
+	
+	/**
+	 * @var task_persistentdocument_plannedtask
+	 */
+	protected  $plannedTask;
+	
 	/**
 	 * @see task_SystemTask::run()
 	 *
@@ -20,6 +26,16 @@ class task_SimpleSystemTask implements task_SystemTask
 	{
 	}
 	
+	/**
+	 * @see task_SystemTask::setPlannedTask()
+	 *
+	 * @param task_persistentdocument_plannedtask $plannedTask
+	 */
+	function setPlannedTask($plannedTask)
+	{
+		$this->plannedTask = $plannedTask;
+	}
+
 	/**
 	 * @see task_SystemTask::setParameterString()
 	 * This implementation assumes parameter string is stored as a serialized array;

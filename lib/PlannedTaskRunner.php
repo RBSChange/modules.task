@@ -29,6 +29,8 @@ class task_PlannedTaskRunner
 			
 			$classInstance = $reflectionClass->newInstance();
 			$classInstance->setParameterString($runnableTask->getParameters());
+			$classInstance->setPlannedTask($runnableTask);
+			
 			$classInstance->run();
 			$failed = false;
 		}
@@ -80,12 +82,76 @@ class task_PlannedTaskRunner
 
 		foreach ($runnableTasks as $runnableTask)
 		{
-			$processHandle = popen("php " . f_util_FileUtils::buildWebeditPath('bin' , 'tasks', 'runner.php' . ' ' . $runnableTask->getId()), 'r');
-			while(($string = fread($processHandle, 1024)))
-			{
-				echo $string;
-			}
-			pclose($processHandle);
+			$url = self::buildTaskURL($runnableTask);
+			self::launchTask($url);
 		}
+	}
+	
+	/**
+	 * @param task_persistentdocument_plannedtask $runnableTask
+	 * @return string
+	 */
+	public static function buildTaskURL($runnableTask)
+	{
+		return Framework::getBaseUrl() .'/changecron.php?taskId=' . $runnableTask->getId();
+	}
+	
+	/**
+	 * @param string $URL
+	 */
+	public static function launchTask($URL)
+	{
+		$rc = curl_init();
+		curl_setopt($rc, CURLOPT_RETURNTRANSFER, false);
+		curl_setopt($rc, CURLOPT_USERAGENT, 'RBSChange/3.0');
+		curl_setopt($rc, CURLOPT_REFERER, Framework::getBaseUrl() .'/changecron.php');
+		curl_setopt($rc, CURLOPT_POSTFIELDS, null);
+		curl_setopt($rc, CURLOPT_POST, false);
+		curl_setopt($rc, CURLOPT_TIMEOUT, 5);
+		curl_setopt($rc, CURLOPT_FOLLOWLOCATION, 0);
+		curl_setopt($rc, CURLOPT_URL, $URL);
+		curl_exec($rc);
+		curl_close($rc);
+	}
+	
+	public static function buildPingURL($token = null)
+	{
+		if ($token)
+		{
+			return Framework::getBaseUrl() .'/changecron.php?token=' . urlencode($token);
+		}
+		return Framework::getBaseUrl() .'/changecron.php';
+	}
+	
+	
+	public static function pingChangeCronURL($pingURl)
+	{
+		$rc = curl_init();
+		curl_setopt($rc, CURLOPT_RETURNTRANSFER, false);
+		curl_setopt($rc, CURLOPT_USERAGENT, 'RBSChange/3.0');
+		curl_setopt($rc, CURLOPT_REFERER, Framework::getBaseUrl() .'/changecron.php');
+		curl_setopt($rc, CURLOPT_POSTFIELDS, null);
+		curl_setopt($rc, CURLOPT_POST, false);
+		curl_setopt($rc, CURLOPT_TIMEOUT, 1);
+		curl_setopt($rc, CURLOPT_FOLLOWLOCATION, 0);
+		curl_setopt($rc, CURLOPT_URL, $pingURl);
+		curl_exec($rc);
+		curl_close($rc);
+	}	
+	
+	public static function setChangeCronToken($start)
+	{
+		$tokenPath = f_util_FileUtils::buildCachePath('changecron.pid');
+		f_util_FileUtils::writeAndCreateContainer($tokenPath, $start, f_util_FileUtils::OVERRIDE);
+	}
+
+	public static function getChangeCronToken()
+	{
+		$tokenPath = f_util_FileUtils::buildCachePath('changecron.pid');
+		if (file_exists($tokenPath))
+		{
+			return file_get_contents($tokenPath);
+		}
+		return null;
 	}
 }

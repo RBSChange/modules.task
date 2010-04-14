@@ -1,0 +1,7 @@
+Version: 3.0.2
+
+Ajout de changecron.php
+
+Commandes non comprises dans le patch:
+	- init-webapp
+	- update-autoload

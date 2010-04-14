@@ -12,5 +12,9 @@ interface task_SystemTask
 	 * @param unknown_type $parameterString
 	 */
 	function setParameterString($parameterString);
+	
+	/**
+	 * @param task_persistentdocument_plannedtask $plannedTask
+	 */
+	function setPlannedTask($plannedTask);
 }
-
