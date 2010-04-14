@@ -250,7 +250,7 @@ class task_PlannedtaskService extends f_persistentdocument_DocumentService
 	 * @param array $allowedSections
 	 * @return array
 	 */
-	public function getResume($document, $forModuleName, $allowedSections)
+	public function getResume($document, $forModuleName, $allowedSections = null)
 	{
 		$data = parent::getResume($document, $forModuleName, $allowedSections);
 		$data['properties']['isrunning'] = $document->getIsrunning() ? f_Locale::translateUI("&modules.uixul.bo.general.Yes;") : f_Locale::translateUI("&modules.uixul.bo.general.No;");
