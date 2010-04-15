@@ -76,6 +76,15 @@ class task_persistentdocument_plannedtask extends task_persistentdocument_planne
 		$this->hasFailed = $hasFailed;
 	}
 	
+	/**
+	 * @param date_Calendar $date
+	 */	
+	public function reSchedule($date)
+	{
+		$this->setUniqueExecutiondate($date);
+		$this->periodUnit = null;
+		$this->setNextrundate(null);
+	}
 
 	/**
 	 * @var Boolean

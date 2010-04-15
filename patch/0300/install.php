@@ -45,5 +45,11 @@ class task_patch_0300 extends patch_BasePatch
 		$task->setMinute(5);
 		$task->setLabel('task_DayChangeTask');
 		$task->save(ModuleService::getInstance()->getSystemFolderId('task', 'task'));
+		
+		$task = task_PlannedtaskService::getInstance()->getNewDocumentInstance();
+		$task->setSystemtaskclassname('task_PublishTask');
+		$task->setUniqueExecutiondate(date_Calendar::getInstance());
+		$task->setLabel('task_PublishTask');
+		$task->save(ModuleService::getInstance()->getSystemFolderId('task', 'task'));
 	}
 }
