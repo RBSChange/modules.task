@@ -33,8 +33,33 @@ class TaskHelper
 	 */
 	public static function getPendingTasksForCurrentUser()
 	{
+		return self::getPendingByUser(users_UserService::getInstance()->getCurrentUser());
+	}
+
+	/**
+	 * @return array<task_persistentdocument_usertask>
+	 */
+	public static function getPendingTasksForCurrentBackendUser()
+	{
+		return self::getPendingByUser(users_UserService::getInstance()->getCurrentBackendUser());
+	}
+
+	/**
+	 * @return array<task_persistentdocument_usertask>
+	 */
+	public static function getPendingTasksForCurrentFrontendUser()
+	{
+		return self::getPendingByUser(users_UserService::getInstance()->getCurrentFrontendUser());
+	}
+
+	/**
+	 * @param users_persistentdocument_user $user
+	 * @return array<task_persistentdocument_usertask>
+	 */
+	public static function getPendingByUser($user)
+	{
 		$query = f_persistentdocument_PersistentProvider::getInstance()->createQuery('modules_task/usertask');
-		$query->add(Restrictions::eq('user', users_UserService::getInstance()->getCurrentUser()));
+		$query->add(Restrictions::eq('user', $user));
 		$query->add(Restrictions::published());
 		$query->addOrder(Order::desc('document_creationdate'));
 		$query->setMaxResults(50);
@@ -47,8 +72,36 @@ class TaskHelper
 	 */
 	public static function getPendingTasksForCurrentUserByDocumentId($documentId)
 	{
+		return self::getPendingTasksByUserAndDocumentId(users_UserService::getInstance()->getCurrentUser(), $documentId);
+	}
+
+	/**
+	 * @param Integer $documentId
+	 * @return array<task_persistentdocument_usertask>
+	 */
+	public static function getPendingTasksForCurrentBackendUserByDocumentId($documentId)
+	{
+		return self::getPendingTasksByUserAndDocumentId(users_UserService::getInstance()->getCurrentBackendUser(), $documentId);
+	}
+
+	/**
+	 * @param Integer $documentId
+	 * @return array<task_persistentdocument_usertask>
+	 */
+	public static function getPendingTasksForCurrentFrontendUserByDocumentId($documentId)
+	{
+		return self::getPendingTasksByUserAndDocumentId(users_UserService::getInstance()->getCurrentFrontendUser(), $documentId);
+	}
+
+	/**
+	 * @param users_persistentdocument_user $user
+	 * @param Integer $documentId
+	 * @return array<task_persistentdocument_usertask>
+	 */
+	public static function getPendingTasksByUserAndDocumentId($user, $documentId)
+	{
 		$query = f_persistentdocument_PersistentProvider::getInstance()->createQuery('modules_task/usertask');
-		$query->add(Restrictions::eq('user', users_UserService::getInstance()->getCurrentUser()));
+		$query->add(Restrictions::eq('user', $user));
 		$query->add(Restrictions::published());
 		$query->add(Restrictions::eq('workitem.documentid', $documentId));
 		$query->addOrder(Order::desc('document_creationdate'));

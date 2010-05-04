@@ -11,7 +11,7 @@ class task_persistentdocument_usertask extends task_persistentdocument_usertaskb
 	public function getDialogName()
 	{
 		list(, $actionName) = explode('_', $this->getWorkitem()->getExecActionName());
-		return str_replace('Workflowaction', '', $actionName);
+		return str_replace('Workflowaction', '', str_replace('WorkflowAction', '', $actionName));
 	}
 	
 	/**

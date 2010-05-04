@@ -7,7 +7,7 @@
 		<ul tal:condition="tasks" class="no-bullet">
 			<li tal:repeat="task tasks">
 				<img change:icon="src task/small" />
-				<a href="#" i18n:attributes="title &amp;modules.task.bo.actions.Perform-UsertaskEllipsis;" onclick="window.Dashboard.openTask(${task/id}, '${task/dialog}', '${task/module}');"><strong>${task/taskLabel}</strong>&nbsp;:&nbsp;${task/documentLabel}</a>&nbsp;-&nbsp;<small tal:content="task/status" />
+				<a href="#" i18n:attributes="title &amp;modules.task.bo.actions.Perform-UsertaskEllipsis;" onclick="window.Dashboard.openTaskWithParameters(${task/id}, '${task/dialog}', '${task/module}', {documentId: ${task/documentId}});"><strong>${task/taskLabel}</strong>&nbsp;:&nbsp;${task/documentLabel}</a>&nbsp;-&nbsp;<small tal:content="task/status" />
 			</li>
 		</ul>
 		<p tal:condition="not:tasks" change:translate="modules.dashboard.dashboard.No-information-to-display" />

@@ -38,6 +38,7 @@ class task_BlockDashboardPendingTasksAction extends dashboard_BlockDashboardActi
 				'dialog' => $task->getDialogName(),
 				'module' => $task->getModule(),
 				'status' => ucfirst($status),
+				'documentId' => $document->getId(),
 				'documentLabel' => $document->getPersistentModel()->isLocalized() ? $document->getLabelForLang($task->getLang()) : $document->getLabel()
 			);
 			$widget[] = $attr;
