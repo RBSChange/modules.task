@@ -42,6 +42,7 @@
 			<contextactions>
 				<contextaction name="edit" />
 				<contextaction name="unlockplannedtask" />
+				<contextaction name="resetplannedtasktime" />
 				<contextaction name="reactivate" />
 				<contextaction name="deactivated" />
 			</contextactions>
@@ -58,6 +59,7 @@
 		<action name="openFolder" icon="folder_into" label="&amp;modules.uixul.bo.actions.OpenFolder;" />
 		<action name="performUsertask" single="true" icon="task-execute" label="&amp;modules.task.bo.actions.Perform-Usertask;" />
 		<action name="unlockplannedtask" single="true" icon="unlock" label="&amp;modules.task.bo.actions.Unlockplannedtask;" />
+		<action name="resetplannedtasktime" single="true" icon="plannedtask" label="&amp;modules.task.bo.actions.Resetplannedtasktime;" />
 		<action name="reactivate" permission="ReActivate" icon="reactivate" label="&amp;modules.uixul.bo.actions.ReActivate;" />
 		<action name="deactivated" permission="Deactivated" icon="deactivated" label="&amp;modules.uixul.bo.actions.Deactivate;" />
 	</actions>

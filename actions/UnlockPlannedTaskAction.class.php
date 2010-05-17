@@ -15,8 +15,13 @@ class task_UnlockPlannedTaskAction extends task_Action
 		if ($plannedTask !== null)
 		{
 			$plannedTask->setIsrunning(false);
+			if ($request->hasParameter('resetTime'))
+			{
+				$plannedTask->setNextrundate(date_Calendar::now());
+			}
 			$plannedTask->save();
 		}
+		
 		return self::getSuccessView();
 	}
 }

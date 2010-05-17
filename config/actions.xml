@@ -49,6 +49,14 @@
     	]]></body>
 	</action>
 
+	<action name="resetplannedtasktime">
+		<parameter name="listWidget" />
+		<body><![CDATA[
+			var item = listWidget.getSelectedItems()[0];
+		    this.execute('task', 'UnlockPlannedTask', {cmpref: item.id, resetTime: 'true'}, this);
+		   	listWidget.refresh();
+		]]></body>
+	</action>
 
 	<method name="deactivatedIsActive">
 		<parameter name="itemData" />

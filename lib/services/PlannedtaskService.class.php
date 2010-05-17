@@ -207,7 +207,7 @@ class task_PlannedtaskService extends f_persistentdocument_DocumentService
 	 */
 	protected function publicationStatusChanged($document, $oldPublicationStatus, $params)
 	{
-		if ($document->isPublished())
+		if ($document->isPublished() && $oldPublicationStatus == "ACTIVE")
 		{
 			$document->setNextrundate($this->getNextOccurenceDate($document));
 			$document->save();

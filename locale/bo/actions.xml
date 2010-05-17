@@ -15,6 +15,10 @@
     <locale lang="en">unlock task</locale>
     <locale lang="de">Vorgang entsperren</locale>
   </entity>
+    <entity id="resetplannedtasktime">
+    <locale lang="fr">lancer la tâche le plus tôt possible</locale>
+    <locale lang="en">launch task as soon as possible</locale>
+  </entity>
   <entity id="UnlockplannedtaskConfirm">
     <locale lang="fr">Débloquer une tâche peut entrainer des dysfonctionnements de certaines fonctionnalités. Cette action ne devrait être effectué que si vous êtes certain qu'une tâche est réellement bloquée. Voulez-vous vraiment continuer?</locale>
     <locale lang="en">Unlocking a tack might cause unexpected problems in some functionnalities. This action should only be performed if you are sure a task is really locked. Do you want to continue?</locale>
