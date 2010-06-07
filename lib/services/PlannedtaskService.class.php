@@ -2,7 +2,7 @@
 /**
  * @date Wed, 06 Aug 2008 09:19:58 +0000
  * @author intstaufl
- * @package 
+ * @package modules.task
  */
 class task_PlannedtaskService extends f_persistentdocument_DocumentService
 {
@@ -75,11 +75,10 @@ class task_PlannedtaskService extends f_persistentdocument_DocumentService
 			{
 				return $runDate;
 			}
-			else 
-				if ($runDate->belongsToFuture())
-				{
-					return $runDate;
-				}
+			else if ($runDate->belongsToFuture())
+			{
+				return $runDate;
+			}
 			return null;
 		}
 		
