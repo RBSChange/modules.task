@@ -6,6 +6,7 @@
 		<property name="isrunning" labeli18n="modules.task.bo.doceditor.property.Isrunning" />
 		<property name="lastrundate" labeli18n="modules.task.bo.doceditor.property.Lastrundate" />
 		<property name="nextrundate" labeli18n="modules.task.bo.doceditor.property.Nextrundate" />
+		<property name="node" labeli18n="modules.task.bo.doceditor.property.Node" />
 	</section>
 
 	<section name="publication" linkedtab="publication" labeli18n="modules.uixul.bo.doceditor.section.Status" image="{IconsBase}/small/status.png">

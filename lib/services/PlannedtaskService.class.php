@@ -50,7 +50,12 @@ class task_PlannedtaskService extends f_persistentdocument_DocumentService
 	 */
 	protected function getPublishedNonRunningTasksQuery()
 	{
-		return $this->createQuery()->add(Restrictions::published())->add(Restrictions::ne('isrunning', true));
+		$query = $this->createQuery()->add(Restrictions::published())->add(Restrictions::ne('isrunning', true));
+		if (defined('NODE_NAME'))
+		{
+			$query->add(Restrictions::orExp(Restrictions::isNull('node'), Restrictions::eq('node', NODE_NAME)));
+		}
+		return $query;
 	}
 	
 	/**
@@ -255,6 +260,7 @@ class task_PlannedtaskService extends f_persistentdocument_DocumentService
 		$data['properties']['isrunning'] = $document->getIsrunning() ? f_Locale::translateUI("&modules.uixul.bo.general.Yes;") : f_Locale::translateUI("&modules.uixul.bo.general.No;");
 		$data['properties']['lastrundate'] = $document->getUILastrundate();
 		$data['properties']['nextrundate'] = $document->getUINextrundate();
+		$data['properties']['node'] = $document->getNode();
 		return $data;
 	}
 }

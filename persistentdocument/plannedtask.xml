@@ -1,28 +1,27 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document xmlns="http://www.rbs.fr/schema/change-document/1.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-	xsi:schemaLocation="http://www.rbs.fr/schema/change-document/1.0 http://www.rbschange.fr/static/schema/change-document/1.0.xsd" model-version="1.0"
-	icon="plannedtask" linked-to-root-module="true" publish-on-day-change="false" backoffice-indexable="false" has-url="false">
-	<properties>
-		<add name="minute" type="Integer">
-			<constraints>range:0..59</constraints>
-		</add>
-		<add name="hour" type="Integer">
-			<constraints>range:0..23</constraints>
-		</add>
-		<add name="dayofmonth" type="Integer">
-			<constraints>range:1..31</constraints>
-		</add>
-		<add name="monthofyear" type="Integer">
-			<constraints>range:1..12</constraints>
-		</add>
-		<add name="year" type="Integer">
-			<constraints>range:2008..9999</constraints>
-		</add>
-		<add name="nextrundate" type="DateTime" />
-		<add name="lastrundate" type="DateTime" />
-		<add name="isrunning" type="Boolean" />
-		<add name="parameters" type="LongString" />
-		<add name="systemtaskclassname" type="String" min-occurs="1" />
-	</properties>
-	<statuses default="ACTIVE" />
+<document xmlns="http://www.rbs.fr/schema/change-document/1.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.rbs.fr/schema/change-document/1.0 http://www.rbschange.fr/static/schema/change-document/1.0.xsd" model-version="1.0" icon="plannedtask" linked-to-root-module="true" publish-on-day-change="false" backoffice-indexable="false" has-url="false">
+  <properties>
+    <add name="minute" type="Integer">
+      <constraints>range:0..59</constraints>
+    </add>
+    <add name="hour" type="Integer">
+      <constraints>range:0..23</constraints>
+    </add>
+    <add name="dayofmonth" type="Integer">
+      <constraints>range:1..31</constraints>
+    </add>
+    <add name="monthofyear" type="Integer">
+      <constraints>range:1..12</constraints>
+    </add>
+    <add name="year" type="Integer">
+      <constraints>range:2008..9999</constraints>
+    </add>
+    <add name="nextrundate" type="DateTime"/>
+    <add name="lastrundate" type="DateTime"/>
+    <add name="isrunning" type="Boolean"/>
+    <add name="parameters" type="LongString"/>
+    <add name="systemtaskclassname" type="String" min-occurs="1"/>
+    <add name="node" type="String"/>
+  </properties>
+  <statuses default="ACTIVE"/>
 </document>

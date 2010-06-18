@@ -19,4 +19,8 @@
 		<locale lang="fr">en cours d'exécution</locale>
 		<locale lang="en">currently running</locale>
 	</entity>
+	<entity id="property.node">
+		<locale lang="fr">noeud d'exécution</locale>
+		<locale lang="en">eecution node</locale>
+	</entity>
 </localization>
