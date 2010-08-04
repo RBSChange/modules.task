@@ -4,4 +4,19 @@
 		<locale lang="fr">vos tâches en attente</locale>
 		<locale lang="en">your pending tasks</locale>
 	</entity>
+	<entity id="dashboardplannedtasksinfos.title">
+		<locale lang="fr">suivi des tâches planifiées</locale>
+	</entity>
+	<entity id="dashboardplannedtasksinfos.timetosuspecterror">
+		<locale lang="fr">délai de suspicion d'erreur</locale>
+	</entity>
+	<entity id="dashboardplannedtasksinfos.timetosuspecterror-help">
+		<locale lang="fr">Délai à partir duquel une tâche est suspectée d'être en erreur.</locale>
+	</entity>
+	<entity id="dashboardplannedtasksinfos.taskstomonitor">
+		<locale lang="fr">tâches à monitorer</locale>
+	</entity>
+	<entity id="dashboardplannedtasksinfos.taskstomonitor-help">
+		<locale lang="fr">Par défaut, seule la tâche de publication des documents est suivie. Sélectionnez ici la liste des tâches supplémentaires à suivre.</locale>
+	</entity>
 </localization>

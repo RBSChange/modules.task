@@ -202,6 +202,14 @@ class task_PlannedtaskService extends f_persistentdocument_DocumentService
 	}
 	
 	/**
+	 * @return task_persistentdocument_plannedtask[]
+	 */
+	public function getBySystemtaskclassname($className)
+	{
+		return $this->createQuery()->add(Restrictions::eq('systemtaskclassname', $className))->find();
+	}
+	
+	/**
 	 * Methode à surcharger pour effectuer des post traitement apres le changement de status du document
 	 * utiliser $document->getPublicationstatus() pour retrouver le nouveau status du document.
 	 * @param task_persistentdocument_plannedtask $document
@@ -244,6 +252,20 @@ class task_PlannedtaskService extends f_persistentdocument_DocumentService
 			$plannedTask->setNextrundate($nextRunDate);
 			$plannedTask->save();
 		}
+	}
+	
+	/**
+	 * @param string $startedBefore
+	 * @return task_persistentdocument_plannedtask[]
+	 */
+	public function getRunningTasks($startedBefore = null)
+	{
+		$query = $this->createQuery()->add(Restrictions::eq('isrunning', true))->addOrder(Order::desc('lastrundate'));
+		if ($startedBefore !== null)
+		{
+			$query->add(Restrictions::lt('lastrundate', $startedBefore));
+		}
+		return $query->find();
 	}
 	
 	/**

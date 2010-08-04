@@ -1,0 +1,34 @@
+.modules-task-DashboardPlannedTasksInfos p{
+	margin-bottom: 5px;
+}
+.modules-task-DashboardPlannedTasksInfos table{
+	width: 100%;
+}
+.modules-task-DashboardPlannedTasksInfos th{
+	font-weight: bold;
+}
+.modules-task-DashboardPlannedTasksInfos td{
+	padding: 2px 5px;
+}
+.modules-task-DashboardPlannedTasksInfos tbody tr:nth-child(odd){
+	background-color: whitesmoke;
+}
+.modules-task-DashboardPlannedTasksInfos tbody tr:hover{
+	background-color: #ddd;
+}
+.modules-task-DashboardPlannedTasksInfos .contextual-action{
+	display: inline-block;
+	min-height: 16px;
+	margin-left: 10px;
+	cursor: pointer;
+	visibility: hidden;
+}
+.modules-task-DashboardPlannedTasksInfos tr:hover .contextual-action{
+	visibility: visible;	
+}
+.modules-task-DashboardPlannedTasksInfos .error-tasks{
+	margin-bottom: 15px;	
+}
+.modules-task-DashboardPlannedTasksInfos .error-tasks tbody{
+	color: red;
+}

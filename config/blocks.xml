@@ -1,5 +1,12 @@
 <?xml version="1.0" encoding="utf-8"?>
 <blocks>
-	<block type="modules_task_DashboardPendingTasks" display="" icon="task" dashboard="true"
-       label="&amp;modules.task.bo.blocks.DashboardPendingTasks.Title;" />
+	<block type="modules_task_DashboardPendingTasks" icon="task" dashboard="true" label="&amp;modules.task.bo.blocks.DashboardPendingTasks.Title;" />
+	<block type="modules_task_DashboardPlannedTasksInfos" icon="task" dashboard="true" label="&amp;modules.task.bo.blocks.DashboardPlannedTasksInfos.Title;">
+		<parameters>
+			<parameter name="timeToSuspectError" type="Integer" default-value="3" min-occurs="1">
+				<constraints>min:1</constraints>
+			</parameter>
+			<parameter name="tasksToMonitor" type="modules_task/plannedtask" max-occurs="-1" />
+		</parameters>
+	</block>
 </blocks>

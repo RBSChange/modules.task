@@ -100,15 +100,22 @@ class task_persistentdocument_plannedtask extends task_persistentdocument_planne
 	 */
 	protected function addTreeAttributes($moduleName, $treeType, &$nodeAttributes)
 	{
+		$nodeAttributes['isrunninglabel'] = $this->getIsrunningLabel();
+		$nodeAttributes['isrunning'] = (int)$this->getIsrunning();
+	}
+	
+	/**
+	 * @return string
+	 */
+	public function getIsrunningLabel()
+	{
 		if ($this->getIsrunning())
 		{
-			$nodeAttributes['isrunninglabel'] = f_Locale::translate('&modules.task.document.plannedtask.Yes;');
-			
+			return f_Locale::translate('&modules.task.document.plannedtask.Yes;');
 		}
 		else 
 		{
-			$nodeAttributes['isrunninglabel'] = f_Locale::translate('&modules.task.document.plannedtask.No;');
-		}
-		$nodeAttributes['isrunning'] = (int)$this->getIsrunning();
+			return f_Locale::translate('&modules.task.document.plannedtask.No;');
+		}	
 	}
 }

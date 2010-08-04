@@ -24,7 +24,7 @@
 				<child model="modules_task/plannedtask" />
 			</children>
 			<columns>
-				<column name="isrunning" label="isrunning" flex="1" />
+				<column name="isrunninglabel" label="isrunning" flex="1" />
 				<column name="lastrundate" label="lastrundate" flex="3" />
 				<column name="nextrundate" label="nextrundate" flex="3" />
 			</columns>

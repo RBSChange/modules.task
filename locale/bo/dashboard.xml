@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<localization>
+	<entity id="monitored-task-title">
+		<locale lang="fr">tâches suivies</locale>
+	</entity>
+	<entity id="monitored-task-description">
+		<locale lang="fr">Cette liste de tâches peut être modifiée dans les propriétés du bloc.</locale>
+	</entity>
+	<entity id="error-task-title">
+		<locale lang="fr">tâches potentiellement en erreur</locale>
+	</entity>
+	<entity id="error-task-description">
+		<locale lang="fr">Il s'agit des tâches qui tournent depuis plus de {hours} heures. Ce délai est réglable dans les propriétés du bloc.</locale>
+	</entity>
+	<entity id="task-label">
+		<locale lang="fr">libellé de la tâche</locale>
+	</entity>
+	<entity id="is-running">
+		<locale lang="fr">en cours</locale>
+	</entity>
+	<entity id="last-run-date">
+		<locale lang="fr">dernière exécution</locale>
+	</entity>
+	<entity id="next-run-date">
+		<locale lang="fr">prochaine exécution</locale>
+	</entity>
+	<entity id="locate-in-module">
+		<locale lang="fr">localiser dans le module tâches</locale>
+	</entity>
+</localization>
