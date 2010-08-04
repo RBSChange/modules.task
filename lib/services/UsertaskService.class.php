@@ -42,7 +42,7 @@ class task_UsertaskService extends f_persistentdocument_DocumentService
 	 * @param Integer $parentNodeId Parent node ID where to save the document (optionnal).
 	 * @return void
 	 */
-	protected function postInsert($usertask, $parentNodeId = null)
+	protected function postInsert($usertask, $parentNodeId)
 	{
 		$notification = $usertask->getCreationnotification();
 		$this->sendNotification($usertask, $notification);
@@ -111,7 +111,7 @@ class task_UsertaskService extends f_persistentdocument_DocumentService
 				Framework::debug(__METHOD__ . ' : No notification to send.');
 			}
 		}
-		elseif ($notification->getPublicationstatus() != 'ACTIVE' && !$notification->isPublicated())
+		else if ($notification->getPublicationstatus() != 'ACTIVE' && !$notification->isPublicated())
 		{
 			if (Framework::isDebugEnabled())
 			{
@@ -147,13 +147,11 @@ class task_UsertaskService extends f_persistentdocument_DocumentService
 			$documentId = $usertask->getWorkitem()->getDocumentid();
 			$document = $this->pp->getDocumentInstance($documentId);
 			
-			
-			$parameters = workflow_WorkflowEngineService::getInstance()
-		                    ->getDefaultNotificationParameters($document, $workItem, $usertask);
-         
-			// Add the case parameters.
+			// Complete parameters.
+			$defaultParameters = workflow_WorkflowEngineService::getInstance()
+				->getDefaultNotificationParameters($document, $workItem, $usertask);
 			$caseParameters = workflow_CaseService::getInstance()->getParametersArray($usertask->getWorkitem()->getCase());
-			$parameters = array_merge($parameters, $caseParameters);
+			$parameters = array_merge($defaultParameters, $caseParameters, $parameters);
 
 			// Send the notification.
 			TaskHelper::getNotificationService()->sendMail($notification, array($receiver), $parameters);
@@ -194,7 +192,8 @@ class task_UsertaskService extends f_persistentdocument_DocumentService
 		}
 		catch (Exception $e)
 		{
-			// Nothing
+			$e; // Avoid warning in Eclipse.
+			// Document doesn't exist any more.
 		}
 		$data['properties']['additionalinfo'] = $additionalInfo;
 		return $data;
