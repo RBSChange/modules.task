@@ -5,13 +5,15 @@
  */
 class task_persistentdocument_plannedtask extends task_persistentdocument_plannedtaskbase
 {
-	
+	/**
+	 * @var integer
+	 */
 	private $periodUnit;
 	
 	/**
 	 * @return Integer or null
 	 */
-	function getPeriodUnit()
+	public function getPeriodUnit()
 	{
 		if ($this->periodUnit === null)
 		{
@@ -43,7 +45,7 @@ class task_persistentdocument_plannedtask extends task_persistentdocument_planne
 	/**
 	 * @return Integer
 	 */
-	function getPeriodValue()
+	public function getPeriodValue()
 	{
 		return 1;
 	}
@@ -51,7 +53,7 @@ class task_persistentdocument_plannedtask extends task_persistentdocument_planne
 	/**
 	 * @param date_Calendar $date
 	 */
-	function setUniqueExecutiondate($date)
+	public function setUniqueExecutiondate($date)
 	{
 		$this->setYear($date->getYear());
 		$this->setMonthofyear($date->getMonth());
@@ -91,6 +93,11 @@ class task_persistentdocument_plannedtask extends task_persistentdocument_planne
 	 */
 	private $hasFailed = false;
 	
+	/**
+	 * @param string $moduleName
+	 * @param string $treeType
+	 * @param array<string, string> $nodeAttributes
+	 */
 	protected function addTreeAttributes($moduleName, $treeType, &$nodeAttributes)
 	{
 		if ($this->getIsrunning())

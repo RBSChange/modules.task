@@ -1,7 +1,6 @@
 <?php
 class task_Setup extends object_InitDataSetup
 {
-
 	public function install()
 	{
 		try
@@ -14,7 +13,6 @@ class task_Setup extends object_InitDataSetup
 			Framework::exception($e);
 		}
 	}
-	
 	
 	private function addCronTask()
 	{
@@ -38,5 +36,4 @@ class task_Setup extends object_InitDataSetup
 		$task->setLabel('task_PublishTask');
 		$task->save(ModuleService::getInstance()->getSystemFolderId('task', 'task'));
 	}
-
 }

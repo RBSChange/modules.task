@@ -26,10 +26,14 @@ class task_ViewUserTaskAction extends f_action_BaseAction
 		$workItem = $task->getWorkitem();
 		try
 		{
-			$workDocument = DocumentHelper::getDocumentInstance($workItem->getDocumentid());
+			DocumentHelper::getDocumentInstance($workItem->getDocumentid());
 		}
 		catch (Exception $e)
 		{
+			if (Framework::isDebugEnabled())
+			{
+				Framework::debug(__METHOD__ . ' EXCEPTION: ' . $e->getMessage());
+			}
 			return View::ERROR;
 		}
 
