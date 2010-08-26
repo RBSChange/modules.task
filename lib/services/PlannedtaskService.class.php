@@ -231,26 +231,35 @@ class task_PlannedtaskService extends f_persistentdocument_DocumentService
 	 */
 	public function rescheduleIfNecesseary($plannedTask)
 	{
-		$plannedTask->setIsrunning(false);
-		if (!$plannedTask->getHasFailed())
+		try 
 		{
-			$plannedTask->setLastrundate(date_Calendar::now());
-		}
-		$nextRunDate = $this->getNextOccurenceDate($plannedTask);
-		if ($nextRunDate === null)
-		{
-			$this->file($plannedTask->getId());
-			$ts = TreeService::getInstance();
-			$treeNode = $ts->getInstanceByDocument($plannedTask);
-			if ($treeNode !== null)
+			$this->tm->beginTransaction();
+			$plannedTask->setIsrunning(false);
+			if (!$plannedTask->getHasFailed())
 			{
-				$ts->deleteNode($treeNode);
+				$plannedTask->setLastrundate(date_Calendar::now());
 			}
+			$nextRunDate = $this->getNextOccurenceDate($plannedTask);
+			if ($nextRunDate === null)
+			{
+				$this->file($plannedTask->getId());
+				$ts = TreeService::getInstance();
+				$treeNode = $ts->getInstanceByDocument($plannedTask);
+				if ($treeNode !== null)
+				{
+					$ts->deleteNode($treeNode);
+				}
+			}
+			else
+			{
+				$plannedTask->setNextrundate($nextRunDate);
+				$this->pp->updateDocument($plannedTask);
+			}
+			$this->tm->commit();
 		}
-		else
+		catch (Exception $e)
 		{
-			$plannedTask->setNextrundate($nextRunDate);
-			$plannedTask->save();
+			$this->tm->rollBack($e);
 		}
 	}
 	

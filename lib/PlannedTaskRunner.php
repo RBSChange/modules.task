@@ -32,6 +32,10 @@ class task_PlannedTaskRunner
 			$classInstance->setPlannedTask($runnableTask);
 			
 			$classInstance->run();
+			if (Framework::isInfoEnabled())
+			{
+				Framework::info($runnableTask->getId() . ' [' . $taskClassName . '] executed.');
+			}
 			$failed = false;
 		}
 		catch (Exception $e)
@@ -68,9 +72,10 @@ class task_PlannedTaskRunner
 	}
 	
 	/**
+	 * @param string $baseURL
 	 * @return void
 	 */
-	static function main()
+	static function main($baseURL)
 	{
 		$taskService = task_PlannedtaskService::getInstance();
 		$runnableTasks = $taskService->getRunnableTasks();
@@ -82,18 +87,9 @@ class task_PlannedTaskRunner
 
 		foreach ($runnableTasks as $runnableTask)
 		{
-			$url = self::buildTaskURL($runnableTask);
+			$url = $baseURL . '/changecron.php?taskId=' . $runnableTask->getId();
 			self::launchTask($url);
 		}
-	}
-	
-	/**
-	 * @param task_persistentdocument_plannedtask $runnableTask
-	 * @return string
-	 */
-	public static function buildTaskURL($runnableTask)
-	{
-		return Framework::getBaseUrl() .'/changecron.php?taskId=' . $runnableTask->getId();
 	}
 	
 	/**
@@ -104,7 +100,6 @@ class task_PlannedTaskRunner
 		$rc = curl_init();
 		curl_setopt($rc, CURLOPT_RETURNTRANSFER, false);
 		curl_setopt($rc, CURLOPT_USERAGENT, 'RBSChange/3.0');
-		curl_setopt($rc, CURLOPT_REFERER, Framework::getBaseUrl() .'/changecron.php');
 		curl_setopt($rc, CURLOPT_POSTFIELDS, null);
 		curl_setopt($rc, CURLOPT_POST, false);
 		curl_setopt($rc, CURLOPT_TIMEOUT, 5);
@@ -113,23 +108,12 @@ class task_PlannedTaskRunner
 		curl_exec($rc);
 		curl_close($rc);
 	}
-	
-	public static function buildPingURL($token = null)
-	{
-		if ($token)
-		{
-			return Framework::getBaseUrl() .'/changecron.php?token=' . urlencode($token);
-		}
-		return Framework::getBaseUrl() .'/changecron.php';
-	}
-	
-	
+		
 	public static function pingChangeCronURL($pingURl)
 	{
 		$rc = curl_init();
 		curl_setopt($rc, CURLOPT_RETURNTRANSFER, false);
 		curl_setopt($rc, CURLOPT_USERAGENT, 'RBSChange/3.0');
-		curl_setopt($rc, CURLOPT_REFERER, Framework::getBaseUrl() .'/changecron.php');
 		curl_setopt($rc, CURLOPT_POSTFIELDS, null);
 		curl_setopt($rc, CURLOPT_POST, false);
 		curl_setopt($rc, CURLOPT_TIMEOUT, 1);
