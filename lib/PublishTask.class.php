@@ -23,7 +23,12 @@ class task_PublishTask extends task_SimpleSystemTask
 		$script = 'framework/listener/publishDocumentsBatch.php';
 		foreach ($documentsArray as $chunk)
 		{
-			f_util_System::execHTTPScript($script, $chunk);
+			$result = f_util_System::execHTTPScript($script, $chunk);
+			// Log fatal errors...
+			if ($result != '1')
+			{
+				Framework::warn(__METHOD__ . ' framework/listener/publishDocumentsBatch.php an error occured: "' . $result . '"');
+			}
 		}
 		
 		$this->plannedTask->reSchedule(date_Calendar::getInstance()->add(date_Calendar::MINUTE, +10));
