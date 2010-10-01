@@ -4,6 +4,12 @@
 		<locale lang="fr">vos tâches en attente</locale>
 		<locale lang="en">your pending tasks</locale>
 	</entity>
+	<entity id="dashboardpendingtasks.showcomments">
+		<locale lang="fr">afficher les commentaires</locale>
+	</entity>
+	<entity id="dashboardpendingtasks.showcomments-help">
+		<locale lang="fr">Afficher les commentaires ou non les commentaires des demandeurs.</locale>
+	</entity>
 	<entity id="dashboardplannedtasksinfos.title">
 		<locale lang="fr">suivi des tâches planifiées</locale>
 	</entity>

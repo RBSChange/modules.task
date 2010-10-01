@@ -34,12 +34,14 @@ class task_BlockDashboardPendingTasksAction extends dashboard_BlockDashboardActi
 			}
 			$attr = array(
 				'id' => $task->getId(),
-				'taskLabel' => $task->getLabel(),
+				'taskLabel' => $task->getLabelAsHtml(),
 				'dialog' => $task->getDialogName(),
 				'module' => $task->getModule(),
 				'status' => ucfirst($status),
 				'documentId' => $document->getId(),
-				'documentLabel' => $document->getPersistentModel()->isLocalized() ? $document->getLabelForLang($task->getLang()) : $document->getLabel()
+				'documentLabel' => f_util_HtmlUtils::textToHtml($document->getPersistentModel()->isLocalized() ? $document->getLabelForLang($task->getLang()) : $document->getLabel()),
+				'comment' => $task->getCommentaryAsHtml(),
+				'author' => ucfirst($task->getDescriptionAsHtml())
 			);
 			$widget[] = $attr;
 		}

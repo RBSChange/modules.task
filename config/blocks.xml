@@ -1,6 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
 <blocks>
-	<block type="modules_task_DashboardPendingTasks" icon="task" dashboard="true" label="&amp;modules.task.bo.blocks.DashboardPendingTasks.Title;" />
+	<block type="modules_task_DashboardPendingTasks" icon="task" dashboard="true" label="&amp;modules.task.bo.blocks.DashboardPendingTasks.Title;">
+		<parameters>
+			<parameter name="showComments" type="Boolean" default-value="false" />
+		</parameters>
+	</block>
 	<block type="modules_task_DashboardPlannedTasksInfos" icon="task" dashboard="true" label="&amp;modules.task.bo.blocks.DashboardPlannedTasksInfos.Title;">
 		<parameters>
 			<parameter name="timeToSuspectError" type="Integer" default-value="3" min-occurs="1">
