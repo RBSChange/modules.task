@@ -27,7 +27,7 @@ class task_PublishTask extends task_SimpleSystemTask
 			// Log fatal errors...
 			if ($result != '1')
 			{
-				Framework::warn(__METHOD__ . ' framework/listener/publishDocumentsBatch.php an error occured: "' . $result . '"');
+				Framework::error(__METHOD__ . ' ' . $script . ' unexpected result: "' . $result . '"');
 			}
 		}
 		
