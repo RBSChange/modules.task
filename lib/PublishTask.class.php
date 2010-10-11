@@ -25,7 +25,7 @@ class task_PublishTask extends task_SimpleSystemTask
 		{
 			$result = f_util_System::execHTTPScript($script, $chunk);
 			// Log fatal errors...
-			if ($result != '1')
+			if ($result != 'OK')
 			{
 				Framework::error(__METHOD__ . ' ' . $script . ' unexpected result: "' . $result . '"');
 			}
