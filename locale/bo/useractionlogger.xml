@@ -1,2 +1,33 @@
 <?xml version="1.0" encoding="utf-8"?>
-<localization><entity id="reactivate-plannedtask"><locale lang="fr">reactivate.plannedtask {documentlabel}</locale></entity><entity id="log-reactivate-plannedtask"><locale lang="fr">log-reactivate-plannedtask</locale></entity></localization>
+<localization>
+	<entity id="reactivate-plannedtask">
+		<locale lang="fr">réactivation de la tâche ({documentlabel})</locale>
+	</entity>
+	<entity id="log-reactivate-plannedtask">
+		<locale lang="fr">réactivation de la tâche</locale>
+	</entity>
+	<entity id="deactivated-plannedtask">
+		<locale lang="fr">désactivation de la tâche ({documentlabel})</locale>
+	</entity>
+	<entity id="log-deactivated-plannedtask">
+		<locale lang="fr">désactivation de la tâche</locale>
+	</entity>
+	<entity id="unlock-plannedtask">
+		<locale lang="fr">déblocage de la tâche ({documentlabel})</locale>
+	</entity>
+	<entity id="log-unlock-plannedtask">
+		<locale lang="fr">déblocage de la tâche</locale>
+	</entity>
+	<entity id="reset-plannedtask">
+		<locale lang="fr">lancement de la tâche le plus tôt possible ({documentlabel})</locale>
+	</entity>
+	<entity id="log-reset-plannedtask">
+		<locale lang="fr">lancement de la tâche le plus tôt possible</locale>
+	</entity>
+	<entity id="run-failed-plannedtask">
+		<locale lang="fr">échec de l'exécution ({documentlabel}) : {message}</locale>
+	</entity>
+	<entity id="log-run-failed-plannedtask">
+		<locale lang="fr">échec de l'exécution</locale>
+	</entity>
+</localization>

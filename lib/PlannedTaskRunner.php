@@ -38,6 +38,11 @@ class task_PlannedTaskRunner
 			}
 			$failed = false;
 		}
+		catch (BaseException $e)
+		{
+			$logMessages[] = $e->getLocaleMessage();
+			$failed = true;
+		}
 		catch (Exception $e)
 		{
 			$logMessages[] = $e->getMessage();
@@ -52,23 +57,9 @@ class task_PlannedTaskRunner
 		$taskService->rescheduleIfNecesseary($runnableTask);
 		if ($failed)
 		{
-			self::createNewDocumentLogEntry($runnableTask->getId(), implode("\n", $logMessages));
+			$action = 'run-failed.plannedtask';
+			UserActionLoggerService::getInstance()->addUserDocumentEntry(null, $action, $runnableTask, array('message' => implode("\n", $logMessages)), 'task');
 		}
-	}
-	
-	/**
-	 * @param Integer $taskId
-	 * @param String $message
-	 */
-	static function createNewDocumentLogEntry($taskId, $message)
-	{
-		$logEntry = generic_DocumentlogentryService::getInstance()->getNewDocumentInstance();
-		$logEntry->setLabel("&modules.tasks.document.plannedtask.ExecutionFailed;");
-		$logEntry->setDocumentid($taskId);
-		$logEntry->setActor(__CLASS__);
-		$logEntry->setDecision("failed");
-		$logEntry->setCommentary($message);
-		$logEntry->save();
 	}
 	
 	/**
@@ -79,15 +70,18 @@ class task_PlannedTaskRunner
 	{
 		$taskService = task_PlannedtaskService::getInstance();
 		$runnableTasks = $taskService->getRunnableTasks();
+		$runningIds = array();
 		foreach ($runnableTasks as $runnableTask)
 		{
-			$runnableTask->setIsrunning(true);
-			$runnableTask->save();
+			if ($taskService->run($runnableTask))
+			{
+				$runningIds[] = $runnableTask->getId();
+			}
 		}
 
-		foreach ($runnableTasks as $runnableTask)
+		foreach ($runningIds as $runningId)
 		{
-			$url = $baseURL . '/changecron.php?taskId=' . $runnableTask->getId();
+			$url = $baseURL . '/changecron.php?taskId=' . $runningId;
 			self::launchTask($url);
 		}
 	}

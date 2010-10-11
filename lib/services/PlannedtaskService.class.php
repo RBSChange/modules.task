@@ -294,4 +294,33 @@ class task_PlannedtaskService extends f_persistentdocument_DocumentService
 		$data['properties']['node'] = $document->getNode();
 		return $data;
 	}
+	
+	/**
+	 * @param task_persistentdocument_plannedtask $task
+	 * @return boolean
+	 */
+	public function run($task)
+	{
+		$result = false;
+		try 
+		{
+			$this->tm->beginTransaction();
+			$task->setIsrunning(true);
+			if ($task->isModified())
+			{
+				$this->pp->updateDocument($task);
+				$result = true;
+			}
+			else 
+			{
+				Framework::warn(__METHOD__ . ' Task ' . $task->__toString() . ' already running!');
+			}
+			$this->tm->commit();
+		}
+		catch (Exception $e)
+		{
+			$this->tm->rollBack($e);
+		}
+		return $result;
+	}	
 }

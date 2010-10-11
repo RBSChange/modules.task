@@ -20,8 +20,9 @@ class task_UnlockPlannedTaskAction extends task_Action
 				$plannedTask->setNextrundate(date_Calendar::now());
 			}
 			$plannedTask->save();
+			$action = ($request->hasParameter('resetTime') ? 'reset' : 'unlock') . '.plannedtask';
+			UserActionLoggerService::getInstance()->addCurrentUserDocumentEntry($action, $plannedTask, array(), 'task');
 		}
-		
 		return self::getSuccessView();
 	}
 }
