@@ -30,7 +30,7 @@ class task_PlannedTaskRunner
 			$classInstance = $reflectionClass->newInstance();
 			$classInstance->setParameterString($runnableTask->getParameters());
 			$classInstance->setPlannedTask($runnableTask);
-			
+			$startTime = time();
 			$classInstance->run();
 			if (Framework::isInfoEnabled())
 			{
@@ -48,12 +48,17 @@ class task_PlannedTaskRunner
 			$logMessages[] = $e->getMessage();
 			$failed = true;
 		}
-		
+		if (defined('MYSQL_WAIT_TIMEOUT') && time() - $startTime >=  MYSQL_WAIT_TIMEOUT)
+		{
+			// Make sure we didn't loose the MySQL connection due to inactivity timeout
+			f_persistentdocument_PersistentProvider::refresh();
+		}
 		if ($failed === true)
 		{
 			$logMessages[] = ob_get_clean();
 		}
 		$runnableTask->setHasFailed($failed);
+		
 		$taskService->rescheduleIfNecesseary($runnableTask);
 		if ($failed)
 		{
