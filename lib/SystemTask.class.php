@@ -7,8 +7,6 @@ interface task_SystemTask
 	function run();
 	
 	/**
-	 * Enter description here...
-	 *
 	 * @param unknown_type $parameterString
 	 */
 	function setParameterString($parameterString);
