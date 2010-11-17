@@ -111,7 +111,7 @@ class task_UsertaskService extends f_persistentdocument_DocumentService
 				Framework::debug(__METHOD__ . ' : No notification to send.');
 			}
 		}
-		else if ($notification->getPublicationstatus() != 'ACTIVE' && !$notification->isPublicated())
+		else if ($notification->getPublicationstatus() != 'ACTIVE' && !$notification->isPublished())
 		{
 			if (Framework::isDebugEnabled())
 			{
