@@ -37,7 +37,7 @@
 			if (confirm("&amp;modules.task.bo.actions.UnlockplannedtaskConfirm;"))
 			{
 				var item = listWidget.getSelectedItems()[0];
-		    	this.execute('task', 'UnlockPlannedTask', {cmpref: item.id}, this);
+		    	this.executeJSON('UnlockPlannedTask', {cmpref: item.id});
 		   		listWidget.refresh();
 		   	}
 		]]></body>
@@ -53,7 +53,7 @@
 		<parameter name="listWidget" />
 		<body><![CDATA[
 			var item = listWidget.getSelectedItems()[0];
-		    this.execute('task', 'UnlockPlannedTask', {cmpref: item.id, resetTime: 'true'}, this);
+		    this.executeJSON('UnlockPlannedTask', {cmpref: item.id, resetTime: 'true'});
 		   	listWidget.refresh();
 		]]></body>
 	</action>

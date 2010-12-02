@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="utf-8"?>
+<i18n baseKey="m.task.document.plannedtask" lcid="de_DE">
+  <key id="document-name">geplanter Vorgang</key>
+  <key id="label">Name</key>
+  <key id="label-help">Name</key>
+  <key id="minute">Minute</key>
+  <key id="minute-help">Minute</key>
+  <key id="hour">Stunde</key>
+  <key id="hour-help">Stunde</key>
+  <key id="dayofmonth">Tag des Monats</key>
+  <key id="dayofmonth-help">Tag des Monats</key>
+  <key id="monthofyear">Monat des Jahres</key>
+  <key id="monthofyear-help">Monat des Jahres</key>
+  <key id="year">Jahr</key>
+  <key id="year-help">Jahr</key>
+  <key id="nextrundate">nächste Ausführung</key>
+  <key id="nextrundate-help">nächste Ausführung</key>
+  <key id="lastrundate">letzte Ausführung</key>
+  <key id="lastrundate-help">letzte Ausführung</key>
+  <key id="isrunning">Ausführung läuft</key>
+  <key id="isrunning-help">Ausführung läuft</key>
+  <key id="parameters">Parameter</key>
+  <key id="parameters-help">Parameter</key>
+  <key id="yes">JA</key>
+  <key id="no">NEIN</key>
+</i18n>

@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="utf-8"?>
+<i18n baseKey="m.task.bo.useractionlogger" lcid="fr_FR">
+  <key id="reactivate-plannedtask">réactivation de la tâche ({documentlabel})</key>
+  <key id="log-reactivate-plannedtask">réactivation de la tâche</key>
+  <key id="deactivated-plannedtask">désactivation de la tâche ({documentlabel})</key>
+  <key id="log-deactivated-plannedtask">désactivation de la tâche</key>
+  <key id="unlock-plannedtask">déblocage de la tâche ({documentlabel})</key>
+  <key id="log-unlock-plannedtask">déblocage de la tâche</key>
+  <key id="reset-plannedtask">lancement de la tâche le plus tôt possible ({documentlabel})</key>
+  <key id="log-reset-plannedtask">lancement de la tâche le plus tôt possible</key>
+  <key id="run-failed-plannedtask">échec de l'exécution ({documentlabel}) : {message}</key>
+  <key id="log-run-failed-plannedtask">échec de l'exécution</key>
+</i18n>

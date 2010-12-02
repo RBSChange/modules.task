@@ -3,7 +3,7 @@
  * task_UnlockPlannedTaskAction
  * @package modules.task.actions
  */
-class task_UnlockPlannedTaskAction extends task_Action
+class task_UnlockPlannedTaskAction extends f_action_BaseJSONAction
 {
 	/**
 	 * @param Context $context
@@ -23,6 +23,6 @@ class task_UnlockPlannedTaskAction extends task_Action
 			$action = ($request->hasParameter('resetTime') ? 'reset' : 'unlock') . '.plannedtask';
 			UserActionLoggerService::getInstance()->addCurrentUserDocumentEntry($action, $plannedTask, array(), 'task');
 		}
-		return self::getSuccessView();
+		return $this->sendJSON(array('message' => 'UnlockPlannedTaskSuccess'));
 	}
 }

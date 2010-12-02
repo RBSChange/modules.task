@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="utf-8"?>
+<i18n baseKey="m.task.bo.general" lcid="en_GB">
+  <key id="module-name">tasks</key>
+  <key id="tree-root-name">tasks</key>
+  <key id="system-folder-name">tasks</key>
+  <key id="tab-execute-task">execute task</key>
+  <key id="tab-general-informations">general informations</key>
+  <key id="tab-notifications">notifications</key>
+  <key id="your-pending-tasks">your pending tasks</key>
+  <key id="user-task-help">you have been asked to accept or refuse the content below. Type in a commentary to justify your decision and click on the ″Accept″ button to accept the document or on the ″Refuse″ button to refuse it. Acceptation will publish the document on the website.</key>
+  <key id="user-task-decision-commentary">commentary justifying the decision</key>
+  <key id="details">view details</key>
+  <key id="accept">accept</key>
+  <key id="refuse">refuse</key>
+  <key id="close">close</key>
+  <key id="commentary">commentary (optionnal)</key>
+  <key id="author-comment">author's comment ({author})</key>
+  <key id="synchro-scroll">Synchonize flow</key>
+  <key id="document-informations-to-validate">information to be validated</key>
+  <key id="original-document-informations">information of the currently published version</key>
+  <key id="user-task-title">document validation</key>
+</i18n>

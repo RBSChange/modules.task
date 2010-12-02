@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="utf-8"?>
+<i18n baseKey="m.task.bo.general" lcid="fr_FR">
+  <key id="module-name">tâches</key>
+  <key id="tree-root-name">tâches</key>
+  <key id="system-folder-name">tâches</key>
+  <key id="tab-execute-task">exécuter la tâche</key>
+  <key id="tab-general-informations">informations générales</key>
+  <key id="tab-notifications">notifications</key>
+  <key id="your-pending-tasks">vos tâches en attente</key>
+  <key id="user-task-help">
+			il vous est demandé de valider ou de refuser le contenu ci-dessous. Après avoir entré un commentaire qui justifie votre décision, veuillez cliquer sur le bouton ″Accepter″ pour accepter le document ou sur ″Refuser″ pour le refuser. L'acceptation publiera le document sur le site web et
+			sera ainsi visible par tous les internautes.
+		</key>
+  <key id="user-task-decision-commentary">commentaire justifiant la décision</key>
+  <key id="details">voir informations</key>
+  <key id="accept">accepter</key>
+  <key id="refuse">refuser</key>
+  <key id="close">fermer</key>
+  <key id="commentary">commentaire (facutatif)</key>
+  <key id="author-comment">commentaire du demandeur ({author})</key>
+  <key id="synchro-scroll">Synchroniser le déroulement</key>
+  <key id="document-informations-to-validate">informations à valider</key>
+  <key id="original-document-informations">informations de la version actuellement publiée</key>
+  <key id="user-task-title">validation d'un document</key>
+</i18n>

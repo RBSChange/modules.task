@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="utf-8"?>
+<i18n baseKey="m.task.bo.general.column" lcid="en_GB">
+  <key id="isrunning">Is Running</key>
+  <key id="lastrundate">Last execution</key>
+  <key id="nextrundate">Next execution</key>
+</i18n>

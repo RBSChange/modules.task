@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="utf-8"?>
+<i18n baseKey="m.task.bo.doceditor.property" lcid="en_GB">
+  <key id="additionalinfo">workflow label</key>
+  <key id="lastrundate">last execution date</key>
+  <key id="nextrundate">next execution date</key>
+  <key id="isrunning">currently running</key>
+  <key id="node">eecution node</key>
+</i18n>

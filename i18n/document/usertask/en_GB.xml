@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8"?>
+<i18n baseKey="m.task.document.usertask" lcid="en_GB">
+  <key id="label">label</key>
+  <key id="label-help">label</key>
+  <key id="user">user</key>
+  <key id="user-help">user</key>
+  <key id="workitem">workitem</key>
+  <key id="workitem-help">workitem</key>
+  <key id="creationnotification">creationnotification</key>
+  <key id="creationnotification-help">creationnotification</key>
+  <key id="terminationnotification">terminationnotification</key>
+  <key id="terminationnotification-help">terminationnotification</key>
+  <key id="cancellationnotification">cancellationnotification</key>
+  <key id="cancellationnotification-help">cancellationnotification</key>
+  <key id="description">description</key>
+  <key id="description-help">description</key>
+  <key id="commentary">commentary</key>
+  <key id="commentary-help">commentary</key>
+</i18n>
