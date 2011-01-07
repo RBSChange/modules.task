@@ -45,7 +45,16 @@ class task_UsertaskService extends f_persistentdocument_DocumentService
 	protected function postInsert($usertask, $parentNodeId)
 	{
 		$notification = $usertask->getCreationnotification();
-		$this->sendNotification($usertask, $notification);
+		$params = array();
+		if ($notification !== null && $notification->isPublished() && $usertask->getWorkitem() !== null)
+		{
+			$action = $usertask->getWorkitem()->getExecAction();
+			if ($action !== null && f_util_ClassUtils::methodExists($action, "getCreationNotifParameters"))
+			{
+				$params = array_merge($params, $action->getCreationNotifParameters($usertask));
+			}
+		}
+		$this->sendNotification($usertask, $notification, $params);
 	}
 
 	/**
@@ -59,7 +68,16 @@ class task_UsertaskService extends f_persistentdocument_DocumentService
 
 		// Send the cancellation notification.
 		$notification = $usertask->getCancellationnotification();
-		$this->sendNotification($usertask, $notification);
+		$params = array();
+		if ($notification !== null && $notification->isPublished() && $usertask->getWorkitem() !== null)
+		{
+			$action = $usertask->getWorkitem()->getExecAction();
+			if ($action !== null && f_util_ClassUtils::methodExists($action, "getCancellationNotifParameters"))
+			{
+				$params = array_merge($params, $action->getCancellationNotifParameters($usertask));
+			}
+		}
+		$this->sendNotification($usertask, $notification, $params);
 	}
 
 	/**
@@ -92,8 +110,17 @@ class task_UsertaskService extends f_persistentdocument_DocumentService
 			$decision = f_Locale::translate('&modules.workflow.bo.general.decision-' . strtolower($decision) . ';');
 
 			// Send the termination notification.
+			$params = array('decision' => $decision);
 			$notification = $usertask->getTerminationnotification();
-			$this->sendNotification($usertask, $notification, array('decision' => $decision));
+			if ($notification !== null && $notification->isPublished() && $usertask->getWorkitem() !== null)
+			{
+				$action = $workitem->getExecAction();
+				if ($action !== null && f_util_ClassUtils::methodExists($action, "getTerminationNotifParameters"))
+				{
+					$params = array_merge($params, $action->getTerminationNotifParameters($usertask));
+				}
+			}
+			$this->sendNotification($usertask, $notification, $params);
 		}
 	}
 
