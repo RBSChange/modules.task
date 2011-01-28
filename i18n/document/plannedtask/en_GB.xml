@@ -22,4 +22,6 @@
   <key id="parameters-help">parameters</key>
   <key id="yes">yes</key>
   <key id="no">no</key>
+  <key id="maxduration">maximum duration</key>
+  <key id="maxduration-help">maximum duration given to the task work (not stop the task, but let a trace for administrator if it exceed the duration)</key>
 </i18n>
