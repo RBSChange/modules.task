@@ -23,4 +23,6 @@
   <key id="parameters-help">parameters</key>
   <key id="yes">oui</key>
   <key id="no">non</key>
+  <key id="maxduration">durée maximum</key>
+  <key id="maxduration-help">durée maximum accordé à la tâche pour se terminer (n'arrêtera pas la tâche, mais laisse une trace pour l'administrateur si celle-ci dépasse le temps maximum)</key>
 </i18n>
