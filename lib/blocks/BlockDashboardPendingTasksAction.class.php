@@ -20,7 +20,15 @@ class task_BlockDashboardPendingTasksAction extends dashboard_BlockDashboardActi
 		$widget = array();
 		foreach ($tasks as $task)
 		{
-			$document = DocumentHelper::getDocumentInstance($task->getWorkitem()->getDocumentid());
+			try 
+			{
+				$document = DocumentHelper::getDocumentInstance($task->getWorkitem()->getDocumentid());
+			}
+			catch (Exception $e)
+			{
+				Framework::warn(__METHOD__ . ' no document found with id ' . $task->getWorkitem()->getDocumentid() .  ' for the task with id ' . $task->getId());
+				continue;
+			}
 			
 			$lastModification = date_Calendar::getInstance($task->getCreationdate());
 
