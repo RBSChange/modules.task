@@ -107,8 +107,11 @@ class task_PlannedTaskRunner
 		curl_exec($rc);
 		curl_close($rc);
 	}
-		
-	public static function pingChangeCronURL($pingURl)
+	
+	/**
+	 * @param string $pingURL
+	 */
+	public static function pingChangeCronURL($pingURL)
 	{
 		$rc = curl_init();
 		curl_setopt($rc, CURLOPT_RETURNTRANSFER, false);
@@ -117,17 +120,23 @@ class task_PlannedTaskRunner
 		curl_setopt($rc, CURLOPT_POST, false);
 		curl_setopt($rc, CURLOPT_TIMEOUT, 1);
 		curl_setopt($rc, CURLOPT_FOLLOWLOCATION, 0);
-		curl_setopt($rc, CURLOPT_URL, $pingURl);
+		curl_setopt($rc, CURLOPT_URL, $pingURL);
 		curl_exec($rc);
 		curl_close($rc);
 	}	
 	
+	/**
+	 * @param string $start
+	 */
 	public static function setChangeCronToken($start)
 	{
 		$tokenPath = f_util_FileUtils::buildCachePath('changecron.pid');
 		f_util_FileUtils::writeAndCreateContainer($tokenPath, $start, f_util_FileUtils::OVERRIDE);
 	}
 
+	/**
+	 * @return string
+	 */
 	public static function getChangeCronToken()
 	{
 		$tokenPath = f_util_FileUtils::buildCachePath('changecron.pid');
