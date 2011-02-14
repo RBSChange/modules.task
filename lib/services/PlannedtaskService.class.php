@@ -322,5 +322,38 @@ class task_PlannedtaskService extends f_persistentdocument_DocumentService
 			$this->tm->rollBack($e);
 		}
 		return $result;
-	}	
+	}
+	
+	/**
+	 * @param task_persistentdocument_plannedtask $document
+	 * @param String[] $propertiesName
+	 * @param Array $datas
+	 */
+	public function addFormProperties($document, $propertiesName, &$datas)
+	{
+		if (in_array('extraeditparamsjson', $propertiesName))
+		{
+			$datas['extraeditparamsjson'] = array(
+				'minute' => $document->getMinute() !== null,
+				'hour' => $document->getHour() !== null,
+				'dayofmonth' => $document->getDayofmonth() !== null,
+				'monthofyear' => $document->getMonthofyear() !== null,
+				'year' => $document->getYear() !== null,
+				'node' => false
+			);
+			
+			if (ModuleService::getInstance()->isInstalled('clustersafe'))
+			{
+				$datas['extraeditparamsjson']['node'] = true;
+				$datas['nodes'] = array();
+				$nodes = clustersafe_WebnodeService::getInstance()->createQuery()
+				->setProjection(Projections::groupProperty('label', 'label'))
+				->findColumn('label');
+				
+				foreach ($nodes as $nodeName) {
+					$datas['nodes'][$nodeName] = $nodeName;
+				}
+			}
+		}
+	}
 }

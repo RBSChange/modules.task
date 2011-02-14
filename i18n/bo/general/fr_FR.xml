@@ -10,7 +10,7 @@
   <key id="user-task-help">
 			il vous est demandé de valider ou de refuser le contenu ci-dessous. Après avoir entré un commentaire qui justifie votre décision, veuillez cliquer sur le bouton ″Accepter″ pour accepter le document ou sur ″Refuser″ pour le refuser. L'acceptation publiera le document sur le site web et
 			sera ainsi visible par tous les internautes.
-		</key>
+  </key>
   <key id="user-task-decision-commentary">commentaire justifiant la décision</key>
   <key id="details">voir informations</key>
   <key id="accept">accepter</key>
@@ -22,4 +22,8 @@
   <key id="document-informations-to-validate">informations à valider</key>
   <key id="original-document-informations">informations de la version actuellement publiée</key>
   <key id="user-task-title">validation d'un document</key>
+  
+  <key id="execution">execution</key>
+  
+  <key id="planification">planification</key>
 </i18n>

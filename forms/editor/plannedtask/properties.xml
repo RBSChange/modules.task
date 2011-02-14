@@ -1,48 +1,69 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <panel>
-	<section labeli18n="modules.task.bo.general.Maxduration">
-		<field name="maxduration" />
-	
+	<section labeli18n="modules.task.bo.general.Planification">
+		<field name="minute" />
+		<field name="hour" />
+		<field name="dayofmonth" />
+		<field name="monthofyear" />
+		<field name="year" />
 	</section>
-	<fieldinput name="availableparameters" type="hidden"/>
+	
+	<section labeli18n="modules.task.bo.general.Execution">
+		<field name="node" type="dropdownlist" />
+		<field name="maxduration" />
+	</section>
 	
 	<xul>
 		<javascript>
 			<constructor><![CDATA[
 				this.extendMethod("fireInitializeComplete", this.initializeCompleteMetaInfo);
-			]]></constructor>	
+			]]></constructor>
 			
+				
+			<method name="getInitializeParameters">
+				<body><![CDATA[
+					return {
+						action: 'LoadJSON',
+						cmpref: this.documentEditor.documentid, 
+						lang : this.documentEditor.documentInfos.vo, 
+						documentproperties: this.mFieldNames.join(',') + ',extraeditparamsjson'
+					};
+				]]></body>
+			</method>
+						
 			<method name="initializeCompleteMetaInfo">
 				<parameter name="result" />
 				<body><![CDATA[
 				var fields = this.fields;
-				this.setTextTemplate(fields.body, result.contents.availableparameters);
-				this.setTextTemplate(fields.header, result.contents.availableparameters);
-				this.setTextTemplate(fields.footer, result.contents.availableparameters);			
-				]]></body>
-			</method>
-			
-			<method name="setTextTemplate">
-				<parameter name="field" />
-				<parameter name="availableparameters" />
-				<body><![CDATA[
-				var toolbar = field.toolBar;				
-				toolbar.clearTextTemplate();
-				if (availableparameters)
+				if ('extraeditparamsjson' in result.contents)
 				{
-					var parameters = availableparameters.split(/\s|,/);
-					for (var i = 0; i < parameters.length; i++)
+					var fieldsState = result.contents.extraeditparamsjson;
+					
+					for (var name in fieldsState)
 					{
-						var param = parameters[i];
-						if (param.length > 0)
+						if (name in fields)
 						{
-							if (param[0] != '{') {param = '{' + param + '}';}
-							toolbar.addTextTemplate(param, param);
+							if ('disabled' in fields[name])
+							{
+								fields[name].disabled = !fieldsState[name];
+							}
+							else
+							{
+								fields[name].setAttribute('disabled', fieldsState[name] ? 'false' : 'true');
+							}
 						}
 					}
-				}				
+				}
+				if ('nodes' in result.contents)
+				{
+					fields.node.removeItems();
+					for (var nodeName in result.contents.nodes)
+					{
+						fields.node.appendItem(nodeName, nodeName);
+					}
+				}
 				]]></body>
-			</method>					
+			</method>				
 		</javascript>
 	</xul>
 </panel>
