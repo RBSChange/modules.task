@@ -105,6 +105,54 @@ class task_persistentdocument_plannedtask extends task_persistentdocument_planne
 	}
 	
 	/**
+	 * @param Integer $minute 0..59 or -1 for random value
+	 */
+	public function setMinute($minute)
+	{
+		if ($minute == -1)
+		{
+			$minute = rand(0, 59);	
+		}
+		parent::setMinute($minute);
+	}
+	
+	/**
+	 * @param Integer $hour 0..23 or -1 for random value
+	 */
+	public function setHour($hour)
+	{
+		if ($hour == -1)
+		{
+			$hour = rand(0, 23);	
+		}
+		parent::setHour($hour);
+	}
+	
+	/**
+	 * @param Integer $dayofmonth 1..31 or -1 for random value
+	 */
+	public function setDayofmonth($dayofmonth)
+	{
+		if ($dayofmonth == -1)
+		{
+			$dayofmonth = rand(1, 28);	
+		}
+		parent::setDayofmonth($dayofmonth);
+	}
+	
+	/**
+	 * @param Integer $month 1..12 or -1 for random value
+	 */
+	public function setMonth($month)
+	{
+		if ($month == -1)
+		{
+			$month = rand(1, 12);	
+		}
+		parent::setMonth($month);
+	}
+	
+	/**
 	 * @return string
 	 */
 	public function getIsrunningLabel()
