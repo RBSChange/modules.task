@@ -11,7 +11,7 @@ class TaskHelper
 	{
 		if (!self::$UsertaskService)
 		{
-			self::$UsertaskService = ServiceLoader::getServiceByDocumentModelName('modules_task/usertask');
+			self::$UsertaskService = task_UsertaskService::getInstance(); 
 		}
 		return self::$UsertaskService;
 	}
@@ -23,7 +23,7 @@ class TaskHelper
 	{
 		if (!self::$NotificationService)
 		{
-			self::$NotificationService = ServiceLoader::getServiceByDocumentModelName('modules_notification/notification');
+			self::$NotificationService = notification_NotificationService::getInstance();
 		}
 		return self::$NotificationService;
 	}
