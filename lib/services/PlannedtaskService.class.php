@@ -59,6 +59,35 @@ class task_PlannedtaskService extends f_persistentdocument_DocumentService
 	}
 	
 	/**
+	 * @param task_persistentdocument_plannedtask $task
+	 * @param Integer $parentId
+	 */
+	public function preSave($task, $parentId)
+	{
+		$someIsDefined = ($task->getMinute() !== null)
+			|| ($task->getHour() !== null)
+			|| ($task->getDayofmonth() !== null)
+			|| ($task->getMonthofyear() !== null)
+			|| ($task->getYear() !== null);
+		if ($someIsDefined && $task->getMinute() === null)
+		{
+			$task->setMinute(rand(0, 59));
+			if ($task->getHour() === null)
+			{
+				$task->setHour(rand(0, 23));
+				if ($task->getDayofmonth() === null)
+				{
+					$task->setDayofmonth(rand(1, 28));
+					if ($task->getMonthofyear() === null)
+					{
+						$task->setMonthofyear(rand(1, 12));
+					}
+				}
+			}
+		}
+	}
+	
+	/**
 	 * @param task_persistentdocument_plannedtask $document
 	 * @return date_Calendar
 	 */
