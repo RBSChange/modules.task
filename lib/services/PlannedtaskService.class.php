@@ -385,4 +385,16 @@ class task_PlannedtaskService extends f_persistentdocument_DocumentService
 			}
 		}
 	}
+	
+	/**
+	 * @param task_persistentdocument_plannedtask $document
+	 * @param string $moduleName
+	 * @param string $treeType
+	 * @param array<string, string> $nodeAttributes
+	 */
+	public function addTreeAttributes($document, $moduleName, $treeType, &$nodeAttributes)
+	{
+		$nodeAttributes['isrunninglabel'] = $document->getIsrunningLabel();
+		$nodeAttributes['isrunning'] = (int)$document->getIsrunning();
+	}
 }

@@ -94,17 +94,6 @@ class task_persistentdocument_plannedtask extends task_persistentdocument_planne
 	private $hasFailed = false;
 	
 	/**
-	 * @param string $moduleName
-	 * @param string $treeType
-	 * @param array<string, string> $nodeAttributes
-	 */
-	protected function addTreeAttributes($moduleName, $treeType, &$nodeAttributes)
-	{
-		$nodeAttributes['isrunninglabel'] = $this->getIsrunningLabel();
-		$nodeAttributes['isrunning'] = (int)$this->getIsrunning();
-	}
-	
-	/**
 	 * @return Boolean
 	 */
 	public function isLocked()
