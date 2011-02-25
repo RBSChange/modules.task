@@ -1,3 +1,10 @@
 Version: 3.0.4
 
 Complete tasks definition to fix bug #26658.
+
+
+Add Column maxduration to probe tasks, and check possibility to unlock task with new change command line.
+Max duration is settable in backoffice (module task).
+Add action Probetask to check if the task is locked.
+Add change command task.unlock to unlock a task
+Add changedev command task.unlock-all to unlock all tasks

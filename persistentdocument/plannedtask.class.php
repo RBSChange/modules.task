@@ -153,6 +153,32 @@ class task_persistentdocument_plannedtask extends task_persistentdocument_planne
 	}
 	
 	/**
+	 * @return Boolean
+	 */
+	public function isLocked()
+	{
+		if ($this->getIsrunning())
+		{
+			$nextRunDate = date_Calendar::getInstance($this->getNextrundate());
+			$durationMaxDate = date_Calendar::getInstance($this->getNextrundate());
+			$durationMaxDate->add(date_Calendar::MINUTE, $this->getMaxduration());
+			
+			if (date_Calendar::getInstance()->isBetween($nextRunDate, $durationMaxDate))
+			{
+				return false;
+			}
+			else 
+			{
+				return true;
+			}
+		}
+		else
+		{
+			return false;
+		}
+	}
+	
+	/**
 	 * @return string
 	 */
 	public function getIsrunningLabel()

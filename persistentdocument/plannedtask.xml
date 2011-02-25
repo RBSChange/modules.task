@@ -22,6 +22,7 @@
     <add name="parameters" type="LongString"/>
     <add name="systemtaskclassname" type="String" min-occurs="1"/>
     <add name="node" type="String"/>
+    <add name="maxduration" type="Integer" default-value="60" min-occurs="1"/>
   </properties>
   <statuses default="ACTIVE"/>
 </document>

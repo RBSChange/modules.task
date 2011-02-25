@@ -114,4 +114,12 @@
 		<locale lang="en">no</locale>
 		<locale lang="de">NEIN</locale>
 	</entity>
+	<entity id="maxduration">
+		<locale lang="fr">durée maximum</locale>
+		<locale lang="en">maximum duration</locale>
+	</entity>
+	<entity id="maxduration-help">
+		<locale lang="fr">durée maximum accordé à la tâche pour se terminer (n'arrêtera pas la tâche, mais laisse une trace pour l'administrateur si celle-ci dépasse le temps maximum)</locale>
+		<locale lang="en">maximum duration given to the task work (not stop the task, but let a trace for administrator if it exceed the duration)</locale>
+	</entity>
 </localization>

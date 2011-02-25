@@ -67,6 +67,7 @@ class task_UsertaskService extends f_persistentdocument_DocumentService
 	 * @param task_persistentdocument_usertask $usertask
 	 * @param string $decision
 	 * @param string $commentary
+	 * @return Boolean
 	 */
 	public function execute($usertask, $decision, $commentary)
 	{
@@ -94,7 +95,9 @@ class task_UsertaskService extends f_persistentdocument_DocumentService
 			// Send the termination notification.
 			$notification = $usertask->getTerminationnotification();
 			$this->sendNotification($usertask, $notification, array('decision' => $decision));
+			return true;
 		}
+		return false;
 	}
 
 	/**
