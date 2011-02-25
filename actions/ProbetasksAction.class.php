@@ -11,6 +11,7 @@ class task_ProbetasksAction extends f_action_BaseAction
 	 */
 	public function _execute($context, $request)
 	{
+		controller_ChangeController::setNoCache();
 		$taskName = $request->getParameter('taskname');
 		$nodeName = $request->getParameter('nodename');
 		
