@@ -147,20 +147,48 @@ class task_UsertaskService extends f_persistentdocument_DocumentService
 			$receiver = sprintf('%s <%s>', f_util_StringUtils::strip_accents($user->getFullname()), $userEmail);
 
 			$workItem = $usertask->getWorkitem();
-			$documentId = $usertask->getWorkitem()->getDocumentid();
-			$document = $this->pp->getDocumentInstance($documentId);
 			
-			// Complete parameters.
-			$defaultParameters = workflow_WorkflowEngineService::getInstance()
-				->getDefaultNotificationParameters($document, $workItem, $usertask);
-			$caseParameters = workflow_CaseService::getInstance()->getParametersArray($usertask->getWorkitem()->getCase());
-			$parameters = array_merge($defaultParameters, $caseParameters, $parameters);
-
-			// Send the notification.
-			TaskHelper::getNotificationService()->sendMail($notification, array($receiver), $parameters);
+			
+			$rc = RequestContext::getInstance();
+			$ws = website_WebsiteModuleService::getInstance();
+			$websiteId = null;
+			$oldWebsiteId = $ws->getCurrentWebsite()->getId();
+			$lang = $rc->getLang();
+			$classname = $workItem->getExecActionName();
+			if (!empty($classname) && f_util_ClassUtils::classExists($classname))
+			{
+				$action = new $classname();
+				$action->initialize($workItem);
+				list($websiteId, $lang) = $action->getNotificationWebsiteIdAndLang($notification->getCodename());
+			}
+			if ($websiteId !== null)
+			{
+				$ws->setCurrentWebsiteId($websiteId);
+			}
+			try
+			{
+				$rc->beginI18nWork($lang);
+				$documentId = $workItem->getDocumentid();
+				$document = $this->pp->getDocumentInstance($documentId);
+				
+				// Complete parameters.
+				$defaultParameters = workflow_WorkflowEngineService::getInstance()
+					->getDefaultNotificationParameters($document, $workItem, $usertask);
+				$caseParameters = workflow_CaseService::getInstance()->getParametersArray($workItem->getCase());
+				$parameters = array_merge($defaultParameters, $caseParameters, $parameters);
+	
+				// Send the notification.
+				TaskHelper::getNotificationService()->sendMail($notification, array($receiver), $parameters);
+				$ws->setCurrentWebsiteId($oldWebsiteId);
+				$rc->endI18nWork();
+			}
+			catch (Exception $e)
+			{
+				$ws->setCurrentWebsiteId($oldWebsiteId);
+				$rc->endI18nWork($e);
+			}
 		}
 	}
-	
 
 	/**
 	 * @see f_persistentdocument_DocumentService::getResume()
