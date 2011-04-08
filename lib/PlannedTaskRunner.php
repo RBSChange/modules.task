@@ -28,6 +28,7 @@ class task_PlannedTaskRunner
 			}
 			
 			$classInstance = $reflectionClass->newInstance();
+			$start = microtime(true);
 			$classInstance->setParameterString($runnableTask->getParameters());
 			$classInstance->setPlannedTask($runnableTask);
 			$startTime = time();
@@ -36,6 +37,19 @@ class task_PlannedTaskRunner
 			{
 				Framework::info($runnableTask->getId() . ' [' . $taskClassName . '] executed.');
 			}
+			$end = microtime(true);
+			$durations = $runnableTask->getMetaMultiple("task_durations");
+			if ($durations === null)
+			{
+				$durations = array();
+			}
+			$durations[] = ($end - $start);
+			if (count($durations) > 10)
+			{
+				array_shift($durations);
+			}
+			$runnableTask->setMetaMultiple("task_durations", $durations);
+			$runnableTask->saveMeta();
 			$failed = false;
 		}
 		catch (BaseException $e)

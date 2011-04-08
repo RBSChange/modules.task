@@ -25,6 +25,6 @@
   <key id="no">non</key>
   <key id="node">Noeud d'execution</key>
   <key id="node-help">Noeud sur lequel la tâche sera executé, laisser le champ vide pour executer la tâche sur tout les noeuds</key>
-  <key id="maxduration">durée maximum</key>
-  <key id="maxduration-help">durée maximum accordé à la tâche pour se terminer (n'arrêtera pas la tâche, mais laisse une trace pour l'administrateur si celle-ci dépasse le temps maximum)</key>
+  <key id="maxduration">durée maximale attendue</key>
+  <key id="maxduration-help">temps en minutes d'exécution au delà duquel la tâche est considérée en erreur (n'arrêtera pas la tâche, mais laisse une trace pour l'administrateur si celle-ci dépasse le temps maximum)</key>
 </i18n>

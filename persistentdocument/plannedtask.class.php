@@ -63,6 +63,26 @@ class task_persistentdocument_plannedtask extends task_persistentdocument_planne
 	}
 	
 	/**
+	 * @return float minutes
+	 */
+	public function getDurationAverage()
+	{
+		$durations = $this->getMetaMultiple("task_durations");
+		$sum = array_sum($durations);
+		$count = count($durations);
+		return ($sum/$count)/60;
+	}
+	
+	/**
+	 * @return float minutes
+	 */
+	public function getLastDuration()
+	{
+		$durations = $this->getMetaMultiple("task_durations");
+		return ($durations[count($durations)-1])/60;
+	}
+	
+	/**
 	 * @return Boolean
 	 */
 	public function getHasFailed()
