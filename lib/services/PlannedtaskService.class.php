@@ -306,6 +306,25 @@ class task_PlannedtaskService extends f_persistentdocument_DocumentService
 		return $query->find();
 	}
 	
+	public function getLockedTasks()
+	{
+		$query = $this->createQuery()->add(Restrictions::eq('isrunning', true))->find();
+		$lockedTasks = array();
+		
+		foreach ($query as $runningTask)
+		{
+			$nextRunDate = date_Calendar::getInstance($runningTask->getNextrundate());
+			$durationMaxDate = date_Calendar::getInstance($runningTask->getNextrundate());
+			$durationMaxDate->add(date_Calendar::MINUTE, $runningTask->getMaxduration());
+			if (!date_Calendar::getInstance()->isBetween($nextRunDate, $durationMaxDate))
+			{
+				$lockedTasks[] = $runningTask;
+			}
+		}
+		
+		return $lockedTasks;		
+	}
+	
 	/**
 	 * @see f_persistentdocument_DocumentService::getResume()
 	 *

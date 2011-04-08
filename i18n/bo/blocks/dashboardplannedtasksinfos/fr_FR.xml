@@ -1,8 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <i18n baseKey="m.task.bo.blocks.dashboardplannedtasksinfos" lcid="fr_FR">
   <key id="title">suivi des tâches planifiées</key>
-  <key id="timetosuspecterror">délai de suspicion d'erreur</key>
-  <key id="timetosuspecterror-help">Délai à partir duquel une tâche est suspectée d'être en erreur.</key>
   <key id="taskstomonitor">tâches à monitorer</key>
   <key id="taskstomonitor-help">Par défaut, seule la tâche de publication des documents est suivie. Sélectionnez ici la liste des tâches supplémentaires à suivre.</key>
 </i18n>
