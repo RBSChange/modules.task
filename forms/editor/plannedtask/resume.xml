@@ -17,4 +17,9 @@
 	<section name="history" linkedtab="history" actiontexti18n="modules.uixul.bo.doceditor.section.action.View" labeli18n="modules.uixul.bo.doceditor.section.History" image="{IconsBase}/small/history.png">
 		<property name="modificationdate" labeli18n="modules.uixul.bo.doceditor.property.Modificationdate" />
 	</section>
+	
+	<section name="durationinfos" labeli18n="modules.task.bo.doceditor.property.Durationinfos" image="{IconsBase}/small/workflow.png" >
+		<property name="durationaverage" labeli18n="modules.task.bo.doceditor.property.Durationaverage" />
+		<property name="lastduration" labeli18n="modules.task.bo.doceditor.property.Lastduration" />
+	</section>
 </panel>

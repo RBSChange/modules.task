@@ -2,8 +2,8 @@
 <i18n baseKey="m.task.bo.dashboard" lcid="fr_FR">
   <key id="monitored-task-title">tâches suivies</key>
   <key id="monitored-task-description">Cette liste de tâches peut être modifiée dans les propriétés du bloc.</key>
-  <key id="error-task-title">tâches potentiellement en erreur</key>
-  <key id="error-task-description">Il s'agit des tâches qui tournent depuis plus de {hours} heures. Ce délai est réglable dans les propriétés du bloc.</key>
+  <key id="error-task-title">tâches en erreur</key>
+  <key id="error-task-description">Il s'agit des tâches qui tournent depuis plus longtemp que la période définie dans les propriétés de la tâche</key>
   <key id="task-label">libellé de la tâche</key>
   <key id="is-running">en cours</key>
   <key id="last-run-date">dernière exécution</key>

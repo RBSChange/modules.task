@@ -307,6 +307,28 @@ class task_PlannedtaskService extends f_persistentdocument_DocumentService
 	}
 	
 	/**
+	 * @return task_persistentdocument_plannedtask[]
+	 */
+	public function getLockedTasks()
+	{
+		$query = $this->createQuery()->add(Restrictions::eq('isrunning', true))->find();
+		$lockedTasks = array();
+		
+		foreach ($query as $runningTask)
+		{
+			$nextRunDate = date_Calendar::getInstance($runningTask->getNextrundate());
+			$durationMaxDate = date_Calendar::getInstance($runningTask->getNextrundate());
+			$durationMaxDate->add(date_Calendar::MINUTE, $runningTask->getMaxduration());
+			if (!date_Calendar::getInstance()->isBetween($nextRunDate, $durationMaxDate))
+			{
+				$lockedTasks[] = $runningTask;
+			}
+		}
+		
+		return $lockedTasks;		
+	}
+	
+	/**
 	 * @see f_persistentdocument_DocumentService::getResume()
 	 *
 	 * @param task_persistentdocument_plannedtask $document
@@ -316,11 +338,21 @@ class task_PlannedtaskService extends f_persistentdocument_DocumentService
 	 */
 	public function getResume($document, $forModuleName, $allowedSections = null)
 	{
+		$ls = LocaleService::getInstance();
 		$data = parent::getResume($document, $forModuleName, $allowedSections);
-		$data['properties']['isrunning'] = $document->getIsrunning() ? f_Locale::translateUI("&modules.uixul.bo.general.Yes;") : f_Locale::translateUI("&modules.uixul.bo.general.No;");
+		$data['properties']['isrunning'] = $document->getIsrunning() ? $ls->transBO("modules.uixul.bo.general.Yes") : $ls->transBO("modules.uixul.bo.general.No");
 		$data['properties']['lastrundate'] = $document->getUILastrundate();
 		$data['properties']['nextrundate'] = $document->getUINextrundate();
 		$data['properties']['node'] = $document->getNode();
+		
+		$durationAverage = $document->getDurationAverage();
+		$durationAverage = $durationAverage < 1 ? "< 1" : round($durationAverage, 2);
+		
+		$lastDuration = $document->getLastDuration();
+		$lastDuration = $lastDuration < 1 ? "< 1" : round($lastDuration, 2);
+		
+		$data['durationinfos']['durationaverage'] = $durationAverage . " " . $ls->transBO("f.unit.minutes");
+		$data['durationinfos']['lastduration'] = $lastDuration . " " . $ls->transBO("f.unit.minutes");
 		return $data;
 	}
 	

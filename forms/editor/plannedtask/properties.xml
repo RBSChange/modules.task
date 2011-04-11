@@ -12,7 +12,7 @@
 		<field name="node" type="dropdownlist" />
 		<field name="maxduration" />
 	</section>
-	
+
 	<xul>
 		<javascript>
 			<constructor><![CDATA[
