@@ -1,5 +1,4 @@
 <?php
-
 class task_UsertaskService extends f_persistentdocument_DocumentService
 {
 	/**
@@ -44,17 +43,9 @@ class task_UsertaskService extends f_persistentdocument_DocumentService
 	 */
 	protected function postInsert($usertask, $parentNodeId)
 	{
+		// Send the creation notification.
 		$notification = $usertask->getCreationnotification();
-		$params = array();
-		if ($notification !== null && $notification->isPublished() && $usertask->getWorkitem() !== null)
-		{
-			$action = $usertask->getWorkitem()->getExecAction();
-			if ($action !== null && f_util_ClassUtils::methodExists($action, "getCreationNotifParameters"))
-			{
-				$params = array_merge($params, $action->getCreationNotifParameters($usertask));
-			}
-		}
-		$this->sendNotification($usertask, $notification, $params);
+		$this->sendNotification($usertask, $notification, 'creation');
 	}
 
 	/**
@@ -68,16 +59,7 @@ class task_UsertaskService extends f_persistentdocument_DocumentService
 
 		// Send the cancellation notification.
 		$notification = $usertask->getCancellationnotification();
-		$params = array();
-		if ($notification !== null && $notification->isPublished() && $usertask->getWorkitem() !== null)
-		{
-			$action = $usertask->getWorkitem()->getExecAction();
-			if ($action !== null && f_util_ClassUtils::methodExists($action, "getCancellationNotifParameters"))
-			{
-				$params = array_merge($params, $action->getCancellationNotifParameters($usertask));
-			}
-		}
-		$this->sendNotification($usertask, $notification, $params);
+		$this->sendNotification($usertask, $notification, 'cancellation');
 	}
 
 	/**
@@ -107,21 +89,9 @@ class task_UsertaskService extends f_persistentdocument_DocumentService
 				$this->cancelUsertask($task);
 			}
 
-			// Get the decision label.
-			$decision = f_Locale::translate('&modules.workflow.bo.general.decision-' . strtolower($decision) . ';');
-
 			// Send the termination notification.
-			$params = array('decision' => $decision);
 			$notification = $usertask->getTerminationnotification();
-			if ($notification !== null && $notification->isPublished() && $usertask->getWorkitem() !== null)
-			{
-				$action = $workitem->getExecAction();
-				if ($action !== null && f_util_ClassUtils::methodExists($action, "getTerminationNotifParameters"))
-				{
-					$params = array_merge($params, $action->getTerminationNotifParameters($usertask));
-				}
-			}
-			$this->sendNotification($usertask, $notification, $params);
+			$this->sendNotification($usertask, $notification, 'termination');
 			return true;
 		}
 		return false;
@@ -131,90 +101,85 @@ class task_UsertaskService extends f_persistentdocument_DocumentService
 	 * Set the notification.
 	 * @param task_persistentdocument_usertask $usertask
 	 * @param notification_persistentdocument_notification $notification
+	 * @param string $notifType
+	 * @return boolean
 	 */
-	private function sendNotification($usertask, $notification, $parameters = array())
+	private function sendNotification($usertask, $notification, $notifType)
 	{
 		if (!$notification)
 		{
-			if (Framework::isDebugEnabled())
+			if (Framework::isInfoEnabled())
 			{
-				Framework::debug(__METHOD__ . ' : No notification to send.');
+				Framework::info(__METHOD__ . ' : No notification to send for task ' . $usertask->getId() . '.');
+			}
+			return false;
+		}
+		
+		// Get the user.
+		$user = $usertask->getUser();
+		if ($user === null)
+		{
+			Framework::warn(__METHOD__ . ' : There is no user associated to the task ' . $usertask->getId() . '.');
+			return false;
+		}
+					
+		$codeName = $notification->getCodename();
+		$websiteId = null;
+		$lang = null;
+		$suffix = null;
+		$action = $usertask->getWorkitem()->getExecAction();
+		if ($action !== null)
+		{
+			list($websiteId, $lang) = $action->getNotificationWebsiteIdAndLang($codeName);
+			$method = 'get' . ucfirst($notifType) . 'NotifSuffix';
+			if (f_util_ClassUtils::methodExists($action, $method))
+			{
+				$suffix = $action->{$method}($usertask);
 			}
 		}
-		else if ($notification->getPublicationstatus() != 'ACTIVE' && !$notification->isPublished())
+		
+		if ($suffix)
 		{
-			if (Framework::isDebugEnabled())
-			{
-				Framework::debug(__METHOD__ . ' : The notification is not active : ' . $notification->getPublicationstatus());
-			}
+			$notification = notification_NotificationService::getInstance()->getConfiguredByCodeNameAndSuffix($codeName, $suffix, $websiteId, $lang);
 		}
 		else
 		{
-			// Get the user email.
-			$user = $usertask->getUser();
-			if (!$user)
-			{
-				if (Framework::isDebugEnabled())
-				{
-					Framework::debug(__METHOD__ . ' : There is no user associated to the task ' . $usertask->getId());
-				}
-				return;
-			}
-
-			$userEmail = $user->getEmail();
-			if (!$userEmail)
-			{
-				if (Framework::isDebugEnabled())
-				{
-					Framework::debug(__METHOD__ . ' : The user ' . $user->getId() . ' has no email');
-				}
-				return;
-			}
-
-			$receiver = sprintf('%s <%s>', f_util_StringUtils::strip_accents($user->getFullname()), $userEmail);
-
-			$workItem = $usertask->getWorkitem();
-			
-			
-			$rc = RequestContext::getInstance();
-			$ws = website_WebsiteModuleService::getInstance();
-			$websiteId = null;
-			$oldWebsiteId = $ws->getCurrentWebsite()->getId();
-			$lang = $rc->getLang();
-			$classname = $workItem->getExecActionName();
-			if (!empty($classname) && f_util_ClassUtils::classExists($classname))
-			{
-				$action = new $classname();
-				$action->initialize($workItem);
-				list($websiteId, $lang) = $action->getNotificationWebsiteIdAndLang($notification->getCodename());
-			}
-			if ($websiteId !== null)
-			{
-				$ws->setCurrentWebsiteId($websiteId);
-			}
-			try
-			{
-				$rc->beginI18nWork($lang);
-				$documentId = $workItem->getDocumentid();
-				$document = $this->pp->getDocumentInstance($documentId);
-				
-				// Complete parameters.
-				$defaultParameters = workflow_WorkflowEngineService::getInstance()
-					->getDefaultNotificationParameters($document, $workItem, $usertask);
-				$caseParameters = workflow_CaseService::getInstance()->getParametersArray($workItem->getCase());
-				$parameters = array_merge($defaultParameters, $caseParameters, $parameters);
-	
-				// Send the notification.
-				TaskHelper::getNotificationService()->sendMail($notification, array($receiver), $parameters);
-				$ws->setCurrentWebsiteId($oldWebsiteId);
-				$rc->endI18nWork();
-			}
-			catch (Exception $e)
-			{
-				$ws->setCurrentWebsiteId($oldWebsiteId);
-				$rc->endI18nWork($e);
-			}
+			$notification = notification_NotificationService::getInstance()->getConfiguredByCodeName($codeName, $websiteId, $lang);
 		}
+	
+		if ($notification === null)
+		{
+			if (Framework::isInfoEnabled())
+			{
+				Framework::info(__METHOD__ . ' : No published notification found for codeName = ' . $codeName);
+			}
+			return false;
+		}
+		$notification->setSendingModuleName('workflow');
+		$callback = array($this, 'getNotificationParameters');
+		$params = array('usertask' => $usertask, 'action' => $action, 'notifType' => $notifType);
+		return $user->getDocumentService()->sendNotificationToUserCallback($notification, $user, $callback, $params);
+	}
+	
+	/**
+	 * @param task_persistentdocument_usertask $usertask
+	 * @return array
+	 */
+	public function getNotificationParameters($params)
+	{
+		$usertask = $params['usertask'];
+		$action = $params['action'];
+		$method = 'get' . ucfirst($params['notifType']) . 'NotifParameters';
+		if ($action && f_util_ClassUtils::methodExists($action, $method))
+		{
+			$parameters = $action->{$method}($usertask);
+		}
+		$workItem = $usertask->getWorkitem();
+		$document = DocumentHelper::getDocumentInstance($workItem->getDocumentid());
+		$wes = workflow_WorkflowEngineService::getInstance();
+		$defaultParameters = $wes->getDefaultNotificationParameters($document, $workItem, $usertask);
+		$caseParameters = workflow_CaseService::getInstance()->getParametersArray($usertask->getWorkitem()->getCase());
+		return array_merge($defaultParameters, $caseParameters, $parameters);
 	}
 
 	/**
@@ -256,5 +221,4 @@ class task_UsertaskService extends f_persistentdocument_DocumentService
 		$data['properties']['additionalinfo'] = $additionalInfo;
 		return $data;
 	}
-
 }
