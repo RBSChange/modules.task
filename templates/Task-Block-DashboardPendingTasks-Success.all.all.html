@@ -8,7 +8,7 @@
 			<ul tal:condition="tasks" class="no-bullet">
 				<li tal:repeat="task tasks">
 					<img change:icon="task/small" />
-					<a href="#" change:i18nattr="title &amp;modules.task.bo.actions.Perform-UsertaskEllipsis;" onclick="window.Dashboard.openTaskWithParameters(${task/id}, '${task/dialog}', '${task/module}', {documentId: ${task/documentId}});">
+					<a href="#" change:i18nattr="title &amp;modules.task.bo.actions.Perform-UsertaskEllipsis;" onclick="window.Dashboard.openTaskWithParameters(${task/id}, '${task/dialog}', '${task/module}', {documentId: ${task/documentId}, documentModel: '${task/documentModel}', documentModule: '${task/documentModule}'});">
 						<strong>${task/taskLabel}</strong>&nbsp;:&nbsp;${task/documentLabel}
 					</a>
 					&nbsp;-&nbsp;<small>${task/status}</small>

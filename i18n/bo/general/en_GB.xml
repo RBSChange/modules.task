@@ -12,6 +12,7 @@
   <key id="details">view details</key>
   <key id="accept">accept</key>
   <key id="refuse">refuse</key>
+  <key id="refuse-and-edit">refuse and edit</key>
   <key id="close">close</key>
   <key id="commentary">commentary (optionnal)</key>
   <key id="author-comment">author's comment ({author})</key>

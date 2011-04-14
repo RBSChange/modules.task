@@ -15,6 +15,7 @@
   <key id="details">voir informations</key>
   <key id="accept">accepter</key>
   <key id="refuse">refuser</key>
+  <key id="refuse-and-edit">refuser et éditer</key>
   <key id="close">fermer</key>
   <key id="commentary">commentaire (facutatif)</key>
   <key id="author-comment">commentaire du demandeur ({author})</key>

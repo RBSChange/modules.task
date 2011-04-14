@@ -48,6 +48,8 @@ class task_BlockDashboardPendingTasksAction extends dashboard_BlockDashboardActi
 				'status' => ucfirst($status),
 				'documentId' => $document->getId(),
 				'documentLabel' => f_util_HtmlUtils::textToHtml($document->getPersistentModel()->isLocalized() ? $document->getLabelForLang($task->getLang()) : $document->getLabel()),
+				'documentModel' => str_replace('/', '_', $document->getDocumentModelName()),
+				'documentModule' => $document->getDocumentModel()->getModuleName(),
 				'comment' => $task->getCommentaryAsHtml(),
 				'author' => ucfirst($task->getDescriptionAsHtml())
 			);

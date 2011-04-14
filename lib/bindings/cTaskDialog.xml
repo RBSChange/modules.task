@@ -28,6 +28,7 @@
 					
 					var node = document.getAnonymousElementByAttribute(this, 'anonid', 'header');
 					node.dialog = this;
+					wCore.executeOnMethodExists(node, "onCommentaryChange", function() { node.onCommentaryChange(); });
 					node.setAttribute('title', this.title);
 					if (node.firstChild)
 					{
@@ -226,14 +227,17 @@
 					if (result.status != 'OK')
 					{	
 						alert(result.contents.errorMessage);
+						return false;
 					}
 					else
 					{
 						this.closeDialog(true);
+						return true;
 					}
 				]]></body>
 			</method>
-
+			
+			
 			<method name="closeDialog">
 				<parameter name="refesh" />
 				<body><![CDATA[
@@ -326,12 +330,25 @@
 		<implementation>
 			<field name="dialog">null</field>
 			<field name="allowEmptyCommentary">true</field>
+			
+			<constructor><![CDATA[
+				wCore.debug("cSimpleValidationHeader.constructor");
+			]]></constructor>
 
 			<method name="submitDecision">
 				<parameter name="decision" />
 				<body><![CDATA[
-					var commentary = document.getAnonymousElementByAttribute(this, 'anonid', 'commentary').value;
-					this.dialog.submitDecision(decision, commentary);
+					var commentary = this.getElementByAnonId('commentary').value;
+					return this.dialog.submitDecision(decision, commentary);
+				]]></body>
+			</method>
+			
+			<method name="refuseAndEdit">
+				<body><![CDATA[
+					if (this.submitDecision('REFUSED'))
+					{	
+						openActionUri(this.dialog.getAttribute('documentModule')+',openDocument,'+this.dialog.getAttribute('documentModel')+','+this.dialog.getAttribute('documentId'));
+					}
 				]]></body>
 			</method>
 
@@ -346,10 +363,22 @@
 				<body><![CDATA[
 					if (!this.allowEmptyCommentary)
 					{
-						var disabled = document.getElementById('commentary').value.length == 0;
-						document.getElementById('acceptButton').disabled = disabled;
-						document.getElementById('refuseButton').disabled = disabled;
+						var disabled = this.getElementByAnonId('commentary').value.length == 0;
+						this.getElementByAnonId('acceptButton').disabled = disabled;
+						this.getElementByAnonId('refuseButton').disabled = disabled;
+						this.getElementByAnonId('refuseAndEditButton').disabled = disabled;
 					}
+					this.getElementByAnonId('refuseAndEditButton').collapsed =
+						!(this.dialog.getAttribute('documentModule') &&
+						this.dialog.getAttribute('documentId') &&
+						this.dialog.getAttribute('documentModel'));
+				]]></body>
+			</method>
+			
+			<method name="getElementByAnonId">
+				<parameter name="anonid" />
+				<body><![CDATA[
+					return document.getAnonymousElementByAttribute(this, 'anonid', anonid);
 				]]></body>
 			</method>
 		</implementation>
@@ -368,9 +397,10 @@
 				</xul:description>
 				<xul:label control="commentary" value="&amp;modules.task.bo.general.CommentaryLabel;" />
 				<xul:textbox multiline="true" anonid="commentary" flex="1" rows="3" oninput="onCommentaryChange()" />
-				<xul:hbox pack="end">
-					<xul:toolbarbutton anonid="acceptButton" oncommand="submitDecision('ACCEPTED')" label="&amp;modules.task.bo.general.AcceptSpaced;" image="{IconsBase}/small/check.png" />
-					<xul:toolbarbutton anonid="refuseButton" oncommand="submitDecision('REFUSED')" label="&amp;modules.task.bo.general.RefuseSpaced;" image="{IconsBase}/small/reject.png" />
+				<xul:hbox pack="end" anonid="buttons">
+					<xul:button anonid="acceptButton" oncommand="submitDecision('ACCEPTED')" label="&amp;modules.task.bo.general.AcceptSpaced;" image="{IconsBase}/small/check.png" />
+					<xul:button anonid="refuseButton" oncommand="submitDecision('REFUSED')" label="&amp;modules.task.bo.general.RefuseSpaced;" image="{IconsBase}/small/reject.png" />
+					<xul:button anonid="refuseAndEditButton" oncommand="refuseAndEdit()" label="&amp;modules.task.bo.general.Refuse-and-editSpaced;" image="{IconsBase}/small/reject_and_edit.png" />
 				</xul:hbox>
 			</xul:vbox>
 		</content>
