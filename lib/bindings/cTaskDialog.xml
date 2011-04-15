@@ -13,6 +13,7 @@
 			<field name="loadDataAction">''</field>
 			<field name="documentSectionClass">''</field>
 			<field name="allowEmptyCommentary">true</field>
+			<field name="supportRefuseAndEdit">false</field>
 
 			<field name="mScrollSynchronizationInitialized">false</field>
 
@@ -368,10 +369,7 @@
 						this.getElementByAnonId('refuseButton').disabled = disabled;
 						this.getElementByAnonId('refuseAndEditButton').disabled = disabled;
 					}
-					this.getElementByAnonId('refuseAndEditButton').collapsed =
-						!(this.dialog.getAttribute('documentModule') &&
-						this.dialog.getAttribute('documentId') &&
-						this.dialog.getAttribute('documentModel'));
+					this.getElementByAnonId('refuseAndEditButton').collapsed = !this.dialog.supportRefuseAndEdit;
 				]]></body>
 			</method>
 			
