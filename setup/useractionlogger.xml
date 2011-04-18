@@ -5,5 +5,6 @@
 	<actiondef modulename="task" actionname="deactivated.plannedtask" label="modules.task.bo.useractionlogger.deactivated-plannedtask" />
 	<actiondef modulename="task" actionname="unlock.plannedtask" label="modules.task.bo.useractionlogger.unlock-plannedtask" />
 	<actiondef modulename="task" actionname="reset.plannedtask" label="modules.task.bo.useractionlogger.reset-plannedtask" />
+	<actiondef modulename="task" actionname="autounlock.plannedtask" label="modules.task.bo.useractionlogger.autounlock-plannedtask" />
 	<actiondef modulename="task" actionname="run-failed.plannedtask" label="modules.task.bo.useractionlogger.run-failed-plannedtask" />
 </script>

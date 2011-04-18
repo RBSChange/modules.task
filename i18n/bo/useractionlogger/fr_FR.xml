@@ -6,6 +6,8 @@
   <key id="log-deactivated-plannedtask">désactivation de la tâche</key>
   <key id="unlock-plannedtask">déblocage de la tâche ({documentlabel})</key>
   <key id="log-unlock-plannedtask">déblocage de la tâche</key>
+  <key id="autounlock-plannedtask">déblocage automatique de la tâche ({documentlabel})</key>
+  <key id="log-autounlock-plannedtask">déblocage automatique de la tâche</key>
   <key id="reset-plannedtask">lancement de la tâche le plus tôt possible ({documentlabel})</key>
   <key id="log-reset-plannedtask">lancement de la tâche le plus tôt possible</key>
   <key id="run-failed-plannedtask">échec de l'exécution ({documentlabel}) : {message}</key>

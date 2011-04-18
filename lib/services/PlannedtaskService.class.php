@@ -59,6 +59,19 @@ class task_PlannedtaskService extends f_persistentdocument_DocumentService
 	}
 	
 	/**
+	 * @return task_persistentdocument_plannedtask[]
+	 */
+	public function getPublishedTasksToRun()
+	{
+		$query = $this->createQuery()->add(Restrictions::published());
+		if (defined('NODE_NAME'))
+		{
+			$query->add(Restrictions::orExp(Restrictions::isNull('node'), Restrictions::eq('node', NODE_NAME)));
+		}
+		return $query->add(Restrictions::le('nextrundate', date_Calendar::getInstance()->toString()))->find();
+	}
+	
+	/**
 	 * @param task_persistentdocument_plannedtask $task
 	 * @param Integer $parentId
 	 */

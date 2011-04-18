@@ -88,16 +88,27 @@ class task_PlannedTaskRunner
 	static function main($baseURL)
 	{
 		$taskService = task_PlannedtaskService::getInstance();
-		$runnableTasks = $taskService->getRunnableTasks();
+		$runnableTasks = $taskService->getPublishedTasksToRun();
+		
 		$runningIds = array();
+		
 		foreach ($runnableTasks as $runnableTask)
 		{
-			if ($taskService->run($runnableTask))
+			if (!$runnableTask->getIsrunning())
 			{
-				$runningIds[] = $runnableTask->getId();
+				if ($taskService->run($runnableTask))
+				{
+					$runningIds[] = $runnableTask->getId();
+				}
+			}
+			else if ($runnableTask->canBeAutoUnlock())
+			{
+				$runnableTask->setIsrunning(false);
+				$runnableTask->save();
+				UserActionLoggerService::getInstance()->addUserDocumentEntry('system','autounlock.plannedtask', $runnableTask, array(), 'task');
 			}
 		}
-
+		
 		foreach ($runningIds as $runningId)
 		{
 			$url = $baseURL . '/changecron.php?taskId=' . $runningId;

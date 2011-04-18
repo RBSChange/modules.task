@@ -83,6 +83,24 @@ class task_persistentdocument_plannedtask extends task_persistentdocument_planne
 	}
 	
 	/**
+	 * @return boolean
+	 */
+	public function canBeAutoUnlock()
+	{
+		$nextRunDate = date_Calendar::getInstance($this->getNextrundate());
+		$durationMaxDate = date_Calendar::getInstance($this->getNextrundate());
+		$durationMaxDate->add(date_Calendar::MINUTE, ($this->getMaxduration() * 2));
+		if (date_Calendar::getInstance()->isBetween($nextRunDate, $durationMaxDate))
+		{
+			return false;
+		}
+		else
+		{
+			return true;
+		}	
+	}
+	
+	/**
 	 * @return Boolean
 	 */
 	public function getHasFailed()
