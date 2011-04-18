@@ -104,6 +104,7 @@ class task_PlannedTaskRunner
 			else if ($runnableTask->canBeAutoUnlock())
 			{
 				$runnableTask->setIsrunning(false);
+				$runnableTask->setLastrundate(date_Calendar::getInstance());
 				$runnableTask->save();
 				UserActionLoggerService::getInstance()->addUserDocumentEntry('system','autounlock.plannedtask', $runnableTask, array(), 'task');
 			}
