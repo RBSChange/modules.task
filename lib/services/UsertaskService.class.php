@@ -170,6 +170,7 @@ class task_UsertaskService extends f_persistentdocument_DocumentService
 		$usertask = $params['usertask'];
 		$action = $params['action'];
 		$method = 'get' . ucfirst($params['notifType']) . 'NotifParameters';
+		$parameters = array();
 		if ($action && f_util_ClassUtils::methodExists($action, $method))
 		{
 			$parameters = $action->{$method}($usertask);
