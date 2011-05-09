@@ -101,13 +101,14 @@ class task_PlannedTaskRunner
 					$runningIds[] = $runnableTask->getId();
 				}
 			}
-			else if ($runnableTask->canBeAutoUnlock())
+			// intportg 2011-05-09: disable auto unlock until it work correctly.
+			/*else if ($runnableTask->canBeAutoUnlock())
 			{
 				$runnableTask->setIsrunning(false);
 				$runnableTask->setNextrundate(date_Calendar::getInstance());
 				$runnableTask->save();
 				UserActionLoggerService::getInstance()->addUserDocumentEntry('system','autounlock.plannedtask', $runnableTask, array(), 'task');
-			}
+			}*/
 		}
 		
 		foreach ($runningIds as $runningId)
