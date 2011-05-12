@@ -16,11 +16,9 @@ class task_patch_0353 extends patch_BasePatch
 			->add(Restrictions::published());
 		foreach ($query->find() as $task)
 		{
-			if ($task->isRunning())
-			{
-				$task->save();
-				$task->getDocumentService()->file($task->getId());
-			}
+			$task->setIsrunning(false);
+			$task->save();
+			$task->getDocumentService()->file($task->getId());
 		}
 	}
 }
