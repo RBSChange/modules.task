@@ -171,7 +171,7 @@ class task_PlannedtaskService extends f_persistentdocument_DocumentService
 		{
 			if ($nextRunDate->getMonth() > $month)
 			{
-				if ($periodUnit == date_Calendar::YEAR && $nextRunDate->getMonth() > $month)
+				if ($periodUnit != date_Calendar::YEAR && $nextRunDate->getMonth() > $month)
 				{
 					$nextRunDate->add(date_Calendar::YEAR, 1);
 				}
@@ -186,7 +186,7 @@ class task_PlannedtaskService extends f_persistentdocument_DocumentService
 		{
 			if ($nextRunDate->getDay() !== $day)
 			{
-				if ($periodUnit == date_Calendar::MONTH && $nextRunDate->getDay() > $day)
+				if ($periodUnit != date_Calendar::MONTH && $nextRunDate->getDay() > $day)
 				{
 					$nextRunDate->add(date_Calendar::MONTH, 1);
 				}
@@ -200,7 +200,7 @@ class task_PlannedtaskService extends f_persistentdocument_DocumentService
 		{
 			if ($nextRunDate->getHour() != $hour)
 			{
-				if ($periodUnit == date_Calendar::DAY && $nextRunDate->getHour() > $hour)
+				if ($periodUnit != date_Calendar::DAY && $nextRunDate->getHour() > $hour)
 				{
 					$nextRunDate->add(date_Calendar::DAY, 1);
 				}
