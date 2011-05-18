@@ -68,6 +68,10 @@ class task_persistentdocument_plannedtask extends task_persistentdocument_planne
 	public function getDurationAverage()
 	{
 		$durations = $this->getMetaMultiple("task_durations");
+		if (!is_array($durations) || count($durations) == 0)
+		{
+			return null;
+		}
 		$sum = array_sum($durations);
 		$count = count($durations);
 		return ($sum/$count)/60;
@@ -79,6 +83,10 @@ class task_persistentdocument_plannedtask extends task_persistentdocument_planne
 	public function getLastDuration()
 	{
 		$durations = $this->getMetaMultiple("task_durations");
+		if (!is_array($durations) || count($durations) == 0)
+		{
+			return null;
+		}
 		return ($durations[count($durations)-1])/60;
 	}
 	

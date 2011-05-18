@@ -138,6 +138,7 @@ class task_PlannedtaskService extends f_persistentdocument_DocumentService
 				$year = $nextRunDate->getYear();
 			}
 			
+			// Look for the next leap year.
 			while (!date_GregorianCalendar::staticIsLeapYear($year) || ($year == $nextRunDate->getYear() && date_GregorianCalendar::staticIsLeapYear($year) && ($nextRunDate->getMonth() > 2 || $nextRunDate->getDay() > 29)))
 			{
 				$year++;
@@ -146,6 +147,7 @@ class task_PlannedtaskService extends f_persistentdocument_DocumentService
 		
 		if ($day > 28 && $month === null)
 		{
+			// Look for the next month with enough days.
 			while ($nextRunDate->getDaysInMonth() < $day)
 			{
 				$nextRunDate->add(date_Calendar::MONTH, 1);
@@ -169,13 +171,13 @@ class task_PlannedtaskService extends f_persistentdocument_DocumentService
 		{
 			if ($nextRunDate->getMonth() > $month)
 			{
-				$nextRunDate->setDay(1);
-				$nextRunDate->setHour(0);
-				$nextRunDate->setMinute(0);
-				if ($nextRunDate->getMonth() > $month)
+				if ($periodUnit == date_Calendar::YEAR && $nextRunDate->getMonth() > $month)
 				{
 					$nextRunDate->add(date_Calendar::YEAR, 1);
 				}
+				$nextRunDate->setDay(1);
+				$nextRunDate->setHour(0);
+				$nextRunDate->setMinute(0);
 			}
 			$nextRunDate->setMonth($month);
 		}
@@ -184,15 +186,13 @@ class task_PlannedtaskService extends f_persistentdocument_DocumentService
 		{
 			if ($nextRunDate->getDay() !== $day)
 			{
-				$nextRunDate->setHour(0);
-				$nextRunDate->setMinute(0);
-				if ($nextRunDate->getDay() > $day)
+				if ($periodUnit == date_Calendar::MONTH && $nextRunDate->getDay() > $day)
 				{
 					$nextRunDate->add(date_Calendar::MONTH, 1);
-				
 				}
-			}
-			
+				$nextRunDate->setHour(0);
+				$nextRunDate->setMinute(0);
+			}			
 			$nextRunDate->setDay($day);
 		
 		}
@@ -200,7 +200,7 @@ class task_PlannedtaskService extends f_persistentdocument_DocumentService
 		{
 			if ($nextRunDate->getHour() != $hour)
 			{
-				if ($nextRunDate->getHour() > $hour)
+				if ($periodUnit == date_Calendar::DAY && $nextRunDate->getHour() > $hour)
 				{
 					$nextRunDate->add(date_Calendar::DAY, 1);
 				}
@@ -359,13 +359,29 @@ class task_PlannedtaskService extends f_persistentdocument_DocumentService
 		$data['properties']['node'] = $document->getNode();
 		
 		$durationAverage = $document->getDurationAverage();
-		$durationAverage = $durationAverage < 1 ? "< 1" : round($durationAverage, 2);
+		if ($durationAverage !== null)
+		{
+			$durationAverage = $durationAverage < 1 ? '< 1' : round($durationAverage, 2);
+			$durationAverage .=  ' ' . $ls->transBO('f.unit.minutes');
+		}
+		else
+		{
+			$durationAverage = $ls->transBO('m.uixul.bo.doceditor.empty-field-content');
+		}
 		
 		$lastDuration = $document->getLastDuration();
-		$lastDuration = $lastDuration < 1 ? "< 1" : round($lastDuration, 2);
+		if ($lastDuration !== null)
+		{
+			$lastDuration = $lastDuration < 1 ? '< 1' : round($lastDuration, 2);
+			$lastDuration .=  ' ' . $ls->transBO('f.unit.minutes');
+		}
+		else
+		{
+			$lastDuration = $ls->transBO('m.uixul.bo.doceditor.empty-field-content');
+		}
 		
-		$data['durationinfos']['durationaverage'] = $durationAverage . " " . $ls->transBO("f.unit.minutes");
-		$data['durationinfos']['lastduration'] = $lastDuration . " " . $ls->transBO("f.unit.minutes");
+		$data['durationinfos']['durationaverage'] = $durationAverage;
+		$data['durationinfos']['lastduration'] = $lastDuration;
 		return $data;
 	}
 	
