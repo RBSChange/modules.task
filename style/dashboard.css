@@ -16,16 +16,6 @@
 .modules-task-DashboardPlannedTasksInfos tbody tr:hover{
 	background-color: #ddd;
 }
-.modules-task-DashboardPlannedTasksInfos .contextual-action{
-	display: inline-block;
-	min-height: 16px;
-	margin-left: 10px;
-	cursor: pointer;
-	visibility: hidden;
-}
-.modules-task-DashboardPlannedTasksInfos tr:hover .contextual-action{
-	visibility: visible;	
-}
 .modules-task-DashboardPlannedTasksInfos .error-tasks{
 	margin-bottom: 15px;	
 }
