@@ -6,42 +6,76 @@
 class task_persistentdocument_plannedtask extends task_persistentdocument_plannedtaskbase
 {
 	/**
-	 * @var integer
-	 */
-	private $periodUnit;
-	
-	/**
 	 * @return Integer or null
 	 */
 	public function getPeriodUnit()
 	{
-		if ($this->periodUnit === null)
+		if ($this->getMinute() === null)
 		{
-			if ($this->getMinute() === null)
-			{
-				$this->periodUnit = date_Calendar::MINUTE;
-			}
-			else if ($this->getHour() === null)
-			{
-				$this->periodUnit = date_Calendar::HOUR;
-			}
-			else if ($this->getDayofmonth() === null)
-			{
-				$this->periodUnit = date_Calendar::DAY;
-			}
-			else if ($this->getMonthofyear() === null)
-			{
-				$this->periodUnit = date_Calendar::MONTH;
-			}
-			
-			else if ($this->getYear() === null)
-			{
-				$this->periodUnit = date_Calendar::YEAR;
-			}
+			return date_Calendar::MINUTE;
 		}
-		return $this->periodUnit;
+		else if ($this->getHour() === null)
+		{
+			return date_Calendar::HOUR;
+		}
+		else if ($this->getDayofmonth() === null)
+		{
+			return date_Calendar::DAY;
+		}
+		else if ($this->getMonthofyear() === null)
+		{
+			return date_Calendar::MONTH;
+		}
+		else if ($this->getYear() === null)
+		{
+			return date_Calendar::YEAR;
+		}
+		return null;
 	}
 	
+	public function getPeriodUnitLabel()
+	{
+		switch ($this->getPeriodUnit()) 
+		{
+			case date_Calendar::MINUTE:
+				$key = 'm.task.document.plannedtask.period-minute';
+				break;
+			case date_Calendar::HOUR:
+				$key = 'm.task.document.plannedtask.period-hour';
+				break;
+			case date_Calendar::DAY:
+				$key = 'm.task.document.plannedtask.period-day';
+				break;
+			case date_Calendar::MONTH:
+				$key = 'm.task.document.plannedtask.period-month';
+				break;	
+			case date_Calendar::YEAR:
+				$key = 'm.task.document.plannedtask.period-year';
+				break;		
+			default:
+				$key = 'm.task.document.plannedtask.period-no';
+				break;
+		}	
+		return LocaleService::getInstance()->transBO($key, array('ucf'));
+	}
+	
+	
+	public function getUniqueNextDate()
+	{
+		if ($this->getPeriodUnit() === null)
+		{
+			return date_Calendar::getInstance()
+				->setYear($this->getYear())
+				->setMonth($this->getMonthofyear())
+				->setDay($this->getDayofmonth())
+				->setHour($this->getHour())
+				->setMinute($this->getMinute())
+				->setSecond(rand(0, 59))
+				->toString();
+		}		
+		return null;
+	}
+
 	/**
 	 * @return Integer
 	 */
@@ -60,109 +94,74 @@ class task_persistentdocument_plannedtask extends task_persistentdocument_planne
 		$this->setDayofmonth($date->getDay());
 		$this->setHour($date->getHour());
 		$this->setMinute($date->getMinute());
+		$this->setNextrundate($date->toString());
 	}
-	
-	/**
-	 * @return float minutes
-	 */
-	public function getDurationAverage()
-	{
-		$durations = $this->getMetaMultiple("task_durations");
-		if (!is_array($durations) || count($durations) == 0)
-		{
-			return null;
-		}
-		$sum = array_sum($durations);
-		$count = count($durations);
-		return ($sum/$count)/60;
-	}
-	
-	/**
-	 * @return float minutes
-	 */
-	public function getLastDuration()
-	{
-		$durations = $this->getMetaMultiple("task_durations");
-		if (!is_array($durations) || count($durations) == 0)
-		{
-			return null;
-		}
-		return ($durations[count($durations)-1])/60;
-	}
-	
-	/**
-	 * @return boolean
-	 */
-	public function canBeAutoUnlock()
-	{
-		$nextRunDate = date_Calendar::getInstance($this->getNextrundate());
-		$durationMaxDate = date_Calendar::getInstance($this->getNextrundate());
-		$durationMaxDate->add(date_Calendar::MINUTE, ($this->getMaxduration() * 2));
-		if (date_Calendar::getInstance()->isBetween($nextRunDate, $durationMaxDate))
-		{
-			return false;
-		}
-		else
-		{
-			return true;
-		}	
-	}
-	
-	/**
-	 * @return Boolean
-	 */
-	public function getHasFailed()
-	{
-		return $this->hasFailed;
-	}
-	
-	/**
-	 * @param Boolean $hasFailed
-	 */
-	public function setHasFailed($hasFailed)
-	{
-		$this->hasFailed = $hasFailed;
-	}
-	
+		
 	/**
 	 * @param date_Calendar $date
 	 */	
 	public function reSchedule($date)
 	{
-		$this->setUniqueExecutiondate($date);
-		$this->periodUnit = null;
-		$this->setNextrundate(null);
+		$this->getDocumentService()->reSchedule($this, $date);
 	}
-
-	/**
-	 * @var Boolean
-	 */
-	private $hasFailed = false;
+	
+	public function ping()
+	{
+		$this->getDocumentService()->ping($this);
+	}
+	
+	
+	public function end()
+	{
+		$this->getDocumentService()->end($this);
+	}
 	
 	/**
-	 * @return Boolean
+	 * @param string $message
+	 */
+	public function error($message)
+	{
+		$this->getDocumentService()->error($this, $message);
+	}
+	
+	
+	/**
+	 * @return boolean
 	 */
 	public function isLocked()
 	{
+		return $this->getExecutionStatus() === task_PlannedtaskService::STATUS_LOCKED;
+	}
+	
+	/**
+	 * @return boolean
+	 */
+	public function getIsrunning()
+	{
+		return $this->getExecutionStatus() === task_PlannedtaskService::STATUS_RUNNING;
+	}	
+	
+	/**
+	 * @return string
+	 */
+	public function getIsrunningLabel()
+	{
 		if ($this->getIsrunning())
 		{
-			$nextRunDate = date_Calendar::getInstance($this->getNextrundate());
-			$durationMaxDate = date_Calendar::getInstance($this->getNextrundate());
-			$durationMaxDate->add(date_Calendar::MINUTE, $this->getMaxduration());
-			
-			if (date_Calendar::getInstance()->isBetween($nextRunDate, $durationMaxDate))
-			{
-				return false;
-			}
-			else 
-			{
-				return true;
-			}
+			return LocaleService::getInstance()->transBO('m.task.document.plannedtask.yes', array('ucf'));
 		}
-		else
+		else 
 		{
-			return false;
-		}
+			return LocaleService::getInstance()->transBO('m.task.document.plannedtask.no', array('ucf'));
+		}	
+	}
+	
+	/**
+	 * @return string
+	 */
+	public function getExecutionStatusLabel()
+	{
+		return LocaleService::getInstance()->transBO('m.task.document.plannedtask.status-' . $this->getExecutionStatus());
 	}
 	
 	/**
@@ -211,20 +210,5 @@ class task_persistentdocument_plannedtask extends task_persistentdocument_planne
 			$month = rand(1, 12);	
 		}
 		parent::setMonth($month);
-	}
-	
-	/**
-	 * @return string
-	 */
-	public function getIsrunningLabel()
-	{
-		if ($this->getIsrunning())
-		{
-			return f_Locale::translate('&modules.task.document.plannedtask.Yes;');
-		}
-		else 
-		{
-			return f_Locale::translate('&modules.task.document.plannedtask.No;');
-		}	
 	}
 }

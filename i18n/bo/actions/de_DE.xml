@@ -5,4 +5,6 @@
   <key id="unlockplannedtask">Vorgang entsperren</key>
   <key id="unlockplannedtaskconfirm">Einen Vorgang zu entsperren kann Funktionsstörungen einiger Funktionen mit sich führen. Diese Aktion sollte ausschliesslich 
 	ausgeführt werden, wenn Sie sich sicher sind, dass eine Vorgang wirklich gesperrt ist. Möchten Sie wirklich fortfahren?</key>
+  <key id="createplannedfolder">neu</key>
+  <key id="createuserfolder">neu</key>
 </i18n>

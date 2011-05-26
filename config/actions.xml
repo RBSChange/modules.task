@@ -1,39 +1,36 @@
 <?xml version="1.0"?>
 <actions extends="generic">
-	<action name="createUsertask">
-		<parameter name="listWidget" />
-		<body><![CDATA[
+  <action name="createUsertask">
+    <parameter name="listWidget"/>
+    <body><![CDATA[
 			this.createDocumentEditor('modules_task_usertask', listWidget.getSelectedItems()[0].id);
 		]]></body>
-	</action>
-
-	<action name="createPlannedtask">
-		<parameter name="listWidget" />
-		<body><![CDATA[
+  </action>
+  <action name="createPlannedtask">
+    <parameter name="listWidget"/>
+    <body><![CDATA[
 			this.createDocumentEditor('modules_task_plannedtask', listWidget.getSelectedItems()[0].id);
 		]]></body>
-	</action>
-
-	<action name="performUsertask">
-		<parameter name="listWidget" />
-		<body><![CDATA[
+  </action>
+  <action name="performUsertask">
+    <parameter name="listWidget"/>
+    <body><![CDATA[
 			var item = listWidget.getSelectedItems()[0];
 			var windowParams = [];
 			windowParams['width'] = Math.floor(screen.width * 0.8);
 			windowParams['height'] = Math.floor(screen.height * 0.8);
 			wToolkit.dialog('task', 'ViewUserTask', { cmpref: item.id }, windowParams, true, false);
     	]]></body>
-	</action>
-	<action name="performUsertaskIsActive">
-		<parameter name="itemdata" />
-		<body><![CDATA[
+  </action>
+  <action name="performUsertaskIsActive">
+    <parameter name="itemdata"/>
+    <body><![CDATA[
 			return itemdata.status == 'PUBLICATED'; 
     	]]></body>
-	</action>
-
-	<action name="unlockplannedtask">
-		<parameter name="listWidget" />
-		<body><![CDATA[
+  </action>
+  <action name="unlockplannedtask">
+    <parameter name="listWidget"/>
+    <body><![CDATA[
 			if (confirm("&amp;modules.task.bo.actions.UnlockplannedtaskConfirm;"))
 			{
 				var item = listWidget.getSelectedItems()[0];
@@ -41,35 +38,39 @@
 		   		listWidget.refresh();
 		   	}
 		]]></body>
-	</action>
-	<action name="unlockplannedtaskIsActive">
-		<parameter name="itemdata" />
-		<body><![CDATA[
-			return itemdata.isrunning == '1';
+  </action>
+  <action name="unlockplannedtaskIsActive">
+    <parameter name="itemdata"/>
+    <body><![CDATA[
+			return itemdata.isLocked == '1';
     	]]></body>
-	</action>
-
-	<action name="resetplannedtasktime">
-		<parameter name="listWidget" />
-		<body><![CDATA[
+  </action>
+  <action name="resetplannedtasktime">
+    <parameter name="listWidget"/>
+    <body><![CDATA[
 			var item = listWidget.getSelectedItems()[0];
 		    this.executeJSON('UnlockPlannedTask', {cmpref: item.id, resetTime: 'true'});
 		   	listWidget.refresh();
 		]]></body>
-	</action>
-
-	<method name="deactivatedIsActive">
-		<parameter name="itemData" />
-		<body><![CDATA[
-			return  Context.DEV_MODE && ((itemData.status === 'ACTIVE') || (itemData.status === 'PUBLICATED'));
+  </action>
+  <method name="deactivatedIsActive">
+    <parameter name="itemData"/>
+    <body><![CDATA[
+			return  ((itemData.status === 'ACTIVE') || (itemData.status === 'PUBLICATED'));
 		]]></body>
-	</method>
-
-
-	<method name="reactivateIsActive">
-		<parameter name="itemData" />
-		<body><![CDATA[
-			return  Context.DEV_MODE && (itemData.status === 'DEACTIVATED');
+  </method>
+  <method name="reactivateIsActive">
+    <parameter name="itemData"/>
+    <body><![CDATA[
+			return (itemData.status === 'DEACTIVATED');
 		]]></body>
-	</method>
+  </method>
+  <action name="createPlannedfolder">
+    <parameter name="listWidget"/>
+    <body><![CDATA[this.createDocumentEditor('modules_task_plannedfolder', listWidget.getSelectedItems()[0].id);]]></body>
+  </action>
+  <action name="createUserfolder">
+    <parameter name="listWidget"/>
+    <body><![CDATA[this.createDocumentEditor('modules_task_userfolder', listWidget.getSelectedItems()[0].id);]]></body>
+  </action>
 </actions>

@@ -3,13 +3,13 @@ class task_PublishTask extends task_SimpleSystemTask
 {
 	/**
 	 * @see task_SimpleSystemTask::execute()
-	 *
 	 */
 	protected function execute()
 	{
-		$end = date_Calendar::now()->toString();
 		
-		$start = $this->plannedTask->getLastrundate();
+		$end = date_Calendar::now()->toString();		
+		$start = $this->plannedTask->getLastSuccessDate();
+		
 		if ($start == null)
 		{
 			$start = date_Calendar::getInstance($end)->add(date_Calendar::MINUTE, -5)->toString();
@@ -18,20 +18,29 @@ class task_PublishTask extends task_SimpleSystemTask
 		{
 			$start = date_Calendar::getInstance($start)->add(date_Calendar::MINUTE, -1)->toString();
 		}
-		
+
+		$errors = array();
 		$documentsArray = array_chunk($this->getDocumentIdsToProcess($start, $end), 500);
 		$script = 'framework/listener/publishDocumentsBatch.php';
 		foreach ($documentsArray as $chunk)
 		{
+			$this->plannedTask->ping();
 			$result = f_util_System::execHTTPScript($script, $chunk);
 			// Log fatal errors...
 			if ($result != 'OK')
 			{
-				Framework::error(__METHOD__ . ' ' . $script . ' unexpected result: "' . $result . '"');
+				$errors[] = $result;
 			}
 		}
 		
-		$this->plannedTask->reSchedule(date_Calendar::getInstance()->add(date_Calendar::MINUTE, +10));
+		if (count($errors))
+		{
+			throw new Exception(implode("\n", $errors));
+		}
+		else
+		{
+			$this->plannedTask->reSchedule(date_Calendar::getInstance()->add(date_Calendar::MINUTE, +2));
+		}
 	}
 	
 	private function getDocumentIdsToProcess($start, $end)

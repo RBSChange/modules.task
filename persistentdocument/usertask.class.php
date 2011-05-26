@@ -22,4 +22,17 @@ class task_persistentdocument_usertask extends task_persistentdocument_usertaskb
 		list($moduleName, ) = explode('_', $this->getWorkitem()->getExecActionName());
 		return $moduleName;
 	}
+	
+	
+	public function getUserLabel()
+	{
+		if ($this->getUser())
+		{
+			return $this->getUser()->getLabel();
+		}
+		else
+		{
+			return LocaleService::getInstance()->transBO('m.task.document.usertask.anonymous', array('ucf'));
+		}
+	}
 }

@@ -1,10 +1,19 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <script>
-	<binding fileName="modules/useractionlogger/persistentdocument/import/useractionlogger_binding.xml" />
-	<actiondef modulename="task" actionname="reactivate.plannedtask" label="modules.task.bo.useractionlogger.reactivate-plannedtask" />
-	<actiondef modulename="task" actionname="deactivated.plannedtask" label="modules.task.bo.useractionlogger.deactivated-plannedtask" />
-	<actiondef modulename="task" actionname="unlock.plannedtask" label="modules.task.bo.useractionlogger.unlock-plannedtask" />
-	<actiondef modulename="task" actionname="reset.plannedtask" label="modules.task.bo.useractionlogger.reset-plannedtask" />
-	<actiondef modulename="task" actionname="autounlock.plannedtask" label="modules.task.bo.useractionlogger.autounlock-plannedtask" />
-	<actiondef modulename="task" actionname="run-failed.plannedtask" label="modules.task.bo.useractionlogger.run-failed-plannedtask" />
+  <binding fileName="modules/useractionlogger/persistentdocument/import/useractionlogger_binding.xml"/>
+  <actiondef modulename="task" actionname="reactivate.plannedtask" label="modules.task.bo.useractionlogger.reactivate-plannedtask"/>
+  <actiondef modulename="task" actionname="deactivated.plannedtask" label="modules.task.bo.useractionlogger.deactivated-plannedtask"/>
+  <actiondef modulename="task" actionname="unlock.plannedtask" label="modules.task.bo.useractionlogger.unlock-plannedtask"/>
+  <actiondef modulename="task" actionname="reset.plannedtask" label="modules.task.bo.useractionlogger.reset-plannedtask"/>
+  <actiondef modulename="task" actionname="autounlock.plannedtask" label="modules.task.bo.useractionlogger.autounlock-plannedtask"/>
+  <actiondef modulename="task" actionname="run-failed.plannedtask" label="modules.task.bo.useractionlogger.run-failed-plannedtask"/>
+  <actiondef modulename="task" actionname="lock.plannedtask" label="modules.task.bo.useractionlogger.lock-plannedtask"/>
+  <actiondef modulename="task" actionname="autounlock.plannedtask" label="modules.task.bo.useractionlogger.autounlock-plannedtask"/>
+  <actiondef modulename="task" actionname="insert.plannedfolder" label="m.task.bo.useractionlogger.insert-plannedfolder"/>
+  <actiondef modulename="task" actionname="update.plannedfolder" label="m.task.bo.useractionlogger.update-plannedfolder"/>
+  <actiondef modulename="task" actionname="insert.userfolder" label="m.task.bo.useractionlogger.insert-userfolder"/>
+  <actiondef modulename="task" actionname="update.userfolder" label="m.task.bo.useractionlogger.update-userfolder"/>
+  <actiondef modulename="task" actionname="move.userfolder" label="m.task.bo.useractionlogger.move-userfolder"/>
+  <actiondef modulename="task" actionname="update.plannedtask" label="m.task.bo.useractionlogger.update-plannedtask"/>
+  <actiondef modulename="task" actionname="move.plannedfolder" label="m.task.bo.useractionlogger.move-plannedfolder"/>
 </script>

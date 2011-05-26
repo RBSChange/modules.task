@@ -13,12 +13,24 @@
   <key id="monthofyear-help">mois de l'année</key>
   <key id="year">année</key>
   <key id="year-help">année</key>
+  
   <key id="nextrundate">prochaine execution</key>
   <key id="nextrundate-help">prochaine execution</key>
+  
   <key id="lastrundate">dernière execution</key>
   <key id="lastrundate-help">dernière execution</key>
-  <key id="isrunning">en cours d'execution</key>
-  <key id="isrunning-help">en cours d'execution</key>
+  
+  <key id="executionstatus">status d'execution</key>
+  <key id="executionstatus-help">status d'execution</key>
+  
+  <key id="executionstatusdate">date du status d'execution</key>
+  <key id="executionstatusdate-help">date du status d'execution</key>
+  
+  <key id="unlockcount">Nombre de vérouillage consecutif</key>
+  <key id="totalsuccesscount">Nombre total d'éxecution réussi</key>
+  <key id="totalerrorcount">Nombre total d'éxecution en erreur</key>
+  <key id="totallockcount">Nombre total de vérouillage</key>
+    
   <key id="parameters">parameters</key>
   <key id="parameters-help">parameters</key>
   <key id="yes">oui</key>
@@ -27,4 +39,19 @@
   <key id="node-help">Noeud sur lequel la tâche sera executé, laisser le champ vide pour executer la tâche sur tout les noeuds</key>
   <key id="maxduration">durée maximale attendue</key>
   <key id="maxduration-help">temps en minutes d'exécution au delà duquel la tâche est considérée en erreur (n'arrêtera pas la tâche, mais laisse une trace pour l'administrateur si celle-ci dépasse le temps maximum)</key>
+  
+  <key id="period-label">Interval d'execution</key>
+  <key id="period-minute">toutes les minutes</key>
+  <key id="period-hour">toutes les heures</key>
+  <key id="period-day">toutes les jours</key>
+  <key id="period-month">toutes les mois</key>
+  <key id="period-year">toutes les ans</key>
+  <key id="period-no">non pèriodique</key>
+  
+  <key id="bo-cancel">Annulation Back-office</key>
+  
+  <key id="status-success">Succès</key>
+  <key id="status-failed">Echec</key>
+  <key id="status-running">En cours</key>
+  <key id="status-locked">Verouillé</key>
 </i18n>

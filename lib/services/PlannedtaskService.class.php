@@ -11,6 +11,12 @@ class task_PlannedtaskService extends f_persistentdocument_DocumentService
 	const DAILY = 3;
 	const MONTHLY = 3;
 	
+	const MAX_AUTOUNLOCK = 3;
+	const STATUS_SUCCESS = 'success';
+	const STATUS_FAILED = 'failed';
+	const STATUS_RUNNING = 'running';
+	const STATUS_LOCKED = 'locked';
+	
 	/**
 	 * @var task_PlannedtaskService
 	 */
@@ -48,199 +54,14 @@ class task_PlannedtaskService extends f_persistentdocument_DocumentService
 	/**
 	 * @return f_persistentdocument_criteria_Query
 	 */
-	protected function getPublishedNonRunningTasksQuery()
-	{
-		$query = $this->createQuery()->add(Restrictions::published())->add(Restrictions::ne('isrunning', true));
-		if (defined('NODE_NAME'))
-		{
-			$query->add(Restrictions::orExp(Restrictions::isNull('node'), Restrictions::eq('node', NODE_NAME)));
-		}
-		return $query;
-	}
-	
-	/**
-	 * @return task_persistentdocument_plannedtask[]
-	 */
-	public function getPublishedTasksToRun()
+	protected function getPublishedNodetaskQuery()
 	{
 		$query = $this->createQuery()->add(Restrictions::published());
 		if (defined('NODE_NAME'))
 		{
 			$query->add(Restrictions::orExp(Restrictions::isNull('node'), Restrictions::eq('node', NODE_NAME)));
 		}
-		return $query->add(Restrictions::le('nextrundate', date_Calendar::getInstance()->toString()))->find();
-	}
-	
-	/**
-	 * @param task_persistentdocument_plannedtask $task
-	 * @param Integer $parentId
-	 */
-	public function preSave($task, $parentId)
-	{
-		$someIsDefined = ($task->getMinute() !== null)
-			|| ($task->getHour() !== null)
-			|| ($task->getDayofmonth() !== null)
-			|| ($task->getMonthofyear() !== null)
-			|| ($task->getYear() !== null);
-		if ($someIsDefined && $task->getMinute() === null)
-		{
-			$task->setMinute(rand(0, 59));
-			if ($task->getHour() === null)
-			{
-				$task->setHour(rand(0, 23));
-				if ($task->getDayofmonth() === null)
-				{
-					$task->setDayofmonth(rand(1, 28));
-					if ($task->getMonthofyear() === null)
-					{
-						$task->setMonthofyear(rand(1, 12));
-					}
-				}
-			}
-		}
-	}
-	
-	/**
-	 * @param task_persistentdocument_plannedtask $document
-	 * @return date_Calendar
-	 */
-	public function getNextOccurenceDate($document)
-	{
-		$year = $document->getYear();
-		$month = $document->getMonthofyear();
-		$day = $document->getDayofmonth();
-		$hour = $document->getHour();
-		$minute = $document->getMinute();
-		
-		$periodUnit = $document->getPeriodUnit();
-		$periodValue = $document->getPeriodValue();
-		
-		if ($periodUnit === null)
-		{
-			$runDate = date_Calendar::getInstance()->setYear($year)->setMonth($month)->setDay($day)->setHour($hour)->setMinute($minute);
-			if ($document->getNextrundate() === null)
-			{
-				return $runDate;
-			}
-			else if ($runDate->belongsToFuture())
-			{
-				return $runDate;
-			}
-			return null;
-		}
-		
-		$nextRunDate = date_GregorianCalendar::getInstance()->setSecond(0);
-		
-		if ($month == 2 && $day == 29)
-		{
-			if ($year === null)
-			{
-				$year = $nextRunDate->getYear();
-			}
-			
-			// Look for the next leap year.
-			while (!date_GregorianCalendar::staticIsLeapYear($year) || ($year == $nextRunDate->getYear() && date_GregorianCalendar::staticIsLeapYear($year) && ($nextRunDate->getMonth() > 2 || $nextRunDate->getDay() > 29)))
-			{
-				$year++;
-			}
-		}
-		
-		if ($day > 28 && $month === null)
-		{
-			// Look for the next month with enough days.
-			while ($nextRunDate->getDaysInMonth() < $day)
-			{
-				$nextRunDate->add(date_Calendar::MONTH, 1);
-			}
-		}
-		
-		if ($year !== null)
-		{
-			if ($nextRunDate->getYear() !== $year)
-			{
-				$nextRunDate->setYear($year);
-				$nextRunDate->setMonth(1);
-				$nextRunDate->setDay(1);
-				$nextRunDate->setHour(0);
-				$nextRunDate->setMinute(0);
-			}
-			$nextRunDate->setYear($year);
-		}
-		
-		if ($month !== null)
-		{
-			if ($nextRunDate->getMonth() > $month)
-			{
-				if ($periodUnit != date_Calendar::YEAR && $nextRunDate->getMonth() > $month)
-				{
-					$nextRunDate->add(date_Calendar::YEAR, 1);
-				}
-				$nextRunDate->setDay(1);
-				$nextRunDate->setHour(0);
-				$nextRunDate->setMinute(0);
-			}
-			$nextRunDate->setMonth($month);
-		}
-		
-		if ($day !== null)
-		{
-			if ($nextRunDate->getDay() !== $day)
-			{
-				if ($periodUnit != date_Calendar::MONTH && $nextRunDate->getDay() > $day)
-				{
-					$nextRunDate->add(date_Calendar::MONTH, 1);
-				}
-				$nextRunDate->setHour(0);
-				$nextRunDate->setMinute(0);
-			}			
-			$nextRunDate->setDay($day);
-		
-		}
-		if ($hour !== null)
-		{
-			if ($nextRunDate->getHour() != $hour)
-			{
-				if ($periodUnit != date_Calendar::DAY && $nextRunDate->getHour() > $hour)
-				{
-					$nextRunDate->add(date_Calendar::DAY, 1);
-				}
-				$nextRunDate->setMinute(0);
-			}
-			$nextRunDate->setHour($hour);
-		}
-		
-		if ($minute !== null)
-		{
-			if ($nextRunDate->getMinute() != $minute)
-			{
-				$nextRunDate->setMinute(0);
-			}
-			$nextRunDate->setMinute($minute);
-		}
-		
-		$nextRunDate->add($periodUnit, $periodValue);
-		if ($nextRunDate->belongsToPast())
-		{
-			return null;
-		}
-		return $nextRunDate;
-	
-	}
-	
-	/**
-	 * @return task_persistentdocument_plannedtask[]
-	 */
-	public function getRunnableTasks()
-	{
-		return $this->getPublishedNonRunningTasksQuery()->add(Restrictions::le('nextrundate', date_Calendar::getInstance()->toString()))->find();
-	}
-	
-	/**
-	 * @return task_persistentdocument_plannedtask[]
-	 */
-	public function getRunnableBySystemtaskclassname($className)
-	{
-		return $this->getPublishedNonRunningTasksQuery()->add(Restrictions::eq('systemtaskclassname', $className))->find();
+		return $query;
 	}
 	
 	/**
@@ -252,93 +73,489 @@ class task_PlannedtaskService extends f_persistentdocument_DocumentService
 	}
 	
 	/**
-	 * Methode à surcharger pour effectuer des post traitement apres le changement de status du document
-	 * utiliser $document->getPublicationstatus() pour retrouver le nouveau status du document.
-	 * @param task_persistentdocument_plannedtask $document
-	 * @param String $oldPublicationStatus
-	 * @param array<"cause" => String, "modifiedPropertyNames" => array, "oldPropertyValues" => array> $params
-	 * @return void
+	 * 
+	 * @param task_persistentdocument_plannedtask $className
 	 */
-	protected function publicationStatusChanged($document, $oldPublicationStatus, $params)
+	public function getRunnableBySystemtaskclassname($className)
 	{
-		if ($document->isPublished() && $oldPublicationStatus == "ACTIVE")
-		{
-			$document->setNextrundate($this->getNextOccurenceDate($document));
-			$document->save();
-		}
+		return $this->createQuery()->add(Restrictions::published())
+			->add(Restrictions::eq('systemtaskclassname', $className))
+			->add(Restrictions::in('executionStatus', array(self::STATUS_SUCCESS, self::STATUS_FAILED)))->find();
 	}
 	
 	/**
-	 * @param task_persistentdocument_plannedtask $plannedTask
+	 * @return task_persistentdocument_plannedtask[]
 	 */
-	public function rescheduleIfNecesseary($plannedTask)
+	public function getTasksToStart()
 	{
+		$now = date_Calendar::getInstance()->toString();
+		$query  = $this->getPublishedNodetaskQuery();
+		$query->add(Restrictions::le('nextrundate', $now))->find();
+		$query->add(Restrictions::in('executionStatus', array(self::STATUS_SUCCESS, self::STATUS_FAILED)));
+		return $query->find();
+	}
+
+	/**
+	 * @return task_persistentdocument_plannedtask[]
+	 */
+	public function getTasksToAutoUnlock()
+	{
+		$now = date_Calendar::getInstance()->toString();
+		$query  = $this->getPublishedNodetaskQuery();
+		$query->add(Restrictions::le('unlockCount', self::MAX_AUTOUNLOCK))->find();
+		$query->add(Restrictions::eq('executionStatus', self::STATUS_LOCKED));
+		return $query->find();
+	}	
+	
+	/**
+	 * @return task_persistentdocument_plannedtask[]
+	 */	
+	public function getTasksToLock()
+	{
+		$query  = $this->getPublishedNodetaskQuery();
+		$query->add(Restrictions::eq('executionStatus', self::STATUS_RUNNING));
+		$tasks = $query->find();
+		$result = array();
+		foreach ($tasks as $task) 
+		{
+			if ($task instanceof task_persistentdocument_plannedtask) 
+			{
+				$maxDuration = (is_integer($task->getMaxduration())) ? $task->getMaxduration() : 60;
+				$date = date_Calendar::getInstance()->add(date_Calendar::MINUTE, - $maxDuration)->toString();
+				if ($task->getRunningDate() <= $date)
+				{
+					$result[] = $task;
+				}
+			}
+		}
+		return $result;
+	}	
+	
+	/**
+	 * @param task_persistentdocument_plannedtask $task
+	 * @param string $newStatus
+	 * @return task_persistentdocument_plannedtask
+	 */
+	protected function updateExecutionStatus($task, $newStatus)
+	{
+		$task->setExecutionStatus($newStatus);
+		$task->setExecutionStatusDate(date_Calendar::getInstance()->toString());
+		f_persistentdocument_PersistentProvider::getInstance()->updateDocument($task);
+		return $task;
+	}
+	
+	/**
+	 * @param task_persistentdocument_plannedtask $task
+	 */
+	public function start($task)
+	{
+		if (Framework::isInfoEnabled())
+		{
+			Framework::info(__METHOD__ . " " . $task->getId()  ." - " .  $task->getLabel());
+		}
+		
 		try 
 		{
 			$this->tm->beginTransaction();
-			$plannedTask->setIsrunning(false);
-			if (!$plannedTask->getHasFailed())
-			{
-				$plannedTask->setLastrundate(date_Calendar::now());
-			}
-			$nextRunDate = $this->getNextOccurenceDate($plannedTask);
-			if ($nextRunDate === null)
-			{
-				$this->file($plannedTask->getId());
-				$ts = TreeService::getInstance();
-				$treeNode = $ts->getInstanceByDocument($plannedTask);
-				if ($treeNode !== null)
-				{
-					$ts->deleteNode($treeNode);
-				}
-			}
-			else
-			{
-				$plannedTask->setNextrundate($nextRunDate);
-				$this->pp->updateDocument($plannedTask);
-			}
-			$this->tm->commit();
-		}
-		catch (Exception $e)
+			$now = date_Calendar::getInstance()->toString();
+			$task->setLastrundate($now);
+			$task->setRunningDate($now);
+			$this->updateExecutionStatus($task, self::STATUS_RUNNING);
+			$this->tm->commit();			
+		} 
+		catch (Exception $e) 
 		{
 			$this->tm->rollBack($e);
 		}
 	}
 	
 	/**
-	 * @param string $startedBefore
-	 * @return task_persistentdocument_plannedtask[]
+	 * @param task_persistentdocument_plannedtask $task
 	 */
-	public function getRunningTasks($startedBefore = null)
+	public function end($task)
 	{
-		$query = $this->createQuery()->add(Restrictions::eq('isrunning', true))->addOrder(Order::desc('lastrundate'));
-		if ($startedBefore !== null)
+		if (Framework::isInfoEnabled())
 		{
-			$query->add(Restrictions::lt('lastrundate', $startedBefore));
+			Framework::info(__METHOD__ . " " . $task->getId()  ." - " .  $task->getLabel());
 		}
-		return $query->find();
+		
+		try 
+		{
+			$this->tm->beginTransaction();
+			$now = date_Calendar::getInstance();
+			$task->setRunningDate($now->toString());
+			$task->setLastSuccessDate($now->toString());
+			
+			$lastrundate  = date_Calendar::getInstance($task->getLastrundate());
+			$duration = ($now->getTimestamp() - $lastrundate->getTimestamp());
+			
+			$this->updateDurationAvg($task, $duration);
+			
+			$task->setTotalSuccessCount(intval($task->getTotalSuccessCount() + 1));
+			$task->setUnlockCount(0);
+			
+			$this->rescheduleIfNecesseary($task);
+			
+			$this->updateExecutionStatus($task, self::STATUS_SUCCESS);
+			$this->tm->commit();			
+		} 
+		catch (Exception $e) 
+		{
+			$this->tm->rollBack($e);
+		}
 	}
+	
+	
+	/**
+	 * @param task_persistentdocument_plannedtask $task
+	 * @param string message
+	 */
+	public function error($task, $message)
+	{
+		if (Framework::isInfoEnabled())
+		{
+			Framework::info(__METHOD__ . " " . $task->getId()  ." - " .  $task->getLabel() . " - " . $message);
+		}
+		
+		try 
+		{
+			$this->tm->beginTransaction();
+			$now = date_Calendar::getInstance();
+			$task->setRunningDate($now->toString());
+			$lastrundate  = date_Calendar::getInstance($task->getLastrundate());
+			$duration = ($now->getTimestamp() - $lastrundate->getTimestamp());+
+			$this->updateDurationAvg($task, $duration);
+			
+			$task->setTotalErrorCount(intval($task->getTotalErrorCount() + 1));
+			$task->setUnlockCount(0);
+			
+			//$this->rescheduleIfNecesseary($task);
+			
+			$this->updateExecutionStatus($task, self::STATUS_FAILED);
+			
+			$user = users_UserService::getInstance()->getCurrentBackEndUser();
+			$action = 'run-failed.plannedtask';
+			UserActionLoggerService::getInstance()->addUserDocumentEntry($user, $action, $task, array('message' => $message), 'task');
+
+			//TODO Send ERROR Notification
+			
+			$this->tm->commit();			
+		} 
+		catch (Exception $e) 
+		{
+			$this->tm->rollBack($e);
+		}
+	}
+	
+	/**
+	 * 
+	 * @param task_persistentdocument_plannedtask $task
+	 * @param integer $duration
+	 * @return double
+	 */
+	protected function updateDurationAvg($task, $duration)
+	{
+		$nb = intval($task->getTotalSuccessCount()) + intval($task->getTotalErrorCount());
+		$avg = ($nb * doubleval($task->getDurationAvg()) + $duration) / ($nb + 1);
+		$task->setDurationAvg($avg);
+	}
+	
+	
+	/**
+	 * @param task_persistentdocument_plannedtask $task
+	 */
+	public function lock($task)
+	{
+		if (Framework::isInfoEnabled())
+		{
+			Framework::info(__METHOD__ . " " . $task->getId()  ." - " .  $task->getLabel());
+		}
+		
+		try 
+		{
+			$this->tm->beginTransaction();
+			$now = date_Calendar::getInstance();
+			$task->setRunningDate($now->toString());
+			$lastrundate  = date_Calendar::getInstance($task->getLastrundate());
+			$duration = ($now->getTimestamp() - $lastrundate->getTimestamp());+
+			$this->updateDurationAvg($task, $duration);
+			$task->setTotalLockCount(intval($task->getTotalLockCount() + 1));
+			
+			$unlockCount = intval($task->getUnlockCount()) + 1;
+			$task->setUnlockCount($unlockCount);
+			
+			$this->updateExecutionStatus($task, self::STATUS_LOCKED);
+			
+			
+			$action = 'lock.plannedtask';
+			$user = users_UserService::getInstance()->getCurrentBackEndUser();
+			UserActionLoggerService::getInstance()->addUserDocumentEntry($user, $action, $task, array('unlockCount' => $unlockCount), 'task');
+			
+			if ($unlockCount > self::MAX_AUTOUNLOCK)
+			{
+				//TODO Send Fianl LOCK Notification
+			}
+			$this->tm->commit();			
+		} 
+		catch (Exception $e) 
+		{
+			$this->tm->rollBack($e);
+		}
+	}
+	
+	
+	/**
+	 * @param task_persistentdocument_plannedtask $task
+	 */
+	public function unlock($task)
+	{
+		if (Framework::isInfoEnabled())
+		{
+			Framework::info(__METHOD__ . " " . $task->getId()  ." - " .  $task->getLabel());
+		}
+		try 
+		{
+			$this->tm->beginTransaction();	
+			$task->setUnlockCount(0);	
+			$this->updateExecutionStatus($task, self::STATUS_FAILED);
+			
+			$action = 'unlock.plannedtask';
+			$user = users_UserService::getInstance()->getCurrentBackEndUser();
+			UserActionLoggerService::getInstance()->addUserDocumentEntry($user, $action, $task, array(), 'task');
+			
+			$this->tm->commit();			
+		} 
+		catch (Exception $e) 
+		{
+			$this->tm->rollBack($e);
+		}
+	}	
+	
+	
+	
+	/**
+	 * @param task_persistentdocument_plannedtask $task
+	 */
+	public function autoUnlock($task)
+	{
+		if (Framework::isInfoEnabled())
+		{
+			Framework::info(__METHOD__ . " " . $task->getId()  ." - " .  $task->getLabel());
+		}
+		try 
+		{
+			$this->tm->beginTransaction();			
+			$this->updateExecutionStatus($task, self::STATUS_FAILED);
+			
+			$action = 'autounlock.plannedtask';
+			$user = users_UserService::getInstance()->getCurrentBackEndUser();
+			$unlockCount = intval($task->getUnlockCount());
+			UserActionLoggerService::getInstance()->addUserDocumentEntry($user, $action, $task, array('unlockCount' => $unlockCount), 'task');
+			
+			$this->tm->commit();			
+		} 
+		catch (Exception $e) 
+		{
+			$this->tm->rollBack($e);
+		}
+	}		
+	
+	
+	/**
+	 * @param task_persistentdocument_plannedtask $task
+	 */
+	public function ping($task)
+	{
+		if (Framework::isInfoEnabled())
+		{
+			Framework::info(__METHOD__ . " " . $task->getId()  ." - " .  $task->getLabel());
+		}
+		
+		try 
+		{
+			$this->tm->beginTransaction();		
+			$now = date_Calendar::getInstance()->toString();	
+			$task->setRunningDate($now);
+			if ($task->isModified())
+			{
+				$this->pp->updateDocument($task);
+			}
+			$this->tm->commit();			
+		} 
+		catch (Exception $e)
+		{
+			$this->tm->rollBack($e);
+		}
+	}	
+	
+	/**
+	 * @param task_persistentdocument_plannedtask $task
+	 * @param date_Calendar $date
+	 */
+	public function setUniqueExecutiondate($task, $date)
+	{
+		try 
+		{
+			$this->tm->beginTransaction();	
+			$task->setUniqueExecutiondate($date);
+			if ($task->isModified())
+			{
+				$this->pp->updateDocument($task);
+			}
+			$this->tm->commit();			
+		} 
+		catch (Exception $e)
+		{
+			$this->tm->rollBack($e);
+		}		
+	}
+	
+	/**
+	 * @param task_persistentdocument_plannedtask $task
+	 * @param date_Calendar $date
+	 */
+	public function reSchedule($task, $date)
+	{
+		try 
+		{
+			$this->tm->beginTransaction();
+			$task->setNextrundate($date->toString());
+			if ($task->isModified())
+			{
+				$this->pp->updateDocument($task);
+			}
+			$this->tm->commit();			
+		} 
+		catch (Exception $e)
+		{
+			$this->tm->rollBack($e);
+		}		
+	}	
+	
+	
+	/**
+	 * @param task_persistentdocument_plannedtask $task
+	 * @param Integer $parentId
+	 */
+	public function preSave($task, $parentId)
+	{
+		$defined = ($task->getYear() !== null);
+		
+		$defined = $defined || ($task->getMonthofyear() !== null);
+		if ($defined && $task->getMonthofyear() === null)
+		{
+			$task->setMonthofyear(rand(1, 12));
+		}
+		$defined = $defined || ($task->getDayofmonth() !== null);
+		if ($defined && $task->getDayofmonth() === null)
+		{
+			$task->setDayofmonth(rand(1, 28));
+		}
+		$defined =  $defined || ($task->getHour() !== null);
+		if ($defined && $task->getHour() === null)
+		{
+			$task->setHour(rand(0, 23));
+		}
+		$defined =  $defined || ($task->getMinute() !== null);
+		if ($defined && $task->getMinute() === null)
+		{
+			$task->setMinute(rand(0, 59));
+		}
+		
+		if ($task->getNextrundate() == null)
+		{
+			if ($task->getPeriodUnit() !== null)
+			{
+				$task->setNextrundate($this->getNextOccurenceDate($task));
+			}
+			else
+			{
+				$task->setNextrundate($task->getUniqueNextDate());	
+			}
+		}
+	}
+	
+	
+	
+	/**
+	 * @param task_persistentdocument_plannedtask $document
+	 * @param Integer $parentNodeId Parent node ID where to save the document (optionnal).
+	 * @return void
+	 */
+	protected function preInsert($document, $parentNodeId)
+	{
+		if ($document->getNode() === null)
+		{
+			$val = Framework::getConfigurationValue('modules/task/default-node');
+			if (!empty($val))
+			{
+				$document->setNode($val);
+			}
+		}
+	}
+
+	/**
+	 * @param task_persistentdocument_plannedtask $task
+	 */
+	protected function rescheduleIfNecesseary($task)
+	{
+		$now = date_Calendar::getInstance();
+		if ($task->getNextrundate() < $now)
+		{
+			if ($task->getPeriodUnit() !== null)
+			{
+				$task->setNextrundate($this->getNextOccurenceDate($task));
+			}
+			else
+			{
+				$task->setPublicationstatus('FILED');
+				if ($task->getTreeId())
+				{
+					TreeService::getInstance()->deleteNodeById($task->getId());
+				}
+			}
+		}
+	}
+	
+	/**
+	 * @param task_persistentdocument_plannedtask $task
+	 * @return string
+	 */
+	protected function getNextOccurenceDate($task)
+	{
+		$nextRunDate = date_Calendar::getInstance($task->getLastrundate())
+			->setSecond(rand(0, 59));
+		
+		$periodUnit = $task->getPeriodUnit();
+		$nextRunDate->add($periodUnit, $task->getPeriodValue());	
+		if ($periodUnit > date_Calendar::MINUTE)
+		{
+			$nextRunDate->setMinute($task->getMinute());
+			if ($periodUnit > date_Calendar::HOUR)
+			{
+				$nextRunDate->setHour($task->getHour());
+				if ($periodUnit > date_Calendar::DAY)
+				{
+					$nextRunDate->setDay($task->getDayofmonth());
+					if ($periodUnit > date_Calendar::MONTH)
+					{
+						$nextRunDate->setMonth($task->getMonthofyear());
+					}
+				}
+			}
+			
+		}
+		return $nextRunDate->toString();
+	}
+	
 	
 	/**
 	 * @return task_persistentdocument_plannedtask[]
 	 */
 	public function getLockedTasks()
 	{
-		$query = $this->createQuery()->add(Restrictions::eq('isrunning', true))->find();
-		$lockedTasks = array();
-		
-		foreach ($query as $runningTask)
-		{
-			$nextRunDate = date_Calendar::getInstance($runningTask->getNextrundate());
-			$durationMaxDate = date_Calendar::getInstance($runningTask->getNextrundate());
-			$durationMaxDate->add(date_Calendar::MINUTE, $runningTask->getMaxduration());
-			if (!date_Calendar::getInstance()->isBetween($nextRunDate, $durationMaxDate))
-			{
-				$lockedTasks[] = $runningTask;
-			}
-		}
-		
-		return $lockedTasks;		
+		return $this->createQuery()->add(Restrictions::eq('executionStatus', self::STATUS_LOCKED))
+			->find();	
 	}
 	
 	/**
@@ -353,67 +570,34 @@ class task_PlannedtaskService extends f_persistentdocument_DocumentService
 	{
 		$ls = LocaleService::getInstance();
 		$data = parent::getResume($document, $forModuleName, $allowedSections);
-		$data['properties']['isrunning'] = $document->getIsrunning() ? $ls->transBO("modules.uixul.bo.general.Yes") : $ls->transBO("modules.uixul.bo.general.No");
-		$data['properties']['lastrundate'] = $document->getUILastrundate();
+		$data['properties']['executionStatus'] = $document->getExecutionStatusLabel();
+		$data['properties']['executionStatusDate'] = $document->getUIExecutionStatusDate();
+		$data['properties']['periodUnit'] = $document->getPeriodUnitLabel();
+		$data['properties']['unlockCount'] = $document->getUnlockCount();
+		
 		$data['properties']['nextrundate'] = $document->getUINextrundate();
 		$data['properties']['node'] = $document->getNode();
 		
-		$durationAverage = $document->getDurationAverage();
-		if ($durationAverage !== null)
-		{
-			$durationAverage = $durationAverage < 1 ? '< 1' : round($durationAverage, 2);
-			$durationAverage .=  ' ' . $ls->transBO('f.unit.minutes');
-		}
-		else
-		{
-			$durationAverage = $ls->transBO('m.uixul.bo.doceditor.empty-field-content');
-		}
 		
-		$lastDuration = $document->getLastDuration();
-		if ($lastDuration !== null)
-		{
-			$lastDuration = $lastDuration < 1 ? '< 1' : round($lastDuration, 2);
-			$lastDuration .=  ' ' . $ls->transBO('f.unit.minutes');
-		}
-		else
-		{
-			$lastDuration = $ls->transBO('m.uixul.bo.doceditor.empty-field-content');
-		}
+		$data['executioninfos']['lastrundate'] = $document->getUILastrundate();
+		$durationAverage = doubleval($document->getDurationAvg()) / 60;
+		$durationAverage = $durationAverage < 1 ? '< 1' : round($durationAverage, 2);
+		$durationAverage .=  ' ' . $ls->transBO('f.unit.minutes');
+		$data['executioninfos']['durationaverage'] = $durationAverage;
 		
-		$data['durationinfos']['durationaverage'] = $durationAverage;
-		$data['durationinfos']['lastduration'] = $lastDuration;
+		$lastSuccessDate = $document->getUILastSuccessDate();
+		if ($lastSuccessDate !== null)
+		{
+			$data['executioninfos']['lastSuccessDate'] = $lastSuccessDate;
+		}
+		$data['executioninfos']['totalSuccessCount'] = $document->getTotalSuccessCount();
+		$data['executioninfos']['totalErrorCount'] = $document->getTotalErrorCount();
+		
+		$data['executioninfos']['totalLockCount'] = $document->getTotalLockCount();
+		
 		return $data;
 	}
-	
-	/**
-	 * @param task_persistentdocument_plannedtask $task
-	 * @return boolean
-	 */
-	public function run($task)
-	{
-		$result = false;
-		try 
-		{
-			$this->tm->beginTransaction();
-			$task->setIsrunning(true);
-			if ($task->isModified())
-			{
-				$this->pp->updateDocument($task);
-				$result = true;
-			}
-			else 
-			{
-				Framework::warn(__METHOD__ . ' Task ' . $task->__toString() . ' already running!');
-			}
-			$this->tm->commit();
-		}
-		catch (Exception $e)
-		{
-			$this->tm->rollBack($e);
-		}
-		return $result;
-	}
-	
+		
 	/**
 	 * @param task_persistentdocument_plannedtask $document
 	 * @param String[] $propertiesName
@@ -455,7 +639,6 @@ class task_PlannedtaskService extends f_persistentdocument_DocumentService
 	 */
 	public function addTreeAttributes($document, $moduleName, $treeType, &$nodeAttributes)
 	{
-		$nodeAttributes['isrunninglabel'] = $document->getIsrunningLabel();
-		$nodeAttributes['isrunning'] = (int)$document->getIsrunning();
+		$nodeAttributes['isLocked'] = $document->isLocked() ? '1' : '0';
 	}
 }

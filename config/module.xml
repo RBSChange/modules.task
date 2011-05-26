@@ -6,4 +6,7 @@
 		<icon>task</icon>
 		<category>admin</category>
 	</module>
+	<project>
+		<entry name="default-node"></entry>
+	</project>
 </config>

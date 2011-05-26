@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<script>
+	<binding fileName="modules/task/persistentdocument/import/task_binding.xml" />	
+	<binding fileName="modules/list/persistentdocument/import/list_binding.xml" />	
+	<systemfolder module="list" relatedmodule="task">
+		<staticlist listid="modules_task/executionstatus" label="Etat d'execution d'une tâche">
+				<staticitem label="m.task.document.plannedtask.status-success" value="success"/>
+				<staticitem label="m.task.document.plannedtask.status-failed" value="failed"/>
+				<staticitem label="m.task.document.plannedtask.status-running" value="running"/>
+				<staticitem label="m.task.document.plannedtask.status-locked" value="locked"/>
+		</staticlist>
+	</systemfolder>
+</script>

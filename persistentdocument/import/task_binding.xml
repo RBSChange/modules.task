@@ -1,6 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <script>
-	<binding fileName="modules/generic/persistentdocument/import/generic_binding.xml" />
-	<binding name="usertask" className="task_UsertaskScriptDocumentElement" />	
-	<binding name="plannedtask" className="task_PlannedtaskScriptDocumentElement" />	
+  <binding fileName="modules/generic/persistentdocument/import/generic_binding.xml"/>
+  <binding name="usertask" className="task_UsertaskScriptDocumentElement"/>
+  <binding name="plannedtask" className="task_PlannedtaskScriptDocumentElement"/>
+  <binding name="plannedfolder" className="task_PlannedfolderScriptDocumentElement"/>
+  <binding name="userfolder" className="task_UserfolderScriptDocumentElement"/>
 </script>

@@ -1,30 +1,31 @@
+<?xml version="1.0"?>
 <rights>
-	<actions>
-		<document name="rootfolder" />
-		<document name="folder" />
-		<document name="usertask" />
-		<document name="plannedtask" />
-	</actions>
-	<roles>
-		<role name="Admin">
-			<permission name="LoadPermissions.*" />
-			<permission name="SavePermissions.*" />
-			<permission name="GetPreferencesDocument" />
-			<permission name="EditLocale"/>
-			
-			<permission name="Load.*" />
-			<permission name="Rename.*" />
-			<permission name="PutInTrash.*" />
-			<permission name="Delete.*" />
-			<permission name="Insert.*" />
-			<permission name="Update.*" />
-			<permission name="Activate.*" />
-			<permission name="Cancel.*" />
-			<permission name="Deactivated.*" />
-			<permission name="ReActivate.*" />
-			
-			<permission name="Enabled" />
-			<permission name="List.*" />
-		</role>
-	</roles>
+  <actions>
+    <document name="rootfolder"/>
+    <document name="folder"/>
+    <document name="usertask"/>
+    <document name="plannedtask"/>
+    <document name="plannedfolder"/>
+    <document name="userfolder"/>
+  </actions>
+  <roles>
+    <role name="Admin">
+      <permission name="LoadPermissions.*"/>
+      <permission name="SavePermissions.*"/>
+      <permission name="GetPreferencesDocument"/>
+      <permission name="EditLocale"/>
+      <permission name="Load.*"/>
+      <permission name="Rename.*"/>
+      <permission name="PutInTrash.*"/>
+      <permission name="Delete.*"/>
+      <permission name="Insert.*"/>
+      <permission name="Update.*"/>
+      <permission name="Activate.*"/>
+      <permission name="Cancel.*"/>
+      <permission name="Deactivated.*"/>
+      <permission name="ReActivate.*"/>
+      <permission name="Enabled"/>
+      <permission name="List.*"/>
+    </role>
+  </roles>
 </rights>

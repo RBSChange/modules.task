@@ -11,17 +11,21 @@ class task_UnlockPlannedTaskAction extends f_action_BaseJSONAction
 	 */
 	public function _execute($context, $request)
 	{
-		$plannedTask = $this->getDocumentInstanceFromRequest($request);
-		if ($plannedTask !== null)
+		$plannedTask = task_persistentdocument_plannedtask::getInstanceById($this->getDocumentIdFromRequest($request));
+		if ($request->hasParameter('resetTime'))
 		{
-			$plannedTask->setIsrunning(false);
-			if ($request->hasParameter('resetTime'))
-			{
-				$plannedTask->setNextrundate(date_Calendar::now());
-			}
-			$plannedTask->save();
-			$action = ($request->hasParameter('resetTime') ? 'reset' : 'unlock') . '.plannedtask';
+			$plannedTask->reSchedule(date_Calendar::getInstance());
+			$action = 'reset.plannedtask';
 			UserActionLoggerService::getInstance()->addCurrentUserDocumentEntry($action, $plannedTask, array(), 'task');
+		}
+		
+		if ($plannedTask->getExecutionStatus() === task_PlannedtaskService::STATUS_RUNNING)
+		{
+			$plannedTask->getDocumentService()->error($plannedTask, LocaleService::getInstance()->transBO('m.task.document.plannedtask.bo-cancel'));
+		}
+		else if ($plannedTask->getExecutionStatus() === task_PlannedtaskService::STATUS_LOCKED)
+		{
+			$plannedTask->getDocumentService()->unlock($plannedTask);
 		}
 		return $this->sendJSON(array('message' => 'UnlockPlannedTaskSuccess'));
 	}

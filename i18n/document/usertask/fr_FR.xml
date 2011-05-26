@@ -18,4 +18,6 @@
   <key id="description-help">description de la tâche à effectuer.</key>
   <key id="commentary">commentaire</key>
   <key id="commentary-help">commentaire concernant la tâche effectuée permettant d'expliciter le choix fait.</key>
+  
+  <key id="anonymous">anonyme</key>
 </i18n>

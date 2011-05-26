@@ -3,9 +3,13 @@
 	<section name="properties" linkedtab="properties" labeli18n="modules.uixul.bo.doceditor.section.Properties" image="{IconsBase}/small/edit-properties.png">
 		<property name="label" labeli18n="modules.uixul.bo.doceditor.property.Label" />
 		<property name="creationdate" labeli18n="modules.uixul.bo.doceditor.property.Creationdate" />
-		<property name="isrunning" labeli18n="modules.task.bo.doceditor.property.Isrunning" />
-		<property name="lastrundate" labeli18n="modules.task.bo.doceditor.property.Lastrundate" />
+		<property name="executionStatus" labeli18n="modules.task.document.plannedtask.executionstatus" />
+		<property name="executionStatusDate" labeli18n="modules.task.document.plannedtask.executionstatusdate" />
+		
+		<property name="periodUnit" labeli18n="modules.task.document.plannedtask.period-label" />
 		<property name="nextrundate" labeli18n="modules.task.bo.doceditor.property.Nextrundate" />
+		<property name="unlockCount" labeli18n="modules.task.document.plannedtask.UnlockCount" />
+			
 		<property name="node" labeli18n="modules.task.bo.doceditor.property.Node" />
 	</section>
 
@@ -18,8 +22,15 @@
 		<property name="modificationdate" labeli18n="modules.uixul.bo.doceditor.property.Modificationdate" />
 	</section>
 	
-	<section name="durationinfos" labeli18n="modules.task.bo.doceditor.property.Durationinfos" image="{IconsBase}/small/workflow.png" >
+	<section name="executioninfos" labeli18n="modules.task.bo.doceditor.property.Executioninfos" image="{IconsBase}/small/workflow.png" >
+		<property name="lastrundate" labeli18n="modules.task.bo.doceditor.property.Lastrundate" />
+		
 		<property name="durationaverage" labeli18n="modules.task.bo.doceditor.property.Durationaverage" />
-		<property name="lastduration" labeli18n="modules.task.bo.doceditor.property.Lastduration" />
+		<property name="lastSuccessDate" labeli18n="modules.task.bo.doceditor.property.LastSuccessDate" />
+		
+		
+		<property name="totalSuccessCount" labeli18n="modules.task.document.plannedtask.TotalSuccessCount" />
+		<property name="totalErrorCount" labeli18n="modules.task.document.plannedtask.TotalErrorCount" />
+		<property name="totalLockCount" labeli18n="modules.task.document.plannedtask.TotalLockCount" />
 	</section>
 </panel>

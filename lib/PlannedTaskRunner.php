@@ -4,82 +4,6 @@
  */
 class task_PlannedTaskRunner
 {
-	/**
-	 * @param task_persistentdocument_plannedtask $runnableTask
-	 */
-	static function executeSystemTask($runnableTask)
-	{
-		$taskService = task_PlannedtaskService::getInstance();
-		$logMessages = array();
-		try
-		{
-			ob_start();
-			$taskClassName = $runnableTask->getSystemtaskclassname();
-			if (!f_util_ClassUtils::classExists($taskClassName))
-			{
-				throw new Exception("Class $taskClassName does not exist");
-			}
-			
-			$reflectionClass = new ReflectionClass($taskClassName);
-			
-			if (!$reflectionClass->implementsInterface('task_SystemTask'))
-			{
-				throw new Exception("Class $taskClassName does not implement task_SystemTask");
-			}
-			
-			$classInstance = $reflectionClass->newInstance();
-			$start = microtime(true);
-			$classInstance->setParameterString($runnableTask->getParameters());
-			$classInstance->setPlannedTask($runnableTask);
-			$startTime = time();
-			$classInstance->run();
-			if (Framework::isInfoEnabled())
-			{
-				Framework::info($runnableTask->getId() . ' [' . $taskClassName . '] executed.');
-			}
-			$end = microtime(true);
-			$durations = $runnableTask->getMetaMultiple("task_durations");
-			if ($durations === null)
-			{
-				$durations = array();
-			}
-			$durations[] = ($end - $start);
-			if (count($durations) > 10)
-			{
-				array_shift($durations);
-			}
-			$runnableTask->setMetaMultiple("task_durations", $durations);
-			$runnableTask->saveMeta();
-			$failed = false;
-		}
-		catch (BaseException $e)
-		{
-			$logMessages[] = $e->getLocaleMessage();
-			$failed = true;
-		}
-		catch (Exception $e)
-		{
-			$logMessages[] = $e->getMessage();
-			$failed = true;
-		}
-		if (defined('MYSQL_WAIT_TIMEOUT') && time() - $startTime >=  MYSQL_WAIT_TIMEOUT)
-		{
-			// Make sure we didn't loose the MySQL connection due to inactivity timeout
-			f_persistentdocument_PersistentProvider::refresh();
-		}
-		if ($failed === true)
-		{
-			$logMessages[] = ob_get_clean();
-		}
-		$runnableTask->setHasFailed($failed);
-		
-		$taskService->rescheduleIfNecesseary($runnableTask);
-		if ($failed)
-		{
-			$action = 'run-failed.plannedtask';
-			UserActionLoggerService::getInstance()->addUserDocumentEntry(null, $action, $runnableTask, array('message' => implode("\n", $logMessages)), 'task');
-		}
-	}
 	
 	/**
 	 * @param string $baseURL
@@ -88,27 +12,22 @@ class task_PlannedTaskRunner
 	static function main($baseURL)
 	{
 		$taskService = task_PlannedtaskService::getInstance();
-		$runnableTasks = $taskService->getPublishedTasksToRun();
+		foreach ($taskService->getTasksToAutoUnlock() as $task) 
+		{
+			$taskService->autoUnlock($task);
+		}
+		
+		foreach ($taskService->getTasksToLock() as $task) 
+		{
+			$taskService->lock($task);
+		}
 		
 		$runningIds = array();
-		
-		foreach ($runnableTasks as $runnableTask)
+		foreach ($taskService->getTasksToStart() as $task) 
 		{
-			if (!$runnableTask->getIsrunning())
-			{
-				if ($taskService->run($runnableTask))
-				{
-					$runningIds[] = $runnableTask->getId();
-				}
-			}
-			// intportg 2011-05-09: disable auto unlock until it work correctly.
-			/*else if ($runnableTask->canBeAutoUnlock())
-			{
-				$runnableTask->setIsrunning(false);
-				$runnableTask->setNextrundate(date_Calendar::getInstance());
-				$runnableTask->save();
-				UserActionLoggerService::getInstance()->addUserDocumentEntry('system','autounlock.plannedtask', $runnableTask, array(), 'task');
-			}*/
+			$taskService->start($task);
+			$runningIds[] = $task->getId();
+			
 		}
 		
 		foreach ($runningIds as $runningId)
@@ -117,6 +36,66 @@ class task_PlannedTaskRunner
 			self::launchTask($url);
 		}
 	}
+	
+	
+	/**
+	 * @param task_persistentdocument_plannedtask $task
+	 */
+	static function executeSystemTask($task)
+	{
+		$taskService = task_PlannedtaskService::getInstance();
+		$erroMessage = null;
+		$taskId = $task->getId();
+		$taskClassName = $task->getSystemtaskclassname();
+		
+		try
+		{
+			if (!f_util_ClassUtils::classExists($taskClassName))
+			{
+				throw new Exception("Class $taskClassName does not exist");
+			}
+			
+			$reflectionClass = new ReflectionClass($taskClassName);	
+			if (!$reflectionClass->implementsInterface('task_SystemTask'))
+			{
+				throw new Exception("Class $taskClassName does not implement task_SystemTask");
+			}
+			
+			$classInstance = $reflectionClass->newInstance();
+			$classInstance->setParameterString($task->getParameters());
+			$classInstance->setPlannedTask($task);
+			$taskService->ping($task);
+			$startTime = time();
+			$classInstance->run();
+		}
+		catch (BaseException $e)
+		{
+			$erroMessage = ''. $e->getLocaleMessage();
+
+		}
+		catch (Exception $e)
+		{
+			$erroMessage = ''. $e->getMessage();
+		}
+
+/*
+		if (defined('MYSQL_WAIT_TIMEOUT') && time() - $startTime >=  MYSQL_WAIT_TIMEOUT)
+		{
+			// TODO et le transaction manager !!!
+			f_persistentdocument_PersistentProvider::refresh();
+		}
+*/				
+		if ($erroMessage === null)
+		{
+			$taskService->end($task);
+		}
+		else 
+		{
+			$taskService->error($task, $erroMessage);
+		}
+	}
+	
+
 	
 	/**
 	 * @param string $URL

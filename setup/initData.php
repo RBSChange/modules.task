@@ -5,6 +5,7 @@ class task_Setup extends object_InitDataSetup
 	{
 		try
 		{
+			$this->executeModuleScript('lists.xml');
 			$this->addCronTask();
 			$this->addBackGroundIndexingTask();
 		}

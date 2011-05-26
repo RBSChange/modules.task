@@ -7,3 +7,10 @@ treechildren::-moz-tree-image(modules_task_plannedtask){
 wdialog[template="ValidateComment"] .dialog-header{
 	background: url(/changeicons/small/check.png) transparent center  left no-repeat!important;
 }
+
+treechildren::-moz-tree-image(modules_task_plannedfolder){
+	list-style-image: url(/changeicons/small/filter.png);
+}
+treechildren::-moz-tree-image(modules_task_userfolder){
+	list-style-image: url(/changeicons/small/filter.png);
+}

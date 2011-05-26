@@ -221,5 +221,5 @@ class task_UsertaskService extends f_persistentdocument_DocumentService
 		}
 		$data['properties']['additionalinfo'] = $additionalInfo;
 		return $data;
-	}
+	}	
 }

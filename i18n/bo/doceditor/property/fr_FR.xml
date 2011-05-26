@@ -6,7 +6,8 @@
   <key id="nextrundate">date de la prochaine exécution</key>
   <key id="isrunning">en cours d'exécution</key>
   <key id="node">noeud d'exécution</key>
-  <key id="lastduration">durée de la dernière exécution </key>
-  <key id="durationaverage">durée moyenne des dernières exécutions</key>
-  <key id="durationinfos">informations sur les durées d'exécutions</key>
+  
+  <key id="Executioninfos">informations sur les exécutions</key>
+  <key id="durationaverage">durée moyenne des exécutions</key>
+  <key id="lastsuccessdate">dernière exécution en succès</key>
 </i18n>

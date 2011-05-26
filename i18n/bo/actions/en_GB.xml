@@ -5,4 +5,6 @@
   <key id="unlockplannedtask">unlock task</key>
   <key id="resetplannedtasktime">launch task as soon as possible</key>
   <key id="unlockplannedtaskconfirm">Unlocking a tack might cause unexpected problems in some functionnalities. This action should only be performed if you are sure a task is really locked. Do you want to continue?</key>
+  <key id="createplannedfolder">create</key>
+  <key id="createuserfolder">create</key>
 </i18n>

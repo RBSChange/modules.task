@@ -5,4 +5,6 @@
   <key id="unlockplannedtask">débloquer la tâche</key>
   <key id="resetplannedtasktime">lancer la tâche le plus tôt possible</key>
   <key id="unlockplannedtaskconfirm">Débloquer une tâche peut entrainer des dysfonctionnements de certaines fonctionnalités. Cette action ne devrait être effectué que si vous êtes certain qu'une tâche est réellement bloquée. Voulez-vous vraiment continuer?</key>
+  <key id="createplannedfolder">créer un filtre de tâche plannifié</key>
+  <key id="createuserfolder">créer un filtre de tâche utilisateur</key>
 </i18n>
