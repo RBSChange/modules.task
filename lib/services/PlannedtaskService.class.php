@@ -499,8 +499,7 @@ class task_PlannedtaskService extends f_persistentdocument_DocumentService
 	 */
 	protected function rescheduleIfNecesseary($task)
 	{
-		$now = date_Calendar::getInstance();
-		if ($task->getNextrundate() < $now)
+		if ($task->getNextrundate() < date_Calendar::getInstance()->toString())
 		{
 			if ($task->getPeriodUnit() !== null)
 			{
