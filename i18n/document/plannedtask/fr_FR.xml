@@ -26,10 +26,10 @@
   <key id="executionstatusdate">date du status d'execution</key>
   <key id="executionstatusdate-help">date du status d'execution</key>
   
-  <key id="unlockcount">Nombre de vérouillage consecutif</key>
-  <key id="totalsuccesscount">Nombre total d'éxecution réussi</key>
-  <key id="totalerrorcount">Nombre total d'éxecution en erreur</key>
-  <key id="totallockcount">Nombre total de vérouillage</key>
+  <key id="unlockcount">Nombre de vérouillages consecutifs</key>
+  <key id="totalsuccesscount">Nombre total d'éxecutions réussies</key>
+  <key id="totalerrorcount">Nombre total d'éxecutions en erreur</key>
+  <key id="totallockcount">Nombre total de vérouillages</key>
     
   <key id="parameters">parameters</key>
   <key id="parameters-help">parameters</key>
