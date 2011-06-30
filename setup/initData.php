@@ -42,6 +42,12 @@ class task_Setup extends object_InitDataSetup
 		$task->setHour(1);
 		$task->setLabel('task_ClearDocumentCacheTask');
 		$task->save(ModuleService::getInstance()->getSystemFolderId('task', 'task'));
+		
+		$task = task_PlannedtaskService::getInstance()->getNewDocumentInstance();
+		$task->setSystemtaskclassname('task_CleanDataCacheTask');
+		$task->setHour(2);
+		$task->setLabel('task_CleanDataCacheTask');
+		$task->save(ModuleService::getInstance()->getSystemFolderId('task', 'task'));
 	}
 	
 	/**
