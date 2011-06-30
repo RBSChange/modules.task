@@ -3,4 +3,5 @@
   <key id="isrunning">Tâche en cours</key>
   <key id="lastrundate">Dernière exécution</key>
   <key id="nextrundate">Prochaine exécution</key>
+  <key id="executionstatuslabel">Statut</key>
 </i18n>
