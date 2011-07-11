@@ -24,7 +24,7 @@
 	
 	<section name="executioninfos" labeli18n="modules.task.bo.doceditor.property.Executioninfos" image="{IconsBase}/small/workflow.png" >
 		<property name="lastrundate" labeli18n="modules.task.bo.doceditor.property.Lastrundate" />
-		
+		<property name="ping" labeli18n="modules.task.bo.doceditor.property.ping" />
 		<property name="durationaverage" labeli18n="modules.task.bo.doceditor.property.Durationaverage" />
 		<property name="lastSuccessDate" labeli18n="modules.task.bo.doceditor.property.LastSuccessDate" />
 		

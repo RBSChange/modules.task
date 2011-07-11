@@ -570,15 +570,15 @@ class task_PlannedtaskService extends f_persistentdocument_DocumentService
 		$ls = LocaleService::getInstance();
 		$data = parent::getResume($document, $forModuleName, $allowedSections);
 		$data['properties']['executionStatus'] = $document->getExecutionStatusLabel();
-		$data['properties']['executionStatusDate'] = $document->getUIExecutionStatusDate();
+		$data['properties']['executionStatusDate'] = date_Calendar::getInstance($document->getUIExecutionStatusDate())->toFormattedDateTimeBO();
 		$data['properties']['periodUnit'] = $document->getPeriodUnitLabel();
 		$data['properties']['unlockCount'] = $document->getUnlockCount();
 		
-		$data['properties']['nextrundate'] = $document->getUINextrundate();
+		$data['properties']['nextrundate'] = date_Calendar::getInstance($document->getUINextrundate())->toFormattedDateTimeBO();
 		$data['properties']['node'] = $document->getNode();
 		
 		
-		$data['executioninfos']['lastrundate'] = $document->getUILastrundate();
+		$data['executioninfos']['lastrundate'] = date_Calendar::getInstance($document->getUILastrundate())->toFormattedDateTimeBO();
 		$durationAverage = doubleval($document->getDurationAvg()) / 60;
 		$durationAverage = $durationAverage < 1 ? '< 1' : round($durationAverage, 2);
 		$durationAverage .=  ' ' . $ls->transBO('f.unit.minutes');
@@ -587,11 +587,15 @@ class task_PlannedtaskService extends f_persistentdocument_DocumentService
 		$lastSuccessDate = $document->getUILastSuccessDate();
 		if ($lastSuccessDate !== null)
 		{
-			$data['executioninfos']['lastSuccessDate'] = $lastSuccessDate;
+			$data['executioninfos']['lastSuccessDate'] = date_Calendar::getInstance($lastSuccessDate)->toFormattedDateTimeBO();
+		}
+		
+		if ($document->getIsrunning())
+		{
+			$data['executioninfos']['ping'] = date_Calendar::getInstance($document->getUIRunningDate())->toFormattedDateTimeBO();
 		}
 		$data['executioninfos']['totalSuccessCount'] = $document->getTotalSuccessCount();
-		$data['executioninfos']['totalErrorCount'] = $document->getTotalErrorCount();
-		
+		$data['executioninfos']['totalErrorCount'] = $document->getTotalErrorCount();		
 		$data['executioninfos']['totalLockCount'] = $document->getTotalLockCount();
 		
 		return $data;

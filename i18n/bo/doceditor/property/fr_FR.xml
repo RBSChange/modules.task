@@ -10,4 +10,5 @@
   <key id="Executioninfos">informations sur les exécutions</key>
   <key id="durationaverage">durée moyenne des exécutions</key>
   <key id="lastsuccessdate">dernière exécution en succès</key>
+  <key id="ping">dernier 'ping' de la tâche</key>
 </i18n>
