@@ -20,7 +20,7 @@
 				<tbody>
 					<tr tal:repeat="task errorTasks">
 						<td>${repeat/task/number}</td>
-						<td>${task/getLabelAsHtml} <a onclick="openActionUri('task,locateDocument,${task/getPersistentModel/getBackofficeName},${task/getId}');" change:i18nattr="title &modules.task.bo.dashboard.Locate-in-module;" class="contextual-action"><img change:icon="search/small" /></a></td>
+						<td>${task/getLabelAsHtml} <a onclick="openActionUri('task,locateDocument,${task/getPersistentModel/getBackofficeName},${task/getId}');" change:i18nattr="title &modules.task.bo.dashboard.Locate-in-module;" class="contextual-action"><img change:img="icon/small/search.png" /></a></td>
 						<td>${task/getIsrunningLabel}</td>
 						<td>${task/getUILastrundate}</td>
 						<td>${task/getUINextrundate}</td>
@@ -43,7 +43,7 @@
 			<tbody>
 				<tr tal:repeat="task monitoredTasks">
 					<td>${repeat/task/number}</td>
-					<td>${task/getLabelAsHtml} <a onclick="openActionUri('task,locateDocument,${task/getPersistentModel/getBackofficeName},${task/getId}');" change:i18nattr="title &modules.task.bo.dashboard.Locate-in-module;" class="contextual-action"><img change:icon="search/small" /></a></td>
+					<td>${task/getLabelAsHtml} <a onclick="openActionUri('task,locateDocument,${task/getPersistentModel/getBackofficeName},${task/getId}');" change:i18nattr="title &modules.task.bo.dashboard.Locate-in-module;" class="contextual-action"><img change:img="icon/small/search.png" /></a></td>
 					<td>${task/getIsrunningLabel}</td>
 					<td>${task/getUILastrundate}</td>
 					<td>${task/getUINextrundate}</td>

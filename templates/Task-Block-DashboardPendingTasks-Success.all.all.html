@@ -7,7 +7,7 @@
 		<div style="max-height: 200px; overflow: auto;">
 			<ul tal:condition="tasks" class="no-bullet">
 				<li tal:repeat="task tasks">
-					<img change:icon="task/small" />
+					<img change:img="icon/small/task.png" />
 					<a href="#" change:i18nattr="title &amp;modules.task.bo.actions.Perform-UsertaskEllipsis;" onclick="window.Dashboard.openTaskWithParameters(${task/id}, '${task/dialog}', '${task/module}', {documentId: ${task/documentId}, documentModel: '${task/documentModel}', documentModule: '${task/documentModule}'});">
 						<strong>${task/taskLabel}</strong>&nbsp;:&nbsp;${task/documentLabel}
 					</a>
