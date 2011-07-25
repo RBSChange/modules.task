@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
-<bindings xmlns="http://www.mozilla.org/xbl" xmlns:xul="http://www.mozilla.org/keymaster/gatekeeper/there.is.only.xul" xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#" xmlns:xbl="http://www.mozilla.org/xbl">
+<bindings xmlns="http://www.mozilla.org/xbl" xmlns:xul="http://www.mozilla.org/keymaster/gatekeeper/there.is.only.xul"
+	xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#" xmlns:xbl="http://www.mozilla.org/xbl">
 
 	<binding id="cTaskDialog" extends="core.wDialog#wDialog">
 		<resources>
@@ -137,40 +138,58 @@
 						var checkboxContent = document.getAnonymousElementByAttribute(this, 'anonid', 'synchronize-preview-checkbox');
 						checkboxContent.checked = true;
 			
+						var me = this;
 						scrollboxElementDataPageToValidate.addEventListener('scroll', function() {
 							if (checkboxData.checked == true)
 							{
-								var scrollPosition = wToolkit.getScrollPosition(this);
-								wToolkit.getScrollBoxObject(scrollboxElementDataPageInProduction).scrollTo(scrollPosition.x, scrollPosition.y);
+								me.synchronizeScroll(scrollboxElementDataPageToValidate, scrollboxElementDataPageInProduction);
 							}
 						}, false);
 			
 						scrollboxElementDataPageInProduction.addEventListener('scroll', function() {
 							if (checkboxData.checked == true)
 							{
-								var scrollPosition = wToolkit.getScrollPosition(this);
-								wToolkit.getScrollBoxObject(scrollboxElementDataPageToValidate).scrollTo(scrollPosition.x, scrollPosition.y);
+								me.synchronizeScroll(scrollboxElementDataPageInProduction, scrollboxElementDataPageToValidate);
 							}
 						}, false);
 			
 						scrollboxElementContentPageToValidate.addEventListener('scroll', function() {
 							if (checkboxContent.checked == true)
 							{
-								var scrollPosition = wToolkit.getScrollPosition(this);
-								wToolkit.getScrollBoxObject(scrollboxElementContentPageInProduction).scrollTo(scrollPosition.x, scrollPosition.y);
+								me.synchronizeScroll(scrollboxElementContentPageToValidate, scrollboxElementContentPageInProduction);
 							}
 						}, false);
 			
 						scrollboxElementContentPageInProduction.addEventListener('scroll', function() {
 							if (checkboxContent.checked == true)
 							{
-								var scrollPosition = wToolkit.getScrollPosition(this);
-								wToolkit.getScrollBoxObject(scrollboxElementContentPageToValidate).scrollTo(scrollPosition.x, scrollPosition.y);
+								me.synchronizeScroll(scrollboxElementContentPageInProduction, scrollboxElementContentPageToValidate);
 							}
 						}, false);
 				    	
 				    	this.mScrollSynchronizationInitialized = true;
 				    }
+				]]></body>
+			</method>
+			
+			<method name="synchronizeScroll">
+				<parameter name="reference" />
+				<parameter name="target" />
+				<body><![CDATA[
+					try
+					{
+						var x = {};
+						var y = {};
+						var referenceObject = reference.boxObject.QueryInterface(Components.interfaces.nsIScrollBoxObject);
+						referenceObject.getPosition(x, y);
+						
+						var targetObject = target.boxObject.QueryInterface(Components.interfaces.nsIScrollBoxObject);
+						targetObject.scrollTo(x.value, y.value);
+					}
+					catch (e)
+					{
+						wCore.error("cTaskDialog.synchronizeScroll", [this], e);
+					}
 				]]></body>
 			</method>
 
