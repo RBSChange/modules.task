@@ -13,10 +13,13 @@
 	height: 20px;
 }
 [span="high"].document-box-title{
-	height: 45px;
+	height: 50px;
 }
 .document-box-synchro-checkbox{
-	height: 25px;
+	height: 29px;
+}
+.document-box-synchro-checkbox checkbox{
+	margin: 0 3px;
 }
 scrollbox{
 	overflow: auto;
