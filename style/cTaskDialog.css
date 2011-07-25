@@ -1,5 +1,3 @@
-
-
 [anonid="commentary"]{
 	margin-bottom: 2px;
 }
@@ -25,4 +23,13 @@ scrollbox{
 }
 row[differs="true"]>:first-child{
 	color: #f00;
+}
+grid.preview column:first-child{
+	background: silver;
+}
+grid.preview row>label:first-child{
+	font-weight: bold;
+}
+grid.preview row{
+	border-bottom: 1px solid silver;
 }
