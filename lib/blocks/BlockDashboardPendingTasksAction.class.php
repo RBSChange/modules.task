@@ -16,6 +16,7 @@ class task_BlockDashboardPendingTasksAction extends dashboard_BlockDashboardActi
 			return;
 		}
 		
+		$ls = LocaleService::getInstance();
 		$tasks = TaskHelper::getPendingTasksForCurrentUser();
 		$widget = array();
 		foreach ($tasks as $task)
@@ -30,16 +31,16 @@ class task_BlockDashboardPendingTasksAction extends dashboard_BlockDashboardActi
 				continue;
 			}
 			
-			$lastModification = date_Calendar::getInstance($task->getCreationdate());
-
+			$lastModification = date_Calendar::getInstance($task->getUICreationdate());
 			if ($lastModification->isToday())
 			{
-				$status = f_Locale::translateUI('&modules.uixul.bo.datePicker.Calendar.today;') . date_DateFormat::format(date_Converter::convertDateToLocal($lastModification), ', H:i');
+				$status = $ls->transBO('m.uixul.bo.datePicker.calendar.today') . date_Formatter::format($lastModification, ', H:i');
 			}
 			else
 			{
-				$status = date_DateFormat::format(date_Converter::convertDateToLocal($lastModification), 'l j F Y, H:i');
+				$status = date_Formatter::toDefaultDateTimeBO($lastModification);
 			}
+			
 			$attr = array(
 				'id' => $task->getId(),
 				'taskLabel' => $task->getLabelAsHtml(),
@@ -49,7 +50,7 @@ class task_BlockDashboardPendingTasksAction extends dashboard_BlockDashboardActi
 				'documentId' => $document->getId(),
 				'documentLabel' => f_util_HtmlUtils::textToHtml($document->getPersistentModel()->isLocalized() ? $document->getLabelForLang($task->getLang()) : $document->getLabel()),
 				'documentModel' => str_replace('/', '_', $document->getDocumentModelName()),
-				'documentModule' => $document->getDocumentModel()->getModuleName(),
+				'documentModule' => $document->getPersistentModel()->getModuleName(),
 				'comment' => $task->getCommentaryAsHtml(),
 				'author' => ucfirst($task->getDescriptionAsHtml())
 			);
