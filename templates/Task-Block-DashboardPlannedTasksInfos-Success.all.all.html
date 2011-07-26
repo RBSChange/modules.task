@@ -1,26 +1,26 @@
 <div class="dashboard-widget" tal:omit-tag="refresh" refreshURL="${refreshURL}" title="${title}" icon="${icon}" hideGotoModule="${hideGotoModule}">
 	<tal:block tal:condition="forEdition">
 		<div class="title-bar" ><img src="${icon}" /> ${title}</div>
-		<div class="content-block"><div class="content" change:translate="modules.dashboard.dashboard.DummyContent">...</div></div>
+		<div class="content-block"><div class="content" tal:content="trans:m.dashboard.dashboard.dummycontent,ucf">...</div></div>
 	</tal:block>
 	<tal:block tal:condition="not:forEdition">
 		<tal:block tal:condition="errorTasks">
-			<h2 change:translate="modules.task.bo.dashboard.Error-task-title"></h2>
-			<p change:translate="modules.task.bo.dashboard.Error-task-description; hours timeToSuspectError"></p>
+			<h2 tal:content="trans:m.task.bo.dashboard.error-task-title,ucf"></h2>
+			<p tal:content="trans:m.task.bo.dashboard.error-task-description,ucf,hours=timeToSuspectError"></p>
 			<table class="error-tasks">
 				<thead>
 					<tr>
 						<th />
-						<th change:translate="modules.task.bo.dashboard.Task-label" />
-						<th change:translate="modules.task.bo.dashboard.Is-running" />
-						<th change:translate="modules.task.bo.dashboard.Last-run-date" />
-						<th change:translate="modules.task.bo.dashboard.Next-run-date" />
+						<th tal:content="trans:m.task.bo.dashboard.task-label,ucf" />
+						<th tal:content="trans:m.task.bo.dashboard.is-running,ucf" />
+						<th tal:content="trans:m.task.bo.dashboard.last-run-date,ucf" />
+						<th tal:content="trans:m.task.bo.dashboard.next-run-date,ucf" />
 					</tr>
 				</thead>
 				<tbody>
 					<tr tal:repeat="task errorTasks">
 						<td>${repeat/task/number}</td>
-						<td>${task/getLabelAsHtml} <a onclick="openActionUri('task,locateDocument,${task/getPersistentModel/getBackofficeName},${task/getId}');" change:i18nattr="title &modules.task.bo.dashboard.Locate-in-module;" class="contextual-action"><img change:img="icon/small/search.png" /></a></td>
+						<td>${task/getLabelAsHtml} <a onclick="openActionUri('task,locateDocument,${task/getPersistentModel/getBackofficeName},${task/getId}');" title="${trans:m.task.bo.dashboard.locate-in-module,ucf,attr}" class="contextual-action"><img change:img="icon/small/search.png" /></a></td>
 						<td>${task/getIsrunningLabel}</td>
 						<td>${task/getUILastrundate}</td>
 						<td>${task/getUINextrundate}</td>
@@ -28,22 +28,22 @@
 				</tbody>
 			</table>
 		</tal:block>
-		<h2 change:translate="modules.task.bo.dashboard.Monitored-task-title"></h2>
-		<p change:translate="modules.task.bo.dashboard.Monitored-task-description"></p>
+		<h2 tal:content="trans:m.task.bo.dashboard.monitored-task-title,ucf"></h2>
+		<p tal:content="trans:m.task.bo.dashboard.monitored-task-description,ucf"></p>
 		<table class="monitored-tasks">
 			<thead>
 				<tr>
 					<th />
-					<th change:translate="modules.task.bo.dashboard.Task-label" />
-					<th change:translate="modules.task.bo.dashboard.Is-running" />
-					<th change:translate="modules.task.bo.dashboard.Last-run-date" />
-					<th change:translate="modules.task.bo.dashboard.Next-run-date" />
+					<th tal:content="trans:m.task.bo.dashboard.task-label,ucf" />
+					<th tal:content="trans:m.task.bo.dashboard.is-running,ucf" />
+					<th tal:content="trans:m.task.bo.dashboard.last-run-date,ucf" />
+					<th tal:content="trans:m.task.bo.dashboard.next-run-date,ucf" />
 				</tr>
 			</thead>
 			<tbody>
 				<tr tal:repeat="task monitoredTasks">
 					<td>${repeat/task/number}</td>
-					<td>${task/getLabelAsHtml} <a onclick="openActionUri('task,locateDocument,${task/getPersistentModel/getBackofficeName},${task/getId}');" change:i18nattr="title &modules.task.bo.dashboard.Locate-in-module;" class="contextual-action"><img change:img="icon/small/search.png" /></a></td>
+					<td>${task/getLabelAsHtml} <a onclick="openActionUri('task,locateDocument,${task/getPersistentModel/getBackofficeName},${task/getId}');" title="${trans:m.task.bo.dashboard.locate-in-module,ucf,attr}" class="contextual-action"><img change:img="icon/small/search.png" /></a></td>
 					<td>${task/getIsrunningLabel}</td>
 					<td>${task/getUILastrundate}</td>
 					<td>${task/getUINextrundate}</td>
