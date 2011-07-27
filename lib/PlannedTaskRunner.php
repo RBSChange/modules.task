@@ -48,22 +48,23 @@ class task_PlannedTaskRunner
 			$logMessages[] = $e->getMessage();
 			$failed = true;
 		}
-		if (defined('MYSQL_WAIT_TIMEOUT') && time() - $startTime >=  MYSQL_WAIT_TIMEOUT)
-		{
-			// Make sure we didn't loose the MySQL connection due to inactivity timeout
-			f_persistentdocument_PersistentProvider::refresh();
-		}
+		
 		if ($failed === true)
 		{
 			$logMessages[] = ob_get_clean();
+			$messagesFilePath = f_util_FileUtils::getTmpFile('task_');
+			file_put_contents($messagesFilePath, implode("\n", $logMessages));
 		}
-		$runnableTask->setHasFailed($failed);
-		
-		$taskService->rescheduleIfNecesseary($runnableTask);
-		if ($failed)
+		else
 		{
-			$action = 'run-failed.plannedtask';
-			UserActionLoggerService::getInstance()->addUserDocumentEntry(null, $action, $runnableTask, array('message' => implode("\n", $logMessages)), 'task');
+			$messagesFilePath = '';
+		}
+		
+		$scriptPath = 'modules/task/lib/bin/taskUpdate.php';
+		$output = f_util_System::execHTTPScript($scriptPath, array($runnableTask->getId(), $failed ? 1 : 0, $messagesFilePath));
+		if ($output != 'OK')
+		{
+			Framework::warn(__METHOD__ . ' -> ' . $runnableTask->getId() . ' : ' . $output);
 		}
 	}
 	
