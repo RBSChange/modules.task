@@ -210,6 +210,17 @@ class task_PlannedtaskService extends f_persistentdocument_DocumentService
 		{
 			return null;
 		}
+		
+		while (true)
+		{
+			$previousRunDate = date_Calendar::getInstance($nextRunDate->toString());
+			$previousRunDate->sub($periodUnit, $periodValue);
+			if ($previousRunDate->belongsToPast())
+			{
+				return $nextRunDate;
+			}
+			$nextRunDate = $previousRunDate;
+		}
 		return $nextRunDate;
 	
 	}
@@ -250,8 +261,9 @@ class task_PlannedtaskService extends f_persistentdocument_DocumentService
 	{
 		if ($document->isPublished() && $oldPublicationStatus == "ACTIVE")
 		{
-			$document->setNextrundate($this->getNextOccurenceDate($document));
-			$document->save();
+			$nextRunDate = $this->getNextOccurenceDate($document);
+			$document->setNextrundate($nextRunDate);
+			$this->save($document);
 		}
 	}
 	
@@ -266,9 +278,10 @@ class task_PlannedtaskService extends f_persistentdocument_DocumentService
 			$plannedTask->setIsrunning(false);
 			if (!$plannedTask->getHasFailed())
 			{
-				$plannedTask->setLastrundate(date_Calendar::now());
+				$lastrundate = date_Calendar::getInstance()->toString();
+				$plannedTask->setLastrundate($lastrundate);
 			}
-			$nextRunDate = $this->getNextOccurenceDate($plannedTask);
+			$nextRunDate = $this->getNextOccurenceDate($plannedTask);			
 			if ($nextRunDate === null)
 			{
 				$this->file($plannedTask->getId());
