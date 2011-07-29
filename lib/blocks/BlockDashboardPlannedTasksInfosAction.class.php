@@ -15,7 +15,7 @@ class task_BlockDashboardPlannedTasksInfosAction extends dashboard_BlockDashboar
 	{
 		if ($forEdition) {return;}
 		
-		StyleService::getInstance()->registerStyle('modules.task.dashboard');
+		website_StyleService::getInstance()->registerStyle('modules.task.dashboard');
 		$pts = task_PlannedtaskService::getInstance();
 		$configuration = $this->getConfiguration();
 		$request->setAttribute('errorTasks', $pts->getLockedTasks());
