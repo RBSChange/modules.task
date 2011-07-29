@@ -9,7 +9,7 @@ class task_persistentdocument_plannedtask extends task_persistentdocument_planne
 	 * @var integer
 	 */
 	private $periodUnit;
-	
+
 	/**
 	 * @return Integer or null
 	 */
@@ -33,7 +33,7 @@ class task_persistentdocument_plannedtask extends task_persistentdocument_planne
 			{
 				$this->periodUnit = date_Calendar::MONTH;
 			}
-			
+
 			else if ($this->getYear() === null)
 			{
 				$this->periodUnit = date_Calendar::YEAR;
@@ -41,7 +41,7 @@ class task_persistentdocument_plannedtask extends task_persistentdocument_planne
 		}
 		return $this->periodUnit;
 	}
-	
+
 	/**
 	 * @return Integer
 	 */
@@ -49,19 +49,20 @@ class task_persistentdocument_plannedtask extends task_persistentdocument_planne
 	{
 		return 1;
 	}
-	
+
 	/**
 	 * @param date_Calendar $date
 	 */
 	public function setUniqueExecutiondate($date)
 	{
+		$this->periodUnit = null;
 		$this->setYear($date->getYear());
 		$this->setMonthofyear($date->getMonth());
 		$this->setDayofmonth($date->getDay());
 		$this->setHour($date->getHour());
 		$this->setMinute($date->getMinute());
 	}
-	
+
 	/**
 	 * @return Boolean
 	 */
@@ -69,7 +70,7 @@ class task_persistentdocument_plannedtask extends task_persistentdocument_planne
 	{
 		return $this->hasFailed;
 	}
-	
+
 	/**
 	 * @param Boolean $hasFailed
 	 */
@@ -77,22 +78,20 @@ class task_persistentdocument_plannedtask extends task_persistentdocument_planne
 	{
 		$this->hasFailed = $hasFailed;
 	}
-	
+
 	/**
 	 * @param date_Calendar $date
-	 */	
+	 */
 	public function reSchedule($date)
 	{
-		$this->setUniqueExecutiondate($date);
-		$this->periodUnit = null;
-		$this->setNextrundate(null);
+		task_PlannedTaskRunner::reSchedule($this->getId(), $date->toString());
 	}
 
 	/**
 	 * @var Boolean
 	 */
 	private $hasFailed = false;
-	
+
 	/**
 	 * @param string $moduleName
 	 * @param string $treeType
@@ -103,7 +102,7 @@ class task_persistentdocument_plannedtask extends task_persistentdocument_planne
 		$nodeAttributes['isrunninglabel'] = $this->getIsrunningLabel();
 		$nodeAttributes['isrunning'] = (int)$this->getIsrunning();
 	}
-	
+
 	/**
 	 * @param Integer $minute 0..59 or -1 for random value
 	 */
@@ -111,11 +110,11 @@ class task_persistentdocument_plannedtask extends task_persistentdocument_planne
 	{
 		if ($minute == -1)
 		{
-			$minute = rand(0, 59);	
+			$minute = rand(0, 59);
 		}
 		parent::setMinute($minute);
 	}
-	
+
 	/**
 	 * @param Integer $hour 0..23 or -1 for random value
 	 */
@@ -123,11 +122,11 @@ class task_persistentdocument_plannedtask extends task_persistentdocument_planne
 	{
 		if ($hour == -1)
 		{
-			$hour = rand(0, 23);	
+			$hour = rand(0, 23);
 		}
 		parent::setHour($hour);
 	}
-	
+
 	/**
 	 * @param Integer $dayofmonth 1..31 or -1 for random value
 	 */
@@ -135,11 +134,11 @@ class task_persistentdocument_plannedtask extends task_persistentdocument_planne
 	{
 		if ($dayofmonth == -1)
 		{
-			$dayofmonth = rand(1, 28);	
+			$dayofmonth = rand(1, 28);
 		}
 		parent::setDayofmonth($dayofmonth);
 	}
-	
+
 	/**
 	 * @param Integer $month 1..12 or -1 for random value
 	 */
@@ -147,11 +146,11 @@ class task_persistentdocument_plannedtask extends task_persistentdocument_planne
 	{
 		if ($month == -1)
 		{
-			$month = rand(1, 12);	
+			$month = rand(1, 12);
 		}
 		parent::setMonth($month);
 	}
-	
+
 	/**
 	 * @return Boolean
 	 */
@@ -162,12 +161,12 @@ class task_persistentdocument_plannedtask extends task_persistentdocument_planne
 			$nextRunDate = date_Calendar::getInstance($this->getNextrundate());
 			$durationMaxDate = date_Calendar::getInstance($this->getNextrundate());
 			$durationMaxDate->add(date_Calendar::MINUTE, $this->getMaxduration());
-			
+
 			if (date_Calendar::getInstance()->isBetween($nextRunDate, $durationMaxDate))
 			{
 				return false;
 			}
-			else 
+			else
 			{
 				return true;
 			}
@@ -177,7 +176,7 @@ class task_persistentdocument_plannedtask extends task_persistentdocument_planne
 			return false;
 		}
 	}
-	
+
 	/**
 	 * @return string
 	 */
@@ -187,9 +186,9 @@ class task_persistentdocument_plannedtask extends task_persistentdocument_planne
 		{
 			return f_Locale::translate('&modules.task.document.plannedtask.Yes;');
 		}
-		else 
+		else
 		{
 			return f_Locale::translate('&modules.task.document.plannedtask.No;');
-		}	
+		}
 	}
 }

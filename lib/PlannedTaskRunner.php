@@ -19,14 +19,14 @@ class task_PlannedTaskRunner
 			{
 				throw new Exception("Class $taskClassName does not exist");
 			}
-			
+
 			$reflectionClass = new ReflectionClass($taskClassName);
-			
+
 			if (!$reflectionClass->implementsInterface('task_SystemTask'))
 			{
 				throw new Exception("Class $taskClassName does not implement task_SystemTask");
 			}
-			
+
 			$classInstance = $reflectionClass->newInstance();
 			$classInstance->setParameterString($runnableTask->getParameters());
 			$classInstance->setPlannedTask($runnableTask);
@@ -48,7 +48,7 @@ class task_PlannedTaskRunner
 			$logMessages[] = $e->getMessage();
 			$failed = true;
 		}
-		
+
 		if ($failed === true)
 		{
 			$logMessages[] = ob_get_clean();
@@ -59,7 +59,7 @@ class task_PlannedTaskRunner
 		{
 			$messagesFilePath = '';
 		}
-		
+
 		$scriptPath = 'modules/task/lib/bin/taskUpdate.php';
 		$output = f_util_System::execHTTPScript($scriptPath, array($runnableTask->getId(), $failed ? 1 : 0, $messagesFilePath));
 		if ($output != 'OK')
@@ -67,7 +67,17 @@ class task_PlannedTaskRunner
 			Framework::warn(__METHOD__ . ' -> ' . $runnableTask->getId() . ' : ' . $output);
 		}
 	}
-	
+
+	static function reSchedule($taskId, $date)
+	{
+		$scriptPath = 'modules/task/lib/bin/taskReSchedule.php';
+		$output = f_util_System::execHTTPScript($scriptPath, array($taskId, $date));
+		if ($output != 'OK')
+		{
+			Framework::warn(__METHOD__ . ' -> ' . $runnableTask->getId() . ' : ' . $output);
+		}
+	}
+
 	/**
 	 * @param string $baseURL
 	 * @return void
@@ -91,7 +101,7 @@ class task_PlannedTaskRunner
 			self::launchTask($url);
 		}
 	}
-	
+
 	/**
 	 * @param string $URL
 	 */
@@ -108,7 +118,7 @@ class task_PlannedTaskRunner
 		curl_exec($rc);
 		curl_close($rc);
 	}
-		
+
 	public static function pingChangeCronURL($pingURl)
 	{
 		$rc = curl_init();
@@ -121,8 +131,8 @@ class task_PlannedTaskRunner
 		curl_setopt($rc, CURLOPT_URL, $pingURl);
 		curl_exec($rc);
 		curl_close($rc);
-	}	
-	
+	}
+
 	public static function setChangeCronToken($start)
 	{
 		$tokenPath = f_util_FileUtils::buildCachePath('changecron.pid');
