@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <panel>
-	<section labeli18n="modules.task.bo.general.Planification">
+	<section labeli18n="m.task.bo.general.planification">
 		<field name="minute" />
 		<field name="hour" />
 		<field name="dayofmonth" />
@@ -8,7 +8,7 @@
 		<field name="year" />
 	</section>
 	
-	<section labeli18n="modules.task.bo.general.Execution">
+	<section labeli18n="m.task.bo.general.execution">
 		<field name="node" type="dropdownlist" />
 		<field name="maxduration" />
 	</section>
