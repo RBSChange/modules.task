@@ -1,9 +1,9 @@
 <?php
-class task_ViewUserTaskAction extends f_action_BaseAction
+class task_ViewUserTaskAction extends change_Action
 {
 	/**
-	 * @param Context $context
-	 * @param Request $request
+	 * @param change_Context $context
+	 * @param change_Request $request
 	 */
 	public function _execute($context, $request)
 	{
@@ -16,11 +16,8 @@ class task_ViewUserTaskAction extends f_action_BaseAction
 		
 		if ($userId != $task->getUser()->getId())
 		{
-			if (Framework::isDebugEnabled())
-			{
-				Framework::debug(__METHOD__ . ' : the current user ' . $userId . ' is different of the task one ' . $task->getUser()->getId());
-			}
-			return self::getErrorView();
+			Framework::error(__METHOD__ . ' : the current user ' . $userId . ' is different of the task one ' . $task->getUser()->getId());
+			return change_View::NONE;
 		}
 
 		$workItem = $task->getWorkitem();
@@ -30,11 +27,8 @@ class task_ViewUserTaskAction extends f_action_BaseAction
 		}
 		catch (Exception $e)
 		{
-			if (Framework::isDebugEnabled())
-			{
-				Framework::debug(__METHOD__ . ' EXCEPTION: ' . $e->getMessage());
-			}
-			return View::ERROR;
+			Framework::error(__METHOD__ . ' EXCEPTION: ' . $e->getMessage());
+			return change_View::NONE;
 		}
 
 		$request->setAttribute('task', $task);

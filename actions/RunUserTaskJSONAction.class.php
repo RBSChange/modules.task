@@ -4,11 +4,11 @@
  * It has to be called after a commentary/decision form submit to perform the task.
  * @package modules.task
  */
-class task_RunUserTaskJSONAction extends f_action_BaseJSONAction
+class task_RunUserTaskJSONAction extends change_JSONAction
 {
 	/**
-	 * @param Context $context
-	 * @param Request $request
+	 * @param change_Context $context
+	 * @param change_Request $request
 	 */
 	public function _execute($context, $request)
 	{

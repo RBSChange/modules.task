@@ -3,11 +3,11 @@
  * task_LoadDataBaseAction
  * @package modules.task.actions
  */
-abstract class task_LoadDataBaseAction extends f_action_BaseJSONAction
+abstract class task_LoadDataBaseAction extends change_JSONAction
 {
 	/**
-	 * @param Context $context
-	 * @param Request $request
+	 * @param change_Context $context
+	 * @param change_Request $request
 	 */
 	public function _execute($context, $request)
 	{

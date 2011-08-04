@@ -3,7 +3,7 @@
  * task_ListMonitoringURLSAction
  * @package modules.task.actions
  */
-class task_ListMonitoringURLSAction extends f_action_BaseAction
+class task_ListMonitoringURLSAction extends change_Action
 {
 	public function isSecure()
 	{
@@ -11,12 +11,12 @@ class task_ListMonitoringURLSAction extends f_action_BaseAction
 	}
 	
 	/**
-	 * @param Context $context
-	 * @param Request $request
+	 * @param change_Context $context
+	 * @param change_Request $request
 	 */
 	public function _execute($context, $request)
 	{
-	    controller_ChangeController::setNoCache();
+	    change_Controller::setNoCache();
 	    $format = "JSON";
 	    if ($request->hasParameter("format"))
 	    {
@@ -42,7 +42,7 @@ class task_ListMonitoringURLSAction extends f_action_BaseAction
 		case("TXT"):
 		    ob_start();
 		    $filename = "list_monitoring_urls.txt";
-		    $path = WEBEDIT_HOME . "/" . $filename;
+		    $path = PROJECT_HOME . "/" . $filename;
 		    $file = $this->formatToTXT($urls, $path);
 		    ob_end_clean();
 		
@@ -68,7 +68,7 @@ class task_ListMonitoringURLSAction extends f_action_BaseAction
 		default:
 		    break;		 
 	    }
-	    return View::NONE;
+	    return change_View::NONE;
 	}
 	
 	private function getAllURLOfProbetasks()
