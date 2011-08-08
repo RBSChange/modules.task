@@ -29,6 +29,7 @@
 				<column name="nextrundate" label="nextrundate" flex="3" />
 			</columns>
 			<contextactions>
+				<contextaction name="edit" />
 				<contextaction name="openFolder" />
 			</contextactions>
 		</model>
