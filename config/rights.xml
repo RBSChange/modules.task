@@ -13,7 +13,6 @@
       <permission name="LoadPermissions.*"/>
       <permission name="SavePermissions.*"/>
       <permission name="GetPreferencesDocument"/>
-      <permission name="EditLocale"/>
       <permission name="Load.*"/>
       <permission name="Rename.*"/>
       <permission name="PutInTrash.*"/>
