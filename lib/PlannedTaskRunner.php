@@ -108,9 +108,17 @@ class task_PlannedTaskRunner
 		$client->setHeaders(array('Cache-Control: no-store, no-cache, no-transform', 'Pragma: no-cache', 'Connection: close'));
 		$client->setUri($URL);
 		
-		// we ignore server response
-		$client->setStream(null);
-		$client->request(Zend_Http_Client::POST);
+		try 
+		{
+			$client->request(Zend_Http_Client::POST);
+		} 
+		catch (Zend_Http_Client_Adapter_Exception $e)
+		{
+			if ($e->getCode() !== Zend_Http_Client_Adapter_Exception::READ_TIMEOUT)
+			{
+				throw $e;
+			}
+		}
 	}
 	
 	/**
@@ -118,13 +126,21 @@ class task_PlannedTaskRunner
 	 */
 	public static function pingChangeCronURL($pingURL)
 	{
-		$client = change_HttpClientService::getInstance()->getNewHttpClient(array('timeout' => 1));
+		$client = change_HttpClientService::getInstance()->getNewHttpClient(array('timeout' => 5));
 		$client->setHeaders(array('Cache-Control: no-store, no-cache, no-transform', 'Pragma: no-cache', 'Connection: close'));
 		$client->setUri($pingURL);
 		
-		// we ignore server response
-		$client->setStream(null);
-		$client->request(Zend_Http_Client::POST);
+		try 
+		{
+			$client->request(Zend_Http_Client::POST);
+		} 
+		catch (Zend_Http_Client_Adapter_Exception $e)
+		{
+			if ($e->getCode() !== Zend_Http_Client_Adapter_Exception::READ_TIMEOUT)
+			{
+				throw $e;
+			}
+		}
 	}	
 	
 	/**
