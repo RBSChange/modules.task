@@ -12,11 +12,11 @@ class task_patch_0353 extends patch_BasePatch
 	{
 		$query = task_PlannedtaskService::getInstance()->createQuery()
 			->add(Restrictions::eq('systemtaskclassname', 'f_tasks_ReindexDocumentsByUpdatedRolesTask'))
-			->add(Restrictions::eq('isrunning', true))
+			->add(Restrictions::eq('executionStatus', task_PlannedtaskService::STATUS_RUNNING))
 			->add(Restrictions::published());
 		foreach ($query->find() as $task)
 		{
-			$task->setIsrunning(false);
+			$task->setExecutionStatus(task_PlannedtaskService::STATUS_FAILED);
 			$task->save();
 			$task->getDocumentService()->file($task->getId());
 		}
