@@ -73,7 +73,7 @@ class commands_task_UnlockAll extends commands_AbstractChangeCommand
 		$tasks = array();
 		
 		$tasks = task_PlannedtaskService::getInstance()->createQuery()
-				->add(Restrictions::eq('isrunning','1'))->find();
+				->add(Restrictions::in('executionStatus',array(task_PlannedtaskService::STATUS_RUNNING, task_PlannedtaskService::STATUS_LOCKED)))->find();
 		if ($onlyShow == false)
 		{	
 			if (count($tasks) > 0)
@@ -82,7 +82,16 @@ class commands_task_UnlockAll extends commands_AbstractChangeCommand
 				{
 					if ($task instanceof task_persistentdocument_plannedtask)
 					{
-						$this->unlockTask($task, $doReset);
+                                            if ($task->getExecutionStatus() == task_PlannedtaskService::STATUS_LOCKED)
+                                            {
+                                                $task->getDocumentService()->unlock($task);
+                                            }
+                                            else if ($task->getExecutionStatus() == task_PlannedtaskService::STATUS_RUNNING)
+                                            {
+                                                 $task->getDocumentService()->error($task, LocaleService::getInstance()->transBO('m.task.document.plannedtask.bo-cancel'));
+                                            }
+                                                 
+                                                
 					}
 				}
 			}
@@ -108,27 +117,4 @@ class commands_task_UnlockAll extends commands_AbstractChangeCommand
 		}
 	}
 	
-	/**
-	 * @param task_persistentdocument_plannedtask $task
-	 * @param Boolean $doReset
-	 */
-	private function unlockTask($task, $doReset = false)
-	{
-		if ($task->getIsrunning())
-		{
-			$task->setIsrunning(false);
-			if ($doReset == true)
-			{
-				$task->setNextrundate(date_Calendar::now());
-			}
-			$task->save();
-			$action = ($doReset == true ? 'reset' : 'unlock') . '.plannedtask';
-			UserActionLoggerService::getInstance()->addUserDocumentEntry('system',$action, $task, array(), 'task');
-			$this->quitOk("Task \"".$task->getSystemtaskclassname()."\" ".($doReset == true ? 'reset' : 'unlock')."ed");
-		}
-		else
-		{
-			$this->quitError("Task \"".$task->getSystemtaskclassname()."\" is not locked");
-		}
-	}
 }
