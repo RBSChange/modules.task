@@ -22,31 +22,6 @@ class commands_task_UnlockAll extends c_ChangescriptCommand
 	{
 		return "Unlock all tasks --reset to unlock and rerun tasks --show to only view which tasks is locked";
 	}
-	
-	/**
-	 * This method is used to handle auto-completion for this command.
-	 * @param Integer $completeParamCount the parameters that are already complete in the command line
-	 * @param String[] $params
-	 * @param array<String, String> $options where the option array key is the option name, the potential option value or true
-	 * @return String[] or null
-	 */
-//	function getParameters($completeParamCount, $params, $options, $current)
-//	{
-//		$components = array();
-//		
-//		// Generate options in $components.		
-//		
-//		return array_diff($components, $params);
-//	}
-	
-	/**
-	 * @param String[] $params
-	 * @param array<String, String> $options where the option array key is the option name, the potential option value or true
-	 * @return boolean
-	 */
-//	protected function validateArgs($params, $options)
-//	{
-//	}
 
 	/**
 	 * @return String[]
@@ -73,7 +48,7 @@ class commands_task_UnlockAll extends c_ChangescriptCommand
 		$tasks = array();
 		
 		$tasks = task_PlannedtaskService::getInstance()->createQuery()
-				->add(Restrictions::eq('isrunning','1'))->find();
+				->add(Restrictions::eq('executionStatus', 'running'))->find();
 		if ($onlyShow == false)
 		{	
 			if (count($tasks) > 0)
@@ -98,7 +73,7 @@ class commands_task_UnlockAll extends c_ChangescriptCommand
 				foreach ($tasks as $task)
 				{
 					$nodeName = $task->getNode() != NULL ? $task->getNode() : "";
-					$this->message($task->getSystemtaskclassname()." ".$nodeName, c_Changescript::FG_MAGENTA);
+					$this->log($task->getSystemtaskclassname()." ".$nodeName);
 				}
 			}
 			else 
