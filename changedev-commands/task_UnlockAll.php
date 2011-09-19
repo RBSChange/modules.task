@@ -3,7 +3,7 @@
  * commands_task_UnlockAll
  * @package modules.task.command
  */
-class commands_task_UnlockAll extends commands_AbstractChangeCommand
+class commands_task_UnlockAll extends c_ChangescriptCommand
 {
 	/**
 	 * @return String
