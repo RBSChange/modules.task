@@ -16,4 +16,5 @@
   <actiondef modulename="task" actionname="move.userfolder" label="m.task.bo.useractionlogger.move-userfolder"/>
   <actiondef modulename="task" actionname="update.plannedtask" label="m.task.bo.useractionlogger.update-plannedtask"/>
   <actiondef modulename="task" actionname="move.plannedfolder" label="m.task.bo.useractionlogger.move-plannedfolder"/>
+  <actiondef modulename="task" actionname="savepermissions.rootfolder" label="m.task.bo.useractionlogger.savepermissions-rootfolder"/>
 </script>

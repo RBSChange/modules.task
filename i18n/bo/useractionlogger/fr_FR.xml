@@ -28,4 +28,6 @@
   <key id="log-update-plannedtask">log update plannedtask</key>
   <key id="move-plannedfolder">move.plannedfolder {destinationlabel} {documentlabel}</key>
   <key id="log-move-plannedfolder">log move plannedfolder</key>
+  <key id="savepermissions-rootfolder">savepermissions.rootfolder {documentlabel}</key>
+  <key id="log-savepermissions-rootfolder">log savepermissions rootfolder</key>
 </i18n>
