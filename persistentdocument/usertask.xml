@@ -1,15 +1,13 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document xmlns="http://www.rbs.fr/schema/change-document/1.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-	xsi:schemaLocation="http://www.rbs.fr/schema/change-document/1.0 http://www.rbschange.fr/static/schema/change-document/3.5.xsd"
-	model-version="3.5" icon="task" has-url="false" backoffice-indexable="false" publish-on-day-change="false">
-	<properties>
-		<add name="user" type="modules_users/user" />
-		<add name="workitem" type="modules_workflow/workitem" inverse="true" />
-		<add name="creationnotification" type="modules_notification/notification" />
-		<add name="terminationnotification" type="modules_notification/notification" />
-		<add name="cancellationnotification" type="modules_notification/notification" />
-		<add name="description" type="LongString" />
-		<add name="commentary" type="LongString" />
-	</properties>
-	<statuses default="ACTIVE" />
+<document xmlns="http://www.rbs.fr/schema/change-document/1.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.rbs.fr/schema/change-document/1.0 http://www.rbschange.fr/static/schema/change-document/4.0.xsd" model-version="3.5" icon="task" has-url="false" backoffice-indexable="false" publish-on-day-change="false">
+  <properties>
+    <property name="user" type="modules_users/user"/>
+    <property name="workitem" type="modules_workflow/workitem" inverse="true"/>
+    <property name="creationnotification" type="modules_notification/notification"/>
+    <property name="terminationnotification" type="modules_notification/notification"/>
+    <property name="cancellationnotification" type="modules_notification/notification"/>
+    <property name="description" type="LongString"/>
+    <property name="commentary" type="LongString"/>
+  </properties>
+  <statuses default="ACTIVE"/>
 </document>
