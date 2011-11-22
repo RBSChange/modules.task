@@ -1,8 +1,13 @@
 <?xml version="1.0" encoding="utf-8"?>
 <i18n baseKey="m.task.bo.doceditor.property" lcid="en_GB">
-  <key id="additionalinfo">workflow label</key>
-  <key id="lastrundate">last execution date</key>
-  <key id="nextrundate">next execution date</key>
-  <key id="isrunning">currently running</key>
-  <key id="node">eecution node</key>
+  <key id="additionalinfo">workflow title</key>
+  <key id="lastrundate">last run date</key>
+  <key id="nextrundate">next run date</key>
+  <key id="isrunning">current running task</key>
+  <key id="node">run node</key>
+  <key id="executioninfos">information on runs</key>
+  <key id="affected-user">affected user</key>
+  <key id="durationaverage">mean duration of runs</key>
+  <key id="lastsuccessdate">last successful run</key>
+  <key id="ping">last task ping</key>
 </i18n>

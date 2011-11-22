@@ -2,6 +2,8 @@
 <i18n baseKey="m.task.document.plannedfolder" lcid="en_GB">
   <include id="m.generic.document.folder"/>
   <key id="document-name">plannedfolder</key>
-  <key id="statusfilter">[TO TRANSLATE] statusFilter</key>
-  <key id="statusfilter-help">[TO TRANSLATE] statusFilter-help</key>
+  <key id="statusfilter">Task run state</key>
+  <key id="statusfilter-help">Running state of scheduled tasks</key>
+  <key id="all-status">All scheduled tasks</key>
+  <key id="def-status">Scheduled tasks: {executionStatus}</key>
 </i18n>

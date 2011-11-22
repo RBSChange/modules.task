@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="utf-8"?>
+<i18n baseKey="m.task.bo.blocks.dashboardplannedtasksinfos" lcid="en_GB">
+  <key id="taskstomonitor">tasks to be monitored</key>
+  <key id="taskstomonitor-help">By default, only the document publication tasks are monitored. Select the list of additional tasks to monitor here.</key>
+  <key id="title">planned task monitoring</key>
+</i18n>
