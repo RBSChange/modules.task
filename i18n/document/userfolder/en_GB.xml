@@ -3,7 +3,6 @@
   <include id="m.generic.document.folder"/>
   <key id="document-name">userfolder</key>
   <key id="statusfilter">Publication status</key>
-  <key id="statusfilter-help">[TO TRANSLATE] statusFilter-help</key>
   <key id="all-status">All the user tasks</key>
   <key id="def-status">User tasks: {publicationstatus}</key>
 </i18n>
