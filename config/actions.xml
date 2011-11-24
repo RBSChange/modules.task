@@ -31,7 +31,7 @@
   <action name="unlockplannedtask">
     <parameter name="listWidget"/>
     <body><![CDATA[
-			if (confirm("&amp;modules.task.bo.actions.UnlockplannedtaskConfirm;"))
+			if (confirm("${trans:m.task.bo.actions.UnlockplannedtaskConfirm,ucf,js}"))
 			{
 				var item = listWidget.getSelectedItems()[0];
 		    	this.executeJSON('UnlockPlannedTask', {cmpref: item.id});

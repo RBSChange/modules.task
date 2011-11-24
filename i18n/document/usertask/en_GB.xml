@@ -1,19 +1,22 @@
 <?xml version="1.0" encoding="utf-8"?>
 <i18n baseKey="m.task.document.usertask" lcid="en_GB">
   <key id="label">label</key>
-  <key id="label-help">label</key>
+  <key id="label-help">name of the task, with the ID of the document in question between parentheses</key>
   <key id="user">user</key>
-  <key id="user-help">user</key>
-  <key id="workitem">workitem</key>
-  <key id="workitem-help">workitem</key>
-  <key id="creationnotification">creationnotification</key>
-  <key id="creationnotification-help">creationnotification</key>
-  <key id="terminationnotification">terminationnotification</key>
-  <key id="terminationnotification-help">terminationnotification</key>
-  <key id="cancellationnotification">cancellationnotification</key>
-  <key id="cancellationnotification-help">cancellationnotification</key>
+  <key id="user-help">the user to whom the task is associated. Only that user can run it.</key>
+  <key id="workitem">work item</key>
+  <key id="workitem-help">Work item related to the task.</key>
+  <key id="creationnotification">creation notification</key>
+  <key id="creationnotification-help">This notification is sent to the task's owner after it has been created.</key>
+  <key id="terminationnotification">termination notification</key>
+  <key id="terminationnotification-help">This notification is sent to the task's owner after its execution has finished.</key>
+  <key id="cancellationnotification">cancellation notification</key>
+  <key id="cancellationnotification-help">This notification is sent to the task's owner after it has been cancelled.</key>
   <key id="description">description</key>
-  <key id="description-help">description</key>
-  <key id="commentary">commentary</key>
-  <key id="commentary-help">commentary</key>
+  <key id="description-help">Description of the task to carry out.</key>
+  <key id="commentary">comment</key>
+  <key id="commentary-help">Comment related to the task to carry out explaining the choice that has been made.</key>
+  <key id="anonymous">anonymous</key>
+  <key id="document-name">user task</key>
+  <key id="edition-form-title">User task properties</key>
 </i18n>

@@ -278,15 +278,15 @@
 				</xul:vbox>
 				<xul:tabbox flex="1">
 					<xul:tabs anonid="tabs" collapsed="true">
-						<xul:tab label="&amp;modules.task.bo.general.tab.PropertiesSpaced;" image="{IconsBase}/small/information.png" />
-						<xul:tab label="&amp;modules.task.bo.general.tab.PreviewSpaced;" image="{IconsBase}/small/preview.png" />
+						<xul:tab label="${trans:m.task.bo.general.tab.Properties,space,ucf,attr}" image="{IconsBase}/small/information.png" />
+						<xul:tab label="${trans:m.task.bo.general.tab.Preview,space,ucf,attr}" image="{IconsBase}/small/preview.png" />
 					</xul:tabs>
 					<xul:tabpanels flex="1">
 						<xul:tabpanel flex="1">
 							<xul:hbox flex="1">
 								<xul:vbox flex="1" anonid="workDocument-box">
 									<xul:hbox class="document-box-title" anonid="workDocument-title">
-										<xul:label value="&amp;modules.task.bo.general.Document-informations-to-validate;" />
+										<xul:label value="${trans:m.task.bo.general.Document-informations-to-validate,ucf,attr}" />
 									</xul:hbox>
 									<xul:scrollbox flex="1" orient="vertical" anonid="current-data-scrollbox">
 										<xul:grid class="preview" flex="1">
@@ -300,10 +300,10 @@
 								</xul:vbox>
 								<xul:vbox flex="1" anonid="originalDocument-box" collapsed="true">
 									<xul:hbox class="document-box-title">
-										<xul:label value="&amp;modules.task.bo.general.Original-document-informations;" />
+										<xul:label value="${trans:m.task.bo.general.Original-document-informations,ucf,attr}" />
 									</xul:hbox>
 									<xul:hbox class="document-box-synchro-checkbox">
-										<xul:checkbox anonid="synchronize-data-checkbox" label="&amp;modules.task.bo.general.Synchro-scroll;" />
+										<xul:checkbox anonid="synchronize-data-checkbox" label="${trans:m.task.bo.general.Synchro-scroll,ucf,attr}" />
 									</xul:hbox>
 									<xul:scrollbox flex="1" orient="vertical" anonid="original-data-scrollbox">
 										<xul:grid class="preview" flex="1">
@@ -321,7 +321,7 @@
 							<xul:hbox flex="1">
 								<xul:vbox flex="1" anonid="workDocument-preview-box">
 									<xul:hbox class="document-box-title" anonid="workDocument-preview-title">
-										<xul:label value="&amp;modules.task.bo.general.Document-informations-to-validate;" />
+										<xul:label value="${trans:m.task.bo.general.Document-informations-to-validate,ucf,attr}" />
 									</xul:hbox>
 									<xul:scrollbox flex="1" anonid="current-preview-scrollbox" orient="vertical">
 										<xul:iframe flex="1" anonid="current-preview-iframe" style="overflow: hidden !important; border: 0px none; min-width: 1050px; min-height: 8192px;" />
@@ -329,10 +329,10 @@
 								</xul:vbox>
 								<xul:vbox flex="1" anonid="originalDocument-preview-box">
 									<xul:hbox class="document-box-title">
-										<xul:label value="&amp;modules.task.bo.general.Original-document-informations;" />
+										<xul:label value="${trans:m.task.bo.general.Original-document-informations,ucf,attr}" />
 									</xul:hbox>
 									<xul:hbox class="document-box-synchro-checkbox">
-										<xul:checkbox anonid="synchronize-preview-checkbox" label="&amp;modules.task.bo.general.Synchro-scroll;" />
+										<xul:checkbox anonid="synchronize-preview-checkbox" label="${trans:m.task.bo.general.Synchro-scroll,ucf,attr}" />
 									</xul:hbox>
 									<xul:scrollbox flex="1" anonid="original-preview-scrollbox" orient="vertical">
 										<xul:iframe flex="1" anonid="original-preview-iframe" style="overflow: hidden !important; border: 0px none; min-width: 1050px; min-height: 8192px;" />
@@ -406,18 +406,18 @@
 					<xul:label anonid="title" xbl:inherits="value=title" class="dialog-title" />
 					<xul:spacer flex="1" />
 					<xul:vbox pack="center">
-						<xul:toolbarbutton height="16" width="16" image="{IconsBase}/small/delete.png" oncommand="onCancel();" tooltiptexts="&amp;modules.uixul.bo.dialog.Cancel;" />
+						<xul:toolbarbutton height="16" width="16" image="{IconsBase}/small/delete.png" oncommand="onCancel();" tooltiptexts="${trans:m.uixul.bo.dialog.Cancel,ucf,attr}" />
 					</xul:vbox>
 				</xul:hbox>
 				<xul:description>
 					<xbl:children />
 				</xul:description>
-				<xul:label control="commentary" value="&amp;modules.task.bo.general.CommentaryLabel;" />
+				<xul:label control="commentary" value="${trans:m.task.bo.general.Commentary,lab,ucf,attr}" />
 				<xul:textbox multiline="true" anonid="commentary" flex="1" rows="3" oninput="onCommentaryChange()" />
 				<xul:hbox pack="end" anonid="buttons">
-					<xul:button anonid="acceptButton" oncommand="submitDecision('ACCEPTED')" label="&amp;modules.task.bo.general.AcceptSpaced;" image="{IconsBase}/small/check.png" />
-					<xul:button anonid="refuseButton" oncommand="submitDecision('REFUSED')" label="&amp;modules.task.bo.general.RefuseSpaced;" image="{IconsBase}/small/reject.png" />
-					<xul:button anonid="refuseAndEditButton" oncommand="refuseAndEdit()" label="&amp;modules.task.bo.general.Refuse-and-editSpaced;" image="{IconsBase}/small/reject_and_edit.png" />
+					<xul:button anonid="acceptButton" oncommand="submitDecision('ACCEPTED')" label="${trans:m.task.bo.general.Accept,space,ucf,attr}" image="{IconsBase}/small/check.png" />
+					<xul:button anonid="refuseButton" oncommand="submitDecision('REFUSED')" label="${trans:m.task.bo.general.Refuse,space,ucf,attr}" image="{IconsBase}/small/reject.png" />
+					<xul:button anonid="refuseAndEditButton" oncommand="refuseAndEdit()" label="${trans:m.task.bo.general.Refuse-and-edit,space,ucf,attr}" image="{IconsBase}/small/reject_and_edit.png" />
 				</xul:hbox>
 			</xul:vbox>
 		</content>

@@ -1,10 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
 <i18n baseKey="m.task.bo.actions" lcid="en_GB">
-  <key id="perform-usertask">Perform task</key>
-  <key id="create-plannedtask">Create plannedtask</key>
-  <key id="unlockplannedtask">unlock task</key>
-  <key id="resetplannedtasktime">launch task as soon as possible</key>
-  <key id="unlockplannedtaskconfirm">Unlocking a tack might cause unexpected problems in some functionnalities. This action should only be performed if you are sure a task is really locked. Do you want to continue?</key>
-  <key id="createplannedfolder">create</key>
-  <key id="createuserfolder">create</key>
+  <key id="perform-usertask">Perform the task</key>
+  <key id="create-plannedtask">Create a planned task</key>
+  <key id="unlockplannedtask">unlock the task</key>
+  <key id="resetplannedtasktime">launch the task as soon as possible</key>
+  <key id="unlockplannedtaskconfirm">Unlocking a task might cause unexpected problems in certain features. This action should only be performed if you are sure that a task is really locked. Are you sure that you want to continue?</key>
+  <key id="createplannedfolder">create a planned task filter</key>
+  <key id="createuserfolder">create a user task filter</key>
 </i18n>
