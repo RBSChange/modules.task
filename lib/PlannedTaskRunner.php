@@ -74,7 +74,7 @@ class task_PlannedTaskRunner
 		$output = f_util_System::execHTTPScript($scriptPath, array($taskId, $date));
 		if ($output != 'OK')
 		{
-			Framework::warn(__METHOD__ . ' -> ' . $runnableTask->getId() . ' : ' . $output);
+			Framework::warn(__METHOD__ . ' -> ' . $taskId . ' : ' . $output);
 		}
 	}
 
