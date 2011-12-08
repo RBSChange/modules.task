@@ -636,12 +636,12 @@ class task_PlannedtaskService extends f_persistentdocument_DocumentService
 	
 	/**
 	 * @param task_persistentdocument_plannedtask $document
+	 * @param array<string, string> $attributes
+	 * @param integer $mode
 	 * @param string $moduleName
-	 * @param string $treeType
-	 * @param array<string, string> $nodeAttributes
 	 */
-	public function addTreeAttributes($document, $moduleName, $treeType, &$nodeAttributes)
+	public function completeBOAttributes($document, &$attributes, $mode, $moduleName)
 	{
-		$nodeAttributes['isLocked'] = $document->isLocked() ? '1' : '0';
+		$attributes['isLocked'] = $document->isLocked() ? '1' : '0';
 	}
 }
