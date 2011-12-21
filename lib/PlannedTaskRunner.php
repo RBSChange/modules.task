@@ -102,17 +102,17 @@ class task_PlannedTaskRunner
 	 */
 	public static function launchTask($URL)
 	{
-		//Framework::info(__METHOD__ . ' ' . $URL);
-		
 		$rc = curl_init();
 		curl_setopt($rc, CURLOPT_RETURNTRANSFER, false);
 		curl_setopt($rc, CURLOPT_HTTPHEADER, array('Cache-Control: no-store, no-cache, no-transform', 'Pragma: no-cache', 'Connection: close'));
-		curl_setopt($rc, CURLOPT_USERAGENT, 'RBSChange/3.0');
+		curl_setopt($rc, CURLOPT_USERAGENT, 'RBSChange/3.6');
 		curl_setopt($rc, CURLOPT_POST, 1);
 		curl_setopt($rc, CURLOPT_POSTFIELDS, null);	
 		curl_setopt($rc, CURLOPT_TIMEOUT, 5);
 		curl_setopt($rc, CURLOPT_FOLLOWLOCATION, true);
 		curl_setopt($rc, CURLOPT_URL, $URL);
+		$lp = Framework::getConfigurationValue('general/selfRequestProxy');
+		if (!empty($lp)) {curl_setopt($rc, CURLOPT_PROXY, $lp);}
 		curl_exec($rc);
 		curl_close($rc);
 	}
@@ -122,18 +122,18 @@ class task_PlannedTaskRunner
 	 */
 	public static function pingChangeCronURL($pingURL)
 	{
-		//Framework::info(__METHOD__ . ' ' . $pingURL);
-		
 		$rc = curl_init();
 		curl_setopt($rc, CURLOPT_RETURNTRANSFER, false);
 		curl_setopt($rc, CURLOPT_HTTPHEADER, array('Cache-Control: no-store, no-cache, no-transform', 'Pragma: no-cache', 'Connection: close'));
-		curl_setopt($rc, CURLOPT_USERAGENT, 'RBSChange/3.0');
+		curl_setopt($rc, CURLOPT_USERAGENT, 'RBSChange/3.6');
 		curl_setopt($rc, CURLOPT_POST, 1);
 		curl_setopt($rc, CURLOPT_POSTFIELDS, null);
 		curl_setopt($rc, CURLOPT_FRESH_CONNECT, 1); // don't use a cached version of the url 	
 		curl_setopt($rc, CURLOPT_TIMEOUT, 1);
 		curl_setopt($rc, CURLOPT_FOLLOWLOCATION, 0);
 		curl_setopt($rc, CURLOPT_URL, $pingURL);
+		$lp = Framework::getConfigurationValue('general/selfRequestProxy');
+		if (!empty($lp)) {curl_setopt($rc, CURLOPT_PROXY, $lp);}
 		curl_exec($rc);
 		curl_close($rc);
 	}	
