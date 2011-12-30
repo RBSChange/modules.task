@@ -7,7 +7,6 @@ class commands_task_UnlockAll extends commands_AbstractChangeCommand
 {
 	/**
 	 * @return String
-	 * @example "<moduleName> <name>"
 	 */
 	function getUsage()
 	{
@@ -16,7 +15,6 @@ class commands_task_UnlockAll extends commands_AbstractChangeCommand
 
 	/**
 	 * @return String
-	 * @example "initialize a document"
 	 */
 	function getDescription()
 	{
