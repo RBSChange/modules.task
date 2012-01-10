@@ -7,7 +7,7 @@
   <key id="isrunning">en cours d'exécution</key>
   <key id="node">noeud d'exécution</key>
   
-  <key id="Executioninfos">informations sur les exécutions</key>
+  <key id="executioninfos">informations sur les exécutions</key>
   <key id="durationaverage">durée moyenne des exécutions</key>
   <key id="lastsuccessdate">dernière exécution en succès</key>
   <key id="ping">dernier 'ping' de la tâche</key>
