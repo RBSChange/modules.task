@@ -16,7 +16,7 @@
     <add name="parameters" type="LongString"/>
     <add name="systemtaskclassname" type="String" min-occurs="1"/>
     <add name="node" type="String"/>
-    <add name="maxduration" type="Integer" default-value="60" min-occurs="1"/>
+    <add name="maxduration" type="Integer" default-value="5" min-occurs="1"/>
     
     <add name="unlockCount" type="Integer" default-value="0" />
     <add name="executionStatus" type="String" default-value="success" from-list="modules_task/executionstatus"/>
