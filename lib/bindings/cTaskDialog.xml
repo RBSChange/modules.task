@@ -365,9 +365,12 @@
 			
 			<method name="refuseAndEdit">
 				<body><![CDATA[
+					var documentModule = this.dialog.getAttribute('documentModule');
+					var documentModel = this.dialog.getAttribute('documentModel');
+					var documentId = this.dialog.getAttribute('documentId');
 					if (this.submitDecision('REFUSED'))
 					{	
-						openActionUri(this.dialog.getAttribute('documentModule')+',openDocument,'+this.dialog.getAttribute('documentModel')+','+this.dialog.getAttribute('documentId'));
+						openActionUri(documentModule+',openDocument,'+documentModel+','+documentId);
 					}
 				]]></body>
 			</method>
