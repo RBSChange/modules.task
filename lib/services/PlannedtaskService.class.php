@@ -151,7 +151,7 @@ class task_PlannedtaskService extends f_persistentdocument_DocumentService
 	{
 		if (Framework::isInfoEnabled())
 		{
-			Framework::info(__METHOD__ . " " . $task->getId()  ." - " .  $task->getLabel());
+			Framework::info(__METHOD__ . " " . $task->getId()  ." - " .  $task->getSystemtaskclassname());
 		}
 		
 		try 
@@ -176,7 +176,7 @@ class task_PlannedtaskService extends f_persistentdocument_DocumentService
 	{
 		if (Framework::isInfoEnabled())
 		{
-			Framework::info(__METHOD__ . " " . $task->getId()  ." - " .  $task->getLabel());
+			Framework::info(__METHOD__ . " " . $task->getId()  ." - " .  $task->getSystemtaskclassname());
 		}
 		
 		try 
@@ -214,7 +214,7 @@ class task_PlannedtaskService extends f_persistentdocument_DocumentService
 	{
 		if (Framework::isInfoEnabled())
 		{
-			Framework::info(__METHOD__ . " " . $task->getId()  ." - " .  $task->getLabel() . " - " . $message);
+			Framework::info(__METHOD__ . " " . $task->getId()  ." - " .  $task->getSystemtaskclassname() . " - " . $message);
 		}
 		
 		try 
@@ -268,7 +268,7 @@ class task_PlannedtaskService extends f_persistentdocument_DocumentService
 	{
 		if (Framework::isInfoEnabled())
 		{
-			Framework::info(__METHOD__ . " " . $task->getId()  ." - " .  $task->getLabel());
+			Framework::info(__METHOD__ . " " . $task->getId()  ." - " .  $task->getSystemtaskclassname());
 		}
 		
 		try 
@@ -311,7 +311,7 @@ class task_PlannedtaskService extends f_persistentdocument_DocumentService
 	{
 		if (Framework::isInfoEnabled())
 		{
-			Framework::info(__METHOD__ . " " . $task->getId()  ." - " .  $task->getLabel());
+			Framework::info(__METHOD__ . " " . $task->getId()  ." - " .  $task->getSystemtaskclassname());
 		}
 		try 
 		{
@@ -340,7 +340,7 @@ class task_PlannedtaskService extends f_persistentdocument_DocumentService
 	{
 		if (Framework::isInfoEnabled())
 		{
-			Framework::info(__METHOD__ . " " . $task->getId()  ." - " .  $task->getLabel());
+			Framework::info(__METHOD__ . " " . $task->getId()  ." - " .  $task->getSystemtaskclassname());
 		}
 		try 
 		{
@@ -368,7 +368,7 @@ class task_PlannedtaskService extends f_persistentdocument_DocumentService
 	{
 		if (Framework::isInfoEnabled())
 		{
-			Framework::info(__METHOD__ . " " . $task->getId()  ." - " .  $task->getLabel());
+			Framework::info(__METHOD__ . " " . $task->getId()  ." - " .  $task->getSystemtaskclassname());
 		}
 		
 		try 

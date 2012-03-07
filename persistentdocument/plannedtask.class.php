@@ -6,6 +6,14 @@
 class task_persistentdocument_plannedtask extends task_persistentdocument_plannedtaskbase
 {
 	/**
+	 * @return string
+	 */
+	public function getTreeNodeLabel()
+	{
+		return LocaleService::getInstance()->transBO(parent::getTreeNodeLabel(), array('ucf'));
+	}
+	
+	/**
 	 * @return Integer or null
 	 */
 	public function getPeriodUnit()
@@ -35,47 +43,39 @@ class task_persistentdocument_plannedtask extends task_persistentdocument_planne
 	
 	public function getPeriodUnitLabel()
 	{
-		switch ($this->getPeriodUnit()) 
+		switch ($this->getPeriodUnit())
 		{
-			case date_Calendar::MINUTE:
+			case date_Calendar::MINUTE :
 				$key = 'm.task.document.plannedtask.period-minute';
 				break;
-			case date_Calendar::HOUR:
+			case date_Calendar::HOUR :
 				$key = 'm.task.document.plannedtask.period-hour';
 				break;
-			case date_Calendar::DAY:
+			case date_Calendar::DAY :
 				$key = 'm.task.document.plannedtask.period-day';
 				break;
-			case date_Calendar::MONTH:
+			case date_Calendar::MONTH :
 				$key = 'm.task.document.plannedtask.period-month';
-				break;	
-			case date_Calendar::YEAR:
+				break;
+			case date_Calendar::YEAR :
 				$key = 'm.task.document.plannedtask.period-year';
-				break;		
-			default:
+				break;
+			default :
 				$key = 'm.task.document.plannedtask.period-no';
 				break;
-		}	
+		}
 		return LocaleService::getInstance()->transBO($key, array('ucf'));
 	}
-	
 	
 	public function getUniqueNextDate()
 	{
 		if ($this->getPeriodUnit() === null)
 		{
-			return date_Calendar::getInstance()
-				->setYear($this->getYear())
-				->setMonth($this->getMonthofyear())
-				->setDay($this->getDayofmonth())
-				->setHour($this->getHour())
-				->setMinute($this->getMinute())
-				->setSecond(rand(0, 59))
-				->toString();
-		}		
+			return date_Calendar::getInstance()->setYear($this->getYear())->setMonth($this->getMonthofyear())->setDay($this->getDayofmonth())->setHour($this->getHour())->setMinute($this->getMinute())->setSecond(rand(0, 59))->toString();
+		}
 		return null;
 	}
-
+	
 	/**
 	 * @return Integer
 	 */
@@ -96,10 +96,10 @@ class task_persistentdocument_plannedtask extends task_persistentdocument_planne
 		$this->setMinute($date->getMinute());
 		$this->setNextrundate($date->toString());
 	}
-		
+	
 	/**
 	 * @param date_Calendar $date
-	 */	
+	 */
 	public function reSchedule($date)
 	{
 		$this->getDocumentService()->reSchedule($this, $date);
@@ -109,7 +109,6 @@ class task_persistentdocument_plannedtask extends task_persistentdocument_planne
 	{
 		$this->getDocumentService()->ping($this);
 	}
-	
 	
 	public function end()
 	{
@@ -123,7 +122,6 @@ class task_persistentdocument_plannedtask extends task_persistentdocument_planne
 	{
 		$this->getDocumentService()->error($this, $message);
 	}
-	
 	
 	/**
 	 * @return boolean
@@ -139,7 +137,7 @@ class task_persistentdocument_plannedtask extends task_persistentdocument_planne
 	public function getIsrunning()
 	{
 		return $this->getExecutionStatus() === task_PlannedtaskService::STATUS_RUNNING;
-	}	
+	}
 	
 	/**
 	 * @return string
@@ -150,10 +148,10 @@ class task_persistentdocument_plannedtask extends task_persistentdocument_planne
 		{
 			return LocaleService::getInstance()->transBO('m.task.document.plannedtask.yes', array('ucf'));
 		}
-		else 
+		else
 		{
 			return LocaleService::getInstance()->transBO('m.task.document.plannedtask.no', array('ucf'));
-		}	
+		}
 	}
 	
 	/**
@@ -171,7 +169,7 @@ class task_persistentdocument_plannedtask extends task_persistentdocument_planne
 	{
 		if ($minute == -1)
 		{
-			$minute = rand(0, 59);	
+			$minute = rand(0, 59);
 		}
 		parent::setMinute($minute);
 	}
@@ -183,7 +181,7 @@ class task_persistentdocument_plannedtask extends task_persistentdocument_planne
 	{
 		if ($hour == -1)
 		{
-			$hour = rand(0, 23);	
+			$hour = rand(0, 23);
 		}
 		parent::setHour($hour);
 	}
@@ -195,7 +193,7 @@ class task_persistentdocument_plannedtask extends task_persistentdocument_planne
 	{
 		if ($dayofmonth == -1)
 		{
-			$dayofmonth = rand(1, 28);	
+			$dayofmonth = rand(1, 28);
 		}
 		parent::setDayofmonth($dayofmonth);
 	}
@@ -207,7 +205,7 @@ class task_persistentdocument_plannedtask extends task_persistentdocument_planne
 	{
 		if ($month == -1)
 		{
-			$month = rand(1, 12);	
+			$month = rand(1, 12);
 		}
 		parent::setMonth($month);
 	}
