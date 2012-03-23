@@ -7,7 +7,6 @@ class task_Setup extends object_InitDataSetup
 		{
 			$this->executeModuleScript('lists.xml');
 			$this->addCronTask();
-			$this->addBackGroundIndexingTask();
 		}
 		catch (Exception $e)
 		{
@@ -48,13 +47,13 @@ class task_Setup extends object_InitDataSetup
 		$task->setHour(2);
 		$task->setLabel('task_CleanDataCacheTask');
 		$task->save(ModuleService::getInstance()->getSystemFolderId('task', 'task'));
-	}
-	
-	/**
-	 * @return void
-	 */
-	private function addBackGroundIndexingTask()
-	{
+		
+		$task = task_PlannedtaskService::getInstance()->getNewDocumentInstance();
+		$task->setSystemtaskclassname('task_I18nSynchroTask');
+		$task->setLabel('task_I18nSynchroTask');
+		$task->save(ModuleService::getInstance()->getSystemFolderId('task', 'task'));
+		
+		
 		$task = task_PlannedtaskService::getInstance()->getNewDocumentInstance();
 		$task->setSystemtaskclassname('f_tasks_BackgroundIndexingTask');
 		$task->setLabel('f_tasks_BackgroundIndexingTask');
