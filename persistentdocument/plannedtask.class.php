@@ -6,14 +6,6 @@
 class task_persistentdocument_plannedtask extends task_persistentdocument_plannedtaskbase
 {
 	/**
-	 * @return string
-	 */
-	public function getTreeNodeLabel()
-	{
-		return LocaleService::getInstance()->transBO(parent::getTreeNodeLabel(), array('ucf'));
-	}
-
-	/**
 	 * @return integer or null
 	 */
 	public function getPeriodUnit()
