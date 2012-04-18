@@ -19,7 +19,7 @@ If you accept, the document will be published on the website and all visitors wi
   <key id="close">close</key>
   <key id="commentary">comment (optionnal)</key>
   <key id="author-comment">author's comment ({author})</key>
-  <key id="synchro-scroll">Synchonise the scrolling</key>
+  <key id="synchro-scroll">Synchronise the scrolling</key>
   <key id="document-informations-to-validate">information to be validated</key>
   <key id="original-document-informations">currently published version information</key>
   <key id="user-task-title">document validation</key>
