@@ -10,7 +10,7 @@ class task_I18nSynchroTask extends task_SimpleSystemTask
 		while (true)
 		{
 			$this->plannedTask->ping();
-			$output = f_util_System::execHTTPScript($scriptPath, array('synchro'));
+			$output = f_util_System::execScript($scriptPath, array('synchro'));
 			if (!is_numeric($output))
 			{
 				if (!f_util_StringUtils::endsWith($output, 'OK'))

@@ -25,7 +25,7 @@ class task_PublishTask extends task_SimpleSystemTask
 		foreach ($documentsArray as $chunk)
 		{
 			$this->plannedTask->ping();
-			$result = f_util_System::execHTTPScript($script, $chunk);
+			$result = f_util_System::execScript($script, $chunk);
 			// Log fatal errors...
 			if ($result != 'OK')
 			{
