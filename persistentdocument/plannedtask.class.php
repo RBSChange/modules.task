@@ -6,7 +6,7 @@
 class task_persistentdocument_plannedtask extends task_persistentdocument_plannedtaskbase
 {
 	/**
-	 * @return Integer or null
+	 * @return integer or null
 	 */
 	public function getPeriodUnit()
 	{
@@ -33,6 +33,10 @@ class task_persistentdocument_plannedtask extends task_persistentdocument_planne
 		return null;
 	}
 	
+	/**
+	 * 
+	 * @return string
+	 */
 	public function getPeriodUnitLabel()
 	{
 		switch ($this->getPeriodUnit()) 
@@ -56,10 +60,12 @@ class task_persistentdocument_plannedtask extends task_persistentdocument_planne
 				$key = 'm.task.document.plannedtask.period-no';
 				break;
 		}	
-		return LocaleService::getInstance()->transBO($key, array('ucf'));
+		return LocaleService::getInstance()->trans($key, array('ucf'));
 	}
 	
-	
+	/**
+	 * @return string|null
+	 */	
 	public function getUniqueNextDate()
 	{
 		if ($this->getPeriodUnit() === null)
@@ -77,7 +83,7 @@ class task_persistentdocument_plannedtask extends task_persistentdocument_planne
 	}
 
 	/**
-	 * @return Integer
+	 * @return integer
 	 */
 	public function getPeriodValue()
 	{
@@ -148,11 +154,11 @@ class task_persistentdocument_plannedtask extends task_persistentdocument_planne
 	{
 		if ($this->getIsrunning())
 		{
-			return LocaleService::getInstance()->transBO('m.task.document.plannedtask.yes', array('ucf'));
+			return LocaleService::getInstance()->trans('m.task.document.plannedtask.yes', array('ucf'));
 		}
 		else 
 		{
-			return LocaleService::getInstance()->transBO('m.task.document.plannedtask.no', array('ucf'));
+			return LocaleService::getInstance()->trans('m.task.document.plannedtask.no', array('ucf'));
 		}	
 	}
 	
@@ -161,7 +167,7 @@ class task_persistentdocument_plannedtask extends task_persistentdocument_planne
 	 */
 	public function getExecutionStatusLabel()
 	{
-		return LocaleService::getInstance()->transBO('m.task.document.plannedtask.status-' . $this->getExecutionStatus());
+		return LocaleService::getInstance()->trans('m.task.document.plannedtask.status-' . $this->getExecutionStatus());
 	}
 	
 	/**

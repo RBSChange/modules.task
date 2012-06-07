@@ -7,20 +7,18 @@ class commands_task_Unlock extends c_ChangescriptCommand
 {
 	/**
 	 * @return String
-	 * @example "<moduleName> <name>"
 	 */
-	function getUsage()
+	public function getUsage()
 	{
-		return "<taskToUnlock> [nodeName] [--reset]";
+		return "<taskClassName> [nodeName]";
 	}
-
+	
 	/**
 	 * @return String
-	 * @example "initialize a document"
 	 */
-	function getDescription()
+	public function getDescription()
 	{
-		return "Unlock a task, add nodeName if your task is on multiple nodes  --reset to unlock and rerun task";
+		return "Unlock a task by class name. Specify nodeName if you want to unlock it on only one node.";
 	}
 	
 	/**
@@ -30,21 +28,22 @@ class commands_task_Unlock extends c_ChangescriptCommand
 	 * @param array<String, String> $options where the option array key is the option name, the potential option value or true
 	 * @return String[] or null
 	 */
-	function getParameters($completeParamCount, $params, $options, $current)
+	public function getParameters($completeParamCount, $params, $options, $current)
 	{
 		$components = array();
 		if ($completeParamCount == 0)
 		{
-			$components = task_PlannedtaskService::getInstance()->createQuery()->add(Restrictions::eq('isrunning', '1'))
+			$components = task_PlannedtaskService::getInstance()->createQuery()
+				->add(Restrictions::eq('executionStatus', task_PlannedtaskService::STATUS_LOCKED))
 				->setProjection(Projections::groupProperty('systemtaskclassname'))->findColumn('systemtaskclassname');		
 		}
 		else if ($completeParamCount == 1)
 		{
-			$components = task_PlannedtaskService::getInstance()->createQuery()->add(Restrictions::eq('isrunning', '1'))
+			$components = task_PlannedtaskService::getInstance()->createQuery()
+				->add(Restrictions::eq('executionStatus', task_PlannedtaskService::STATUS_LOCKED))
 				->add(Restrictions::eq('systemtaskclassname', $params[0]))
 				->setProjection(Projections::groupProperty('node'))->findColumn('node');	
-		}
-			
+		}			
 		return $components;
 	}
 	
@@ -55,39 +54,29 @@ class commands_task_Unlock extends c_ChangescriptCommand
 	 */
 	protected function validateArgs($params, $options)
 	{
-		if (f_util_ArrayUtils::isEmpty($params))
+		if (f_util_ArrayUtils::isEmpty($params) || count($params) > 2)
 		{
-			$result = false;
+			return false;
 		}
 		else 
 		{
-			$taskName = task_PlannedtaskService::getInstance()->createQuery()->add(Restrictions::eq('isrunning', '1'))
-					->setProjection(Projections::groupProperty('systemtaskclassname'))->findColumn('systemtaskclassname');
-	
-			$nodeName = task_PlannedtaskService::getInstance()->createQuery()->add(Restrictions::eq('isrunning', '1'))
-					->add(Restrictions::eq('systemtaskclassname', $params[0]))
-					->setProjection(Projections::groupProperty('node'))->findColumn('node');			
-					
-			if (in_array($params[0], $taskName))
+			$nodes = task_PlannedtaskService::getInstance()->createQuery()
+				->add(Restrictions::eq('executionStatus', task_PlannedtaskService::STATUS_LOCKED))
+				->add(Restrictions::eq('systemtaskclassname', $params[0]))
+				->setProjection(Projections::groupProperty('node'))->findColumn('node');
+			if (!count($nodes))
 			{
-				$result = true; 
+				$this->warnMessage('No locked task for ' . $params[0]);
+				return false;
 			}
-			else
+			
+			if (count($params) == 2 && !in_array($params[1], $nodes))
 			{
-				$result = false;
+				$this->warnMessage('No locked task for ' . $params[0] . ' on node ' . $params[1]);
+				return false;
 			}
 		}
-		return $result;
-	}
-
-	/**
-	 * @return String[]
-	 */
-	function getOptions()
-	{
-		$options = array();
-		$options[] = "--reset";
-		return $options;
+		return true;
 	}
 
 	/**
@@ -95,73 +84,31 @@ class commands_task_Unlock extends c_ChangescriptCommand
 	 * @param array<String, String> $options where the option array key is the option name, the potential option value or true
 	 * @see c_ChangescriptCommand::parseArgs($args)
 	 */
-	function _execute($params, $options)
+	public function _execute($params, $options)
 	{
 		$this->message("== Unlock ==");
-
-		$taskName = array_key_exists("0",$params) ? $params[0] : NULL;
+		$this->loadFramework();
 		
-		$nodeName = array_key_exists("1",$params) ? $params[1] : NULL;
+		$taskName = $params[0];
+		$nodeName = (count($params) > 1) ? $params[1] : null;
 		
-		$doReset = array_key_exists("reset", $options);
+		$query = task_PlannedtaskService::getInstance()->createQuery()
+			->add(Restrictions::eq('executionStatus', task_PlannedtaskService::STATUS_LOCKED))
+			->add(Restrictions::eq('systemtaskclassname', $taskName));
+				
+		if ($nodeName)
+		{
+			$query->add(Restrictions::eq('node', $nodeName));
+		}
 		
-		$tasks = task_PlannedtaskService::getInstance()->createQuery()->add(Restrictions::eq('isrunning','1'))
-				->add(Restrictions::eq('systemtaskclassname',$taskName))->find();
 		$unlockCount = 0;
-		if (count($tasks) > 0)
+		foreach ($query->find() as $task) 
 		{
-			foreach ($tasks as $task) 
-			{
-				if ($task instanceof task_persistentdocument_plannedtask) 
-				{
-					if ($nodeName === null || $task->getNode() == $nodeName)
-					{
-						$unlockCount++;
-						$this->unlockTask($task, $doReset);
-					}
-				}
-				else 
-				{
-					$this->quitError("\"".$taskName."\" is corrupt");
-				}
-			}
+			/* @var $task task_persistentdocument_plannedtask */
+			$unlockCount++;
+			$task->getDocumentService()->unlock($task);
+			$this->okMessage("Task \"".$task->getSystemtaskclassname()."\" unlocked");
 		}
-		
-		
-		if (!$unlockCount)
-		{
-			if ($nodeName === null)
-			{
-				$this->quitError("\"".$taskName."\" is not running or doesn't exist");
-			}
-			else
-			{
-				$this->quitError("\"".$taskName."\" is not running or doesn't exist for \"".$nodeName."\" node name");
-			}
-		}
-	}
-	
-	/**
-	 * @param task_persistentdocument_plannedtask $task
-	 * @param Boolean $doReset
-	 */
-	private function unlockTask($task, $doReset = false)
-	{
-		if ($task->isLocked())
-		{
-			$task->setIsrunning(false);
-			if ($doReset == true)
-			{
-				$task->setNextrundate(date_Calendar::now());
-			}
-			$task->save();
-			$action = ($doReset == true ? 'reset' : 'unlock') . '.plannedtask';
-			UserActionLoggerService::getInstance()->addUserDocumentEntry('system',$action, $task, array(), 'task');
-			$this->quitOk("Task \"".$task->getSystemtaskclassname()."\" ".($doReset == true ? 'reset' : 'unlock')."ed");
-		}
-		else
-		{
-			$this->quitError("Task \"".$task->getSystemtaskclassname()."\" is not locked, the duration given to its work is set to ".$task->getMaxduration()." minutes");
-		}
+		return $this->quitOk($unlockCount . ' tasks unlocked' . ($nodeName ? (' on node ' . $nodeName) : ''));
 	}
 }

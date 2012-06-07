@@ -94,6 +94,19 @@ class task_PlannedtaskService extends f_persistentdocument_DocumentService
 		$query->add(Restrictions::in('executionStatus', array(self::STATUS_SUCCESS, self::STATUS_FAILED)));
 		return $query->find();
 	}
+	
+	/**
+	 * @return integer[]
+	 */
+	public function getTasksToStartIds()
+	{
+		$now = date_Calendar::getInstance()->toString();
+		$query  = $this->getPublishedNodetaskQuery();
+		$query->add(Restrictions::le('nextrundate', $now))->find();
+		$query->add(Restrictions::in('executionStatus', array(self::STATUS_SUCCESS, self::STATUS_FAILED)));
+		$query->setProjection(Projections::property('id', 'id'));
+		return $query->findColumn('id');
+	}
 
 	/**
 	 * @return task_persistentdocument_plannedtask[]
@@ -151,7 +164,7 @@ class task_PlannedtaskService extends f_persistentdocument_DocumentService
 	{
 		if (Framework::isInfoEnabled())
 		{
-			Framework::info(__METHOD__ . " " . $task->getId()  ." - " .  $task->getLabel());
+			Framework::info(__METHOD__ . " " . $task->getId()  ." - " .  $task->getSystemtaskclassname());
 		}
 		
 		try 
@@ -176,7 +189,7 @@ class task_PlannedtaskService extends f_persistentdocument_DocumentService
 	{
 		if (Framework::isInfoEnabled())
 		{
-			Framework::info(__METHOD__ . " " . $task->getId()  ." - " .  $task->getLabel());
+			Framework::info(__METHOD__ . " " . $task->getId()  ." - " .  $task->getSystemtaskclassname());
 		}
 		
 		try 
@@ -214,7 +227,7 @@ class task_PlannedtaskService extends f_persistentdocument_DocumentService
 	{
 		if (Framework::isInfoEnabled())
 		{
-			Framework::info(__METHOD__ . " " . $task->getId()  ." - " .  $task->getLabel() . " - " . $message);
+			Framework::info(__METHOD__ . " " . $task->getId()  ." - " .  $task->getSystemtaskclassname() . " - " . $message);
 		}
 		
 		try 
@@ -268,7 +281,7 @@ class task_PlannedtaskService extends f_persistentdocument_DocumentService
 	{
 		if (Framework::isInfoEnabled())
 		{
-			Framework::info(__METHOD__ . " " . $task->getId()  ." - " .  $task->getLabel());
+			Framework::info(__METHOD__ . " " . $task->getId()  ." - " .  $task->getSystemtaskclassname());
 		}
 		
 		try 
@@ -311,7 +324,7 @@ class task_PlannedtaskService extends f_persistentdocument_DocumentService
 	{
 		if (Framework::isInfoEnabled())
 		{
-			Framework::info(__METHOD__ . " " . $task->getId()  ." - " .  $task->getLabel());
+			Framework::info(__METHOD__ . " " . $task->getId()  ." - " .  $task->getSystemtaskclassname());
 		}
 		try 
 		{
@@ -340,7 +353,7 @@ class task_PlannedtaskService extends f_persistentdocument_DocumentService
 	{
 		if (Framework::isInfoEnabled())
 		{
-			Framework::info(__METHOD__ . " " . $task->getId()  ." - " .  $task->getLabel());
+			Framework::info(__METHOD__ . " " . $task->getId()  ." - " .  $task->getSystemtaskclassname());
 		}
 		try 
 		{
@@ -368,7 +381,7 @@ class task_PlannedtaskService extends f_persistentdocument_DocumentService
 	{
 		if (Framework::isInfoEnabled())
 		{
-			Framework::info(__METHOD__ . " " . $task->getId()  ." - " .  $task->getLabel());
+			Framework::info(__METHOD__ . " " . $task->getId()  ." - " .  $task->getSystemtaskclassname());
 		}
 		
 		try 

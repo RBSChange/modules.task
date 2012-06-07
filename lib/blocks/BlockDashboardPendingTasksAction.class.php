@@ -21,6 +21,7 @@ class task_BlockDashboardPendingTasksAction extends dashboard_BlockDashboardActi
 		$widget = array();
 		foreach ($tasks as $task)
 		{
+			/* @var $task task_persistentdocument_usertask */
 			try 
 			{
 				$document = DocumentHelper::getDocumentInstance($task->getWorkitem()->getDocumentid());
@@ -30,23 +31,13 @@ class task_BlockDashboardPendingTasksAction extends dashboard_BlockDashboardActi
 				Framework::warn(__METHOD__ . ' no document found with id ' . $task->getWorkitem()->getDocumentid() .  ' for the task with id ' . $task->getId());
 				continue;
 			}
-			
-			$lastModification = date_Calendar::getInstance($task->getUICreationdate());
-			if ($lastModification->isToday())
-			{
-				$status = $ls->transBO('m.uixul.bo.datePicker.calendar.today') . date_Formatter::format($lastModification, ', H:i');
-			}
-			else
-			{
-				$status = date_Formatter::toDefaultDateTimeBO($lastModification);
-			}
-			
+						
 			$attr = array(
 				'id' => $task->getId(),
 				'taskLabel' => $task->getLabelAsHtml(),
 				'dialog' => $task->getDialogName(),
 				'module' => $task->getModule(),
-				'status' => ucfirst($status),
+				'status' => date_Formatter::toDefaultDateTimeBO($task->getUICreationdate()),
 				'documentId' => $document->getId(),
 				'documentLabel' => f_util_HtmlUtils::textToHtml($document->getPersistentModel()->isLocalized() ? $document->getLabelForLang($task->getLang()) : $document->getLabel()),
 				'documentModel' => str_replace('/', '_', $document->getDocumentModelName()),

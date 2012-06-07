@@ -77,14 +77,7 @@ class task_PlannedTaskRunner
 		{
 			$erroMessage = ''. $e->getMessage();
 		}
-
-/*
-		if (defined('MYSQL_WAIT_TIMEOUT') && time() - $startTime >=  MYSQL_WAIT_TIMEOUT)
-		{
-			// TODO et le transaction manager !!!
-			f_persistentdocument_PersistentProvider::refresh();
-		}
-*/				
+		
 		if ($erroMessage === null)
 		{
 			$taskService->end($task);
@@ -107,17 +100,23 @@ class task_PlannedTaskRunner
 		$client = change_HttpClientService::getInstance()->getNewHttpClient(array('timeout' => 5));
 		$client->setHeaders(array('Cache-Control: no-store, no-cache, no-transform', 'Pragma: no-cache', 'Connection: close'));
 		$client->setUri($URL);
-		
+		$adapter = $client->getAdapter();
+		if ($adapter instanceof Zend_Http_Client_Adapter_Curl)
+		{
+			$selfRequestProxy = Framework::getConfigurationValue('general/selfRequestProxy');
+			if (!empty($selfRequestProxy))
+			{
+				$adapter->setCurlOption(CURLOPT_PROXY, $selfRequestProxy);
+			}
+		}
+				
 		try 
 		{
 			$client->request(Zend_Http_Client::POST);
 		} 
-		catch (Zend_Http_Client_Adapter_Exception $e)
+		catch (Exception $e)
 		{
-			if ($e->getCode() !== Zend_Http_Client_Adapter_Exception::READ_TIMEOUT)
-			{
-				throw $e;
-			}
+			Framework::info(__METHOD__ . ' ' . $e->getCode() . ' ' . $e->getMessage());
 		}
 	}
 	
@@ -129,17 +128,23 @@ class task_PlannedTaskRunner
 		$client = change_HttpClientService::getInstance()->getNewHttpClient(array('timeout' => 5));
 		$client->setHeaders(array('Cache-Control: no-store, no-cache, no-transform', 'Pragma: no-cache', 'Connection: close'));
 		$client->setUri($pingURL);
+		$adapter = $client->getAdapter();
+		if ($adapter instanceof Zend_Http_Client_Adapter_Curl)
+		{
+			$selfRequestProxy = Framework::getConfigurationValue('general/selfRequestProxy');
+			if (!empty($selfRequestProxy))
+			{
+				$adapter->setCurlOption(CURLOPT_PROXY, $selfRequestProxy);
+			}
+		}
 		
 		try 
 		{
 			$client->request(Zend_Http_Client::POST);
 		} 
-		catch (Zend_Http_Client_Adapter_Exception $e)
+		catch (Exception $e)
 		{
-			if ($e->getCode() !== Zend_Http_Client_Adapter_Exception::READ_TIMEOUT)
-			{
-				throw $e;
-			}
+			Framework::info(__METHOD__ . ' ' . $e->getCode() . ' ' . $e->getMessage());
 		}
 	}	
 	

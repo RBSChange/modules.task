@@ -6,32 +6,27 @@
 class commands_task_UnlockAll extends c_ChangescriptCommand
 {
 	/**
-	 * @return String
-	 * @example "<moduleName> <name>"
+	 * @return string
 	 */
 	function getUsage()
 	{
-		return "(--reset | --show)";
+		return "[--show]";
 	}
 
 	/**
-	 * @return String
-	 * @example "initialize a document"
+	 * @return string
 	 */
 	function getDescription()
 	{
-		return "Unlock all tasks --reset to unlock and rerun tasks --show to only view which tasks is locked";
+		return "Unlock all tasks --show to only view which tasks is locked";
 	}
 
 	/**
-	 * @return String[]
+	 * @return string[]
 	 */
 	function getOptions()
 	{
-		$options = array();
-		$options[] = "--reset";
-		$options[] = "--show";
-		return $options;
+		return array("--show");
 	}
 
 	/**
@@ -41,29 +36,27 @@ class commands_task_UnlockAll extends c_ChangescriptCommand
 	 */
 	function _execute($params, $options)
 	{
-		$this->message("== UnlockAll ==");
-
+		$this->message("== Unlock All ==");
+		$this->loadFramework();
+		
 		$doReset = array_key_exists("reset", $options);
 		$onlyShow = array_key_exists("show", $options);
-		$tasks = array();
-		
 		$tasks = task_PlannedtaskService::getInstance()->createQuery()
-				->add(Restrictions::eq('executionStatus', 'running'))->find();
+			->add(Restrictions::eq('executionStatus', task_PlannedtaskService::STATUS_LOCKED))->find();
+		
 		if ($onlyShow == false)
 		{	
 			if (count($tasks) > 0)
 			{
 				foreach ($tasks as $task)
 				{
-					if ($task instanceof task_persistentdocument_plannedtask)
-					{
-						$this->unlockTask($task, $doReset);
-					}
+					/* @var $task task_persistentdocument_plannedtask */
+					$task->getDocumentService()->unlock($task);
 				}
 			}
 			else
 			{
-				$this->quitOk("No task is running");
+				$this->quitOk("No task is locked");
 			}
 		}
 		else 
@@ -78,32 +71,8 @@ class commands_task_UnlockAll extends c_ChangescriptCommand
 			}
 			else 
 			{
-				$this->message("No task is running");
+				$this->message("No task is locked");
 			}
-		}
-	}
-	
-	/**
-	 * @param task_persistentdocument_plannedtask $task
-	 * @param Boolean $doReset
-	 */
-	private function unlockTask($task, $doReset = false)
-	{
-		if ($task->getIsrunning())
-		{
-			$task->setIsrunning(false);
-			if ($doReset == true)
-			{
-				$task->setNextrundate(date_Calendar::now());
-			}
-			$task->save();
-			$action = ($doReset == true ? 'reset' : 'unlock') . '.plannedtask';
-			UserActionLoggerService::getInstance()->addUserDocumentEntry('system',$action, $task, array(), 'task');
-			$this->quitOk("Task \"".$task->getSystemtaskclassname()."\" ".($doReset == true ? 'reset' : 'unlock')."ed");
-		}
-		else
-		{
-			$this->quitError("Task \"".$task->getSystemtaskclassname()."\" is not locked");
 		}
 	}
 }
