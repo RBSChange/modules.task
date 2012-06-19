@@ -67,7 +67,7 @@ class TaskHelper
 	}
 
 	/**
-	 * @param Integer $documentId
+	 * @param integer $documentId
 	 * @return array<task_persistentdocument_usertask>
 	 */
 	public static function getPendingTasksForCurrentUserByDocumentId($documentId)
@@ -76,7 +76,7 @@ class TaskHelper
 	}
 
 	/**
-	 * @param Integer $documentId
+	 * @param integer $documentId
 	 * @return array<task_persistentdocument_usertask>
 	 */
 	public static function getPendingTasksForCurrentBackendUserByDocumentId($documentId)
@@ -85,7 +85,7 @@ class TaskHelper
 	}
 
 	/**
-	 * @param Integer $documentId
+	 * @param integer $documentId
 	 * @return array<task_persistentdocument_usertask>
 	 */
 	public static function getPendingTasksForCurrentFrontendUserByDocumentId($documentId)
@@ -95,7 +95,7 @@ class TaskHelper
 
 	/**
 	 * @param users_persistentdocument_user $user
-	 * @param Integer $documentId
+	 * @param integer $documentId
 	 * @return array<task_persistentdocument_usertask>
 	 */
 	public static function getPendingTasksByUserAndDocumentId($user, $documentId)
@@ -111,7 +111,7 @@ class TaskHelper
 
 	/**
 	 * @param users_persistentdocument_user $user
-	 * @param Integer $documentId
+	 * @param integer $documentId
 	 * @return array<task_persistentdocument_usertask>
 	 */
 	public static function getTaskForUserIdByDocumentId($user, $documentId, $taskId)

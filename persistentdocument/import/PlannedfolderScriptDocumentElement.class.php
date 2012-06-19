@@ -5,15 +5,15 @@
  */
 class task_PlannedfolderScriptDocumentElement extends import_ScriptDocumentElement
 {
-    /**
-     * @return task_persistentdocument_plannedfolder
-     */
-    protected function initPersistentDocument()
-    {
-    	return task_PlannedfolderService::getInstance()->getNewDocumentInstance();
-    }
-    
-    /**
+	/**
+	 * @return task_persistentdocument_plannedfolder
+	 */
+	protected function initPersistentDocument()
+	{
+		return task_PlannedfolderService::getInstance()->getNewDocumentInstance();
+	}
+	
+	/**
 	 * @return f_persistentdocument_PersistentDocumentModel
 	 */
 	protected function getDocumentModel()

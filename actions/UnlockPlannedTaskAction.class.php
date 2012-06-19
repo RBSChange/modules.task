@@ -21,7 +21,7 @@ class task_UnlockPlannedTaskAction extends change_JSONAction
 		
 		if ($plannedTask->getExecutionStatus() === task_PlannedtaskService::STATUS_RUNNING)
 		{
-			$plannedTask->getDocumentService()->error($plannedTask, LocaleService::getInstance()->transBO('m.task.document.plannedtask.bo-cancel'));
+			$plannedTask->getDocumentService()->error($plannedTask, LocaleService::getInstance()->trans('m.task.document.plannedtask.bo-cancel'));
 		}
 		else if ($plannedTask->getExecutionStatus() === task_PlannedtaskService::STATUS_LOCKED)
 		{

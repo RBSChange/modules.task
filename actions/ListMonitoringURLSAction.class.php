@@ -7,7 +7,7 @@ class task_ListMonitoringURLSAction extends change_Action
 {
 	public function isSecure()
 	{
-	    return false;
+		return false;
 	}
 	
 	/**
@@ -16,111 +16,111 @@ class task_ListMonitoringURLSAction extends change_Action
 	 */
 	public function _execute($context, $request)
 	{
-	    change_Controller::setNoCache();
-	    $format = "JSON";
-	    if ($request->hasParameter("format"))
-	    {
+		change_Controller::setNoCache();
+		$format = "JSON";
+		if ($request->hasParameter("format"))
+		{
 		$format = $request->getParameter("format");
 		if ($format != "XML" && $format != "JSON" && $format != "TXT")
 		{
-		    Framework::warn("Bad format for list monitoring URLs, JSON was used for this request");
-		    $format = "JSON";
+			Framework::warn("Bad format for list monitoring URLs, JSON was used for this request");
+			$format = "JSON";
 		}
-	    }
-	    $urls = $this->getAllURLOfProbetasks();
+		}
+		$urls = $this->getAllURLOfProbetasks();
 
-	    switch ($format)
-	    {
+		switch ($format)
+		{
 		case("JSON"):
-		    $this->setContentType('application/json');
-		    echo JsonService::getInstance()->encode($urls);
-		    break;
+			$this->setContentType('application/json');
+			echo JsonService::getInstance()->encode($urls);
+			break;
 		case("XML"):
 			$this->setContentType('text/xml');
 			echo $this->formatToXML($urls);
-		    break;
+			break;
 		case("TXT"):
-		    ob_start();
-		    $filename = "list_monitoring_urls.txt";
-		    $path = PROJECT_HOME . "/" . $filename;
-		    $file = $this->formatToTXT($urls, $path);
-		    ob_end_clean();
+			ob_start();
+			$filename = "list_monitoring_urls.txt";
+			$path = PROJECT_HOME . "/" . $filename;
+			$file = $this->formatToTXT($urls, $path);
+			ob_end_clean();
 		
-		    $headers = array();
-		    $headers[] = 'Content-Description: File Transfer';
-		    $headers[] = 'Expires: 0';
-		    $headers[] = 'Cache-Control: public, must-revalidate, post-check=0, pre-check=0';
-		    $headers[] = 'Pragma: hack';
-		    $headers[] = 'Content-type: application/octet-stream';
-		    $headers[] = 'Content-Disposition: attachment; filename="' . $filename . '"';
-		    $headers[] = 'Content-Transfer-Encoding: binary';
-		    $headers[] = 'Content-Length: ' . filesize($path);
+			$headers = array();
+			$headers[] = 'Content-Description: File Transfer';
+			$headers[] = 'Expires: 0';
+			$headers[] = 'Cache-Control: public, must-revalidate, post-check=0, pre-check=0';
+			$headers[] = 'Pragma: hack';
+			$headers[] = 'Content-type: application/octet-stream';
+			$headers[] = 'Content-Disposition: attachment; filename="' . $filename . '"';
+			$headers[] = 'Content-Transfer-Encoding: binary';
+			$headers[] = 'Content-Length: ' . filesize($path);
 
-		    foreach ($headers as $header)
-		    {
+			foreach ($headers as $header)
+			{
 			header($header);
-		    }
-		    readfile($path);
+			}
+			readfile($path);
 
-		    @unlink($path);
-		    exit;
-		    break;
+			@unlink($path);
+			exit;
+			break;
 		default:
-		    break;		 
-	    }
-	    return change_View::NONE;
+			break;		 
+		}
+		return change_View::NONE;
 	}
 	
 	private function getAllURLOfProbetasks()
 	{
-	    $query = task_PlannedtaskService::getInstance()->createQuery();
-	    $tasks = $query->find();
-	    $actionURLs = array();
-	    foreach ($tasks as $task) 
-	    {
+		$query = task_PlannedtaskService::getInstance()->createQuery();
+		$tasks = $query->find();
+		$actionURLs = array();
+		foreach ($tasks as $task) 
+		{
 		if ($task instanceof task_persistentdocument_plannedtask)
 		{
-		    $parameters = array(
+			$parameters = array(
 			"taskname" => $task->getSystemtaskclassname(),
 			"nodename" => $task->getNode(),
 			);
-		    $actionURLs[] = LinkHelper::getActionUrl("task", "Probetasks", $parameters);
+			$actionURLs[] = LinkHelper::getActionUrl("task", "Probetasks", $parameters);
 		}
 		
-	    }
-	    return $actionURLs;
+		}
+		return $actionURLs;
 	}
 	
 	private function formatToTXT($urls, $filename)
 	{
-	    
-	    if($file = fopen($filename, "w"))
-	    {
+		
+		if($file = fopen($filename, "w"))
+		{
 		foreach ($urls as $url)
 		{
-		    fwrite($file, $url . "\n");
+			fwrite($file, $url . "\n");
 		}
 		fclose($file);
 		return $file;
-	    }
-	    else
-	    {
+		}
+		else
+		{
 		Framework::warn("couldn't create file for TXT format to provide List Monitoring URLs");
-	    }
+		}
 	}
 	
 	private function formatToXML($urlsText)
 	{
-	    $doc = new DOMDocument('1.0', 'UTF-8');
-	    $urls = $doc->createElement("urls");
-	    
-	    foreach ($urlsText as $urlText)
-	    {
+		$doc = new DOMDocument('1.0', 'UTF-8');
+		$urls = $doc->createElement("urls");
+		
+		foreach ($urlsText as $urlText)
+		{
 		$url = $doc->createElement("url");
 		$url->appendChild($doc->createTextNode($urlText));
 		$urls->appendChild($url);
-	    }
-	    $doc->appendChild($urls);
-	    return $doc->saveXML();
+		}
+		$doc->appendChild($urls);
+		return $doc->saveXML();
 	}
 }

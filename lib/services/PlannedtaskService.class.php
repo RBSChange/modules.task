@@ -1,8 +1,7 @@
 <?php
 /**
- * @date Wed, 06 Aug 2008 09:19:58 +0000
- * @author intstaufl
  * @package modules.task
+ * @method task_PlannedtaskService getInstance()
  */
 class task_PlannedtaskService extends f_persistentdocument_DocumentService
 {
@@ -18,23 +17,6 @@ class task_PlannedtaskService extends f_persistentdocument_DocumentService
 	const STATUS_LOCKED = 'locked';
 	
 	/**
-	 * @var task_PlannedtaskService
-	 */
-	private static $instance;
-	
-	/**
-	 * @return task_PlannedtaskService
-	 */
-	public static function getInstance()
-	{
-		if (self::$instance === null)
-		{
-			self::$instance = new self();
-		}
-		return self::$instance;
-	}
-	
-	/**
 	 * @return task_persistentdocument_plannedtask
 	 */
 	public function getNewDocumentInstance()
@@ -48,7 +30,7 @@ class task_PlannedtaskService extends f_persistentdocument_DocumentService
 	 */
 	public function createQuery()
 	{
-		return $this->pp->createQuery('modules_task/plannedtask');
+		return $this->getPersistentProvider()->createQuery('modules_task/plannedtask');
 	}
 	
 	/**
@@ -169,16 +151,16 @@ class task_PlannedtaskService extends f_persistentdocument_DocumentService
 		
 		try 
 		{
-			$this->tm->beginTransaction();
+			$this->getTransactionManager()->beginTransaction();
 			$now = date_Calendar::getInstance()->toString();
 			$task->setLastrundate($now);
 			$task->setRunningDate($now);
 			$this->updateExecutionStatus($task, self::STATUS_RUNNING);
-			$this->tm->commit();			
+			$this->getTransactionManager()->commit();
 		} 
 		catch (Exception $e) 
 		{
-			$this->tm->rollBack($e);
+			$this->getTransactionManager()->rollBack($e);
 		}
 	}
 	
@@ -194,7 +176,7 @@ class task_PlannedtaskService extends f_persistentdocument_DocumentService
 		
 		try 
 		{
-			$this->tm->beginTransaction();
+			$this->getTransactionManager()->beginTransaction();
 			$now = date_Calendar::getInstance();
 			$task->setRunningDate($now->toString());
 			$task->setLastSuccessDate($now->toString());
@@ -210,11 +192,11 @@ class task_PlannedtaskService extends f_persistentdocument_DocumentService
 			$this->rescheduleIfNecesseary($task);
 			
 			$this->updateExecutionStatus($task, self::STATUS_SUCCESS);
-			$this->tm->commit();			
+			$this->getTransactionManager()->commit();			
 		} 
 		catch (Exception $e) 
 		{
-			$this->tm->rollBack($e);
+			$this->getTransactionManager()->rollBack($e);
 		}
 	}
 	
@@ -232,7 +214,7 @@ class task_PlannedtaskService extends f_persistentdocument_DocumentService
 		
 		try 
 		{
-			$this->tm->beginTransaction();
+			$this->getTransactionManager()->beginTransaction();
 			$now = date_Calendar::getInstance();
 			$task->setRunningDate($now->toString());
 			$lastrundate  = date_Calendar::getInstance($task->getLastrundate());
@@ -252,11 +234,11 @@ class task_PlannedtaskService extends f_persistentdocument_DocumentService
 
 			//TODO Send ERROR Notification
 			
-			$this->tm->commit();			
+			$this->getTransactionManager()->commit();
 		} 
 		catch (Exception $e) 
 		{
-			$this->tm->rollBack($e);
+			$this->getTransactionManager()->rollBack($e);
 		}
 	}
 	
@@ -286,7 +268,7 @@ class task_PlannedtaskService extends f_persistentdocument_DocumentService
 		
 		try 
 		{
-			$this->tm->beginTransaction();
+			$this->getTransactionManager()->beginTransaction();
 			$now = date_Calendar::getInstance();
 			$task->setRunningDate($now->toString());
 			$lastrundate  = date_Calendar::getInstance($task->getLastrundate());
@@ -308,11 +290,11 @@ class task_PlannedtaskService extends f_persistentdocument_DocumentService
 			{
 				//TODO Send Fianl LOCK Notification
 			}
-			$this->tm->commit();			
+			$this->getTransactionManager()->commit();
 		} 
 		catch (Exception $e) 
 		{
-			$this->tm->rollBack($e);
+			$this->getTransactionManager()->rollBack($e);
 		}
 	}
 	
@@ -328,7 +310,7 @@ class task_PlannedtaskService extends f_persistentdocument_DocumentService
 		}
 		try 
 		{
-			$this->tm->beginTransaction();	
+			$this->getTransactionManager()->beginTransaction();	
 			$task->setUnlockCount(0);	
 			$this->updateExecutionStatus($task, self::STATUS_FAILED);
 			
@@ -336,11 +318,11 @@ class task_PlannedtaskService extends f_persistentdocument_DocumentService
 			$user = users_UserService::getInstance()->getCurrentBackEndUser();
 			UserActionLoggerService::getInstance()->addUserDocumentEntry($user, $action, $task, array(), 'task');
 			
-			$this->tm->commit();			
+			$this->getTransactionManager()->commit();
 		} 
 		catch (Exception $e) 
 		{
-			$this->tm->rollBack($e);
+			$this->getTransactionManager()->rollBack($e);
 		}
 	}	
 	
@@ -357,7 +339,7 @@ class task_PlannedtaskService extends f_persistentdocument_DocumentService
 		}
 		try 
 		{
-			$this->tm->beginTransaction();			
+			$this->getTransactionManager()->beginTransaction();
 			$this->updateExecutionStatus($task, self::STATUS_FAILED);
 			
 			$action = 'autounlock.plannedtask';
@@ -365,11 +347,11 @@ class task_PlannedtaskService extends f_persistentdocument_DocumentService
 			$unlockCount = intval($task->getUnlockCount());
 			UserActionLoggerService::getInstance()->addUserDocumentEntry($user, $action, $task, array('unlockCount' => $unlockCount), 'task');
 			
-			$this->tm->commit();			
+			$this->getTransactionManager()->commit();
 		} 
 		catch (Exception $e) 
 		{
-			$this->tm->rollBack($e);
+			$this->getTransactionManager()->rollBack($e);
 		}
 	}		
 	
@@ -386,18 +368,18 @@ class task_PlannedtaskService extends f_persistentdocument_DocumentService
 		
 		try 
 		{
-			$this->tm->beginTransaction();		
+			$this->getTransactionManager()->beginTransaction();
 			$now = date_Calendar::getInstance()->toString();	
 			$task->setRunningDate($now);
 			if ($task->isModified())
 			{
-				$this->pp->updateDocument($task);
+				$this->getPersistentProvider()->updateDocument($task);
 			}
-			$this->tm->commit();			
+			$this->getTransactionManager()->commit();
 		} 
 		catch (Exception $e)
 		{
-			$this->tm->rollBack($e);
+			$this->getTransactionManager()->rollBack($e);
 		}
 	}	
 	
@@ -409,17 +391,17 @@ class task_PlannedtaskService extends f_persistentdocument_DocumentService
 	{
 		try 
 		{
-			$this->tm->beginTransaction();	
+			$this->getTransactionManager()->beginTransaction();	
 			$task->setUniqueExecutiondate($date);
 			if ($task->isModified())
 			{
-				$this->pp->updateDocument($task);
+				$this->getPersistentProvider()->updateDocument($task);
 			}
-			$this->tm->commit();			
+			$this->getTransactionManager()->commit();
 		} 
 		catch (Exception $e)
 		{
-			$this->tm->rollBack($e);
+			$this->getTransactionManager()->rollBack($e);
 		}		
 	}
 	
@@ -431,24 +413,24 @@ class task_PlannedtaskService extends f_persistentdocument_DocumentService
 	{
 		try 
 		{
-			$this->tm->beginTransaction();
+			$this->getTransactionManager()->beginTransaction();
 			$task->setNextrundate($date->toString());
 			if ($task->isModified())
 			{
-				$this->pp->updateDocument($task);
+				$this->getPersistentProvider()->updateDocument($task);
 			}
-			$this->tm->commit();			
+			$this->getTransactionManager()->commit();
 		} 
 		catch (Exception $e)
 		{
-			$this->tm->rollBack($e);
+			$this->getTransactionManager()->rollBack($e);
 		}		
 	}	
 	
 	
 	/**
 	 * @param task_persistentdocument_plannedtask $task
-	 * @param Integer $parentId
+	 * @param integer $parentId
 	 */
 	public function preSave($task, $parentId)
 	{
@@ -492,7 +474,7 @@ class task_PlannedtaskService extends f_persistentdocument_DocumentService
 	
 	/**
 	 * @param task_persistentdocument_plannedtask $document
-	 * @param Integer $parentNodeId Parent node ID where to save the document (optionnal).
+	 * @param integer $parentNodeId Parent node ID where to save the document (optionnal).
 	 * @return void
 	 */
 	protected function preInsert($document, $parentNodeId)
@@ -594,7 +576,7 @@ class task_PlannedtaskService extends f_persistentdocument_DocumentService
 		$data['executioninfos']['lastrundate'] = date_Calendar::getInstance($document->getUILastrundate())->toFormattedDateTimeBO();
 		$durationAverage = doubleval($document->getDurationAvg()) / 60;
 		$durationAverage = $durationAverage < 1 ? '< 1' : round($durationAverage, 2);
-		$durationAverage .=  ' ' . $ls->transBO('f.unit.minutes');
+		$durationAverage .=  ' ' . $ls->trans('f.unit.minutes');
 		$data['executioninfos']['durationaverage'] = $durationAverage;
 		
 		$lastSuccessDate = $document->getUILastSuccessDate();
@@ -616,7 +598,7 @@ class task_PlannedtaskService extends f_persistentdocument_DocumentService
 		
 	/**
 	 * @param task_persistentdocument_plannedtask $document
-	 * @param String[] $propertiesName
+	 * @param string[] $propertiesName
 	 * @param Array $datas
 	 */
 	public function addFormProperties($document, $propertiesName, &$datas)
@@ -637,8 +619,8 @@ class task_PlannedtaskService extends f_persistentdocument_DocumentService
 				$datas['extraeditparamsjson']['node'] = true;
 				$datas['nodes'] = array();
 				$nodes = clustersafe_WebnodeService::getInstance()->createQuery()
-				->setProjection(Projections::groupProperty('label', 'label'))
-				->findColumn('label');
+					->setProjection(Projections::groupProperty('label', 'label'))
+					->findColumn('label');
 				
 				foreach ($nodes as $nodeName) {
 					$datas['nodes'][$nodeName] = $nodeName;

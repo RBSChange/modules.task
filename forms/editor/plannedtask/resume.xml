@@ -1,34 +1,27 @@
-<?xml version="1.0"?>
+<?xml version="1.0" encoding="UTF-8"?>
 <panel>
 	<section name="properties" linkedtab="properties" labeli18n="m.uixul.bo.doceditor.section.properties" image="{IconsBase}/small/edit-properties.png">
 		<property name="label" labeli18n="m.uixul.bo.doceditor.property.label" />
 		<property name="creationdate" labeli18n="m.uixul.bo.doceditor.property.creationdate" />
 		<property name="executionStatus" labeli18n="m.task.document.plannedtask.executionstatus" />
 		<property name="executionStatusDate" labeli18n="m.task.document.plannedtask.executionstatusdate" />
-		
-		<property name="periodUnit" labeli18n="m.task.document.plannedtask.period-label" />
+		<property name="periodUnit" labeli18n="m.task.document.plannedtask.period-" />
 		<property name="nextrundate" labeli18n="m.task.bo.doceditor.property.nextrundate" />
 		<property name="unlockCount" labeli18n="m.task.document.plannedtask.unlockcount" />
-			
 		<property name="node" labeli18n="m.task.bo.doceditor.property.node" />
 	</section>
-
 	<section name="publication" linkedtab="publication" labeli18n="m.uixul.bo.doceditor.section.status" image="{IconsBase}/small/status.png">
 		<property name="status" labeli18n="m.uixul.bo.doceditor.property.status" />
 		<property name="workflow" labeli18n="m.uixul.bo.doceditor.property.workflow" />
 	</section>
-
 	<section name="history" linkedtab="history" actiontexti18n="m.uixul.bo.doceditor.section.action.view" labeli18n="m.uixul.bo.doceditor.section.history" image="{IconsBase}/small/history.png">
 		<property name="modificationdate" labeli18n="m.uixul.bo.doceditor.property.modificationdate" />
 	</section>
-	
-	<section name="executioninfos" labeli18n="m.task.bo.doceditor.property.executioninfos" image="{IconsBase}/small/workflow.png" >
+	<section name="executioninfos" labeli18n="m.task.bo.doceditor.property.executioninfos" image="{IconsBase}/small/workflow.png">
 		<property name="lastrundate" labeli18n="m.task.bo.doceditor.property.lastrundate" />
 		<property name="ping" labeli18n="m.task.bo.doceditor.property.ping" />
 		<property name="durationaverage" labeli18n="m.task.bo.doceditor.property.durationaverage" />
 		<property name="lastSuccessDate" labeli18n="m.task.bo.doceditor.property.lastsuccessdate" />
-		
-		
 		<property name="totalSuccessCount" labeli18n="m.task.document.plannedtask.totalsuccesscount" />
 		<property name="totalErrorCount" labeli18n="m.task.document.plannedtask.totalerrorcount" />
 		<property name="totalLockCount" labeli18n="m.task.document.plannedtask.totallockcount" />

@@ -1,27 +1,10 @@
 <?php
 /**
- * task_PlannedfolderService
  * @package modules.task
+ * @method task_PlannedfolderService getInstance()
  */
 class task_PlannedfolderService extends generic_FolderService
 {
-	/**
-	 * @var task_PlannedfolderService
-	 */
-	private static $instance;
-
-	/**
-	 * @return task_PlannedfolderService
-	 */
-	public static function getInstance()
-	{
-		if (self::$instance === null)
-		{
-			self::$instance = new self();
-		}
-		return self::$instance;
-	}
-
 	/**
 	 * @return task_persistentdocument_plannedfolder
 	 */
@@ -38,7 +21,7 @@ class task_PlannedfolderService extends generic_FolderService
 	 */
 	public function createQuery()
 	{
-		return $this->pp->createQuery('modules_task/plannedfolder');
+		return $this->getPersistentProvider()->createQuery('modules_task/plannedfolder');
 	}
 	
 	/**
@@ -49,7 +32,7 @@ class task_PlannedfolderService extends generic_FolderService
 	 */
 	public function createStrictQuery()
 	{
-		return $this->pp->createQuery('modules_task/plannedfolder', false);
+		return $this->getPersistentProvider()->createQuery('modules_task/plannedfolder', false);
 	}
 	
 	/**
@@ -70,21 +53,21 @@ class task_PlannedfolderService extends generic_FolderService
 			$query = task_PlannedtaskService::getInstance()->createQuery()
 						->add(Restrictions::published())
 						->addOrder(Order::asc('document_label'))
-           				->setProjection(Projections::property('id', 'id')); 
+		   				->setProjection(Projections::property('id', 'id')); 
 			if (!empty($executionStatus))
 			{
 				$query->add(Restrictions::eq('executionStatus', $executionStatus));
 			}
-           	$idsArray = $query->find();
-           	$totalCount = count($idsArray);
-           	foreach ($idsArray as $index => $row)
-           	{            		
-           		if ($row['id'] == $locateDocumentId)
-           		{
-           			$startIndex = $index - ($index % $pageSize);
-           			break;
-           		}
-           	}	 
+		   	$idsArray = $query->find();
+		   	$totalCount = count($idsArray);
+		   	foreach ($idsArray as $index => $row)
+		   	{					
+		   		if ($row['id'] == $locateDocumentId)
+		   		{
+		   			$startIndex = $index - ($index % $pageSize);
+		   			break;
+		   		}
+		   	}	 
 		}
 		else
 		{
@@ -96,7 +79,7 @@ class task_PlannedfolderService extends generic_FolderService
 			{
 				$query->add(Restrictions::eq('executionStatus', $executionStatus));
 			}
-      		$resultCount = $query->findColumn('countItems');
+	  		$resultCount = $query->findColumn('countItems');
 			$totalCount = intval($resultCount[0]);
 		}
 		
@@ -113,7 +96,7 @@ class task_PlannedfolderService extends generic_FolderService
 	
 	/**
 	 * @param task_persistentdocument_plannedfolder $document
-	 * @param Integer $parentNodeId Parent node ID where to save the document (optionnal => can be null !).
+	 * @param integer $parentNodeId Parent node ID where to save the document (optionnal => can be null !).
 	 * @return void
 	 */
 	protected function preSave($document, $parentNodeId)
@@ -122,14 +105,14 @@ class task_PlannedfolderService extends generic_FolderService
 		$executionStatus = $document->getStatusFilter();
 		if (empty($executionStatus))
 		{
-			$document->setLabel(LocaleService::getInstance()->transBO('m.task.document.plannedfolder.all-status'));
+			$document->setLabel(LocaleService::getInstance()->trans('m.task.document.plannedfolder.all-status'));
 		}
 		else
 		{
-			$label = LocaleService::getInstance()->transBO('m.task.document.plannedtask.status-' . $executionStatus, 
+			$label = LocaleService::getInstance()->trans('m.task.document.plannedtask.status-' . $executionStatus, 
 				array('ucf'));
 				
-			$document->setLabel(LocaleService::getInstance()->transBO('m.task.document.plannedfolder.def-status', 
+			$document->setLabel(LocaleService::getInstance()->trans('m.task.document.plannedfolder.def-status', 
 				array(), array('executionStatus' => $label)));
 		}
 	}

@@ -1,23 +1,10 @@
 <?php
+/**
+ * @package modules.task
+ * @method task_UserfolderService getInstance()
+ */
 class task_UsertaskService extends f_persistentdocument_DocumentService
 {
-	/**
-	 * @var task_UsertaskService
-	 */
-	private static $instance;
-
-	/**
-	 * @return task_UsertaskService
-	 */
-	public static function getInstance()
-	{
-		if (self::$instance === null)
-		{
-			self::$instance = new self();
-		}
-		return self::$instance;
-	}
-
 	/**
 	 * @return task_persistentdocument_usertask
 	 */
@@ -32,13 +19,13 @@ class task_UsertaskService extends f_persistentdocument_DocumentService
 	 */
 	public function createQuery()
 	{
-		return $this->pp->createQuery('modules_task/usertask');
+		return $this->getPersistentProvider()->createQuery('modules_task/usertask');
 	}
 
 	/**
 	 * Send the creation notification.
 	 * @param task_persistentdocument_usertask $usertask
-	 * @param Integer $parentNodeId Parent node ID where to save the document (optionnal).
+	 * @param integer $parentNodeId Parent node ID where to save the document (optionnal).
 	 * @return void
 	 */
 	protected function postInsert($usertask, $parentNodeId)
@@ -67,7 +54,7 @@ class task_UsertaskService extends f_persistentdocument_DocumentService
 	 * @param task_persistentdocument_usertask $usertask
 	 * @param string $decision
 	 * @param string $commentary
-	 * @return Boolean
+	 * @return boolean
 	 */
 	public function execute($usertask, $decision, $commentary)
 	{

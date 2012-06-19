@@ -1,4 +1,4 @@
-<?xml version="1.0"?>
+<?xml version="1.0" encoding="UTF-8"?>
 <panel>
 	<section name="properties" labeli18n="m.uixul.bo.doceditor.section.properties" image="{IconsBase}/small/edit-properties.png">
 		<property name="label" labeli18n="m.uixul.bo.doceditor.property.label" />
@@ -7,12 +7,10 @@
 		<property name="affecteduser" labeli18n="m.task.bo.doceditor.property.affected-user" />
 		<property name="additionalinfo" labeli18n="m.task.bo.doceditor.property.additionalinfo" />
 	</section>
-
 	<section name="publication" linkedtab="publication" labeli18n="m.uixul.bo.doceditor.section.status" image="{IconsBase}/small/status.png">
 		<property name="status" labeli18n="m.uixul.bo.doceditor.property.status" />
 		<property name="workflow" labeli18n="m.uixul.bo.doceditor.property.workflow" />
 	</section>
-
 	<section name="history" linkedtab="history" actiontexti18n="m.uixul.bo.doceditor.section.action.view" labeli18n="m.uixul.bo.doceditor.section.history" image="{IconsBase}/small/history.png">
 		<property name="modificationdate" labeli18n="m.uixul.bo.doceditor.property.modificationdate" />
 	</section>

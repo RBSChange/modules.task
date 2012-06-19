@@ -171,7 +171,7 @@ class task_persistentdocument_plannedtask extends task_persistentdocument_planne
 	}
 	
 	/**
-	 * @param Integer $minute 0..59 or -1 for random value
+	 * @param integer $minute 0..59 or -1 for random value
 	 */
 	public function setMinute($minute)
 	{
@@ -183,7 +183,7 @@ class task_persistentdocument_plannedtask extends task_persistentdocument_planne
 	}
 	
 	/**
-	 * @param Integer $hour 0..23 or -1 for random value
+	 * @param integer $hour 0..23 or -1 for random value
 	 */
 	public function setHour($hour)
 	{
@@ -195,7 +195,7 @@ class task_persistentdocument_plannedtask extends task_persistentdocument_planne
 	}
 	
 	/**
-	 * @param Integer $dayofmonth 1..31 or -1 for random value
+	 * @param integer $dayofmonth 1..31 or -1 for random value
 	 */
 	public function setDayofmonth($dayofmonth)
 	{
@@ -207,7 +207,7 @@ class task_persistentdocument_plannedtask extends task_persistentdocument_planne
 	}
 	
 	/**
-	 * @param Integer $month 1..12 or -1 for random value
+	 * @param integer $month 1..12 or -1 for random value
 	 */
 	public function setMonth($month)
 	{

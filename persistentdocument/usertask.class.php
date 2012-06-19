@@ -6,7 +6,7 @@
 class task_persistentdocument_usertask extends task_persistentdocument_usertaskbase
 {
 	/**
-	 * @return String
+	 * @return string
 	 */
 	public function getDialogName()
 	{
@@ -15,7 +15,7 @@ class task_persistentdocument_usertask extends task_persistentdocument_usertaskb
 	}
 	
 	/**
-	 * @return String
+	 * @return string
 	 */
 	public function getModule()
 	{
@@ -32,7 +32,7 @@ class task_persistentdocument_usertask extends task_persistentdocument_usertaskb
 		}
 		else
 		{
-			return LocaleService::getInstance()->transBO('m.task.document.usertask.anonymous', array('ucf'));
+			return LocaleService::getInstance()->trans('m.task.document.usertask.anonymous', array('ucf'));
 		}
 	}
 }

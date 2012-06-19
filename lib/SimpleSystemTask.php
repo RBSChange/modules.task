@@ -40,7 +40,7 @@ class task_SimpleSystemTask implements task_SystemTask
 	 * @see task_SystemTask::setParameterString()
 	 * This implementation assumes parameter string is stored as a serialized array;
 	 * 
-	 * @param String $parameterString
+	 * @param string $parameterString
 	 */
 	final function setParameterString($parameterString)
 	{
@@ -54,8 +54,8 @@ class task_SimpleSystemTask implements task_SystemTask
 	}
 	
 	/**
-	 * @param String $name
-	 * @return Boolean
+	 * @param string $name
+	 * @return boolean
 	 */
 	final function hasParameter($name)
 	{
@@ -63,7 +63,7 @@ class task_SimpleSystemTask implements task_SystemTask
 	}
 	
 	/**
-	 * @param String $name
+	 * @param string $name
 	 * @param Mixed $defaultValue
 	 * @return Mixed
 	 */

@@ -1,38 +1,38 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <document xmlns="http://www.rbs.fr/schema/change-document/1.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.rbs.fr/schema/change-document/1.0 http://www.rbschange.fr/static/schema/change-document/4.0.xsd" model-version="3.5" icon="plannedtask" publish-on-day-change="false" backoffice-indexable="false" has-url="false">
-  <properties>
-    <property name="minute" type="Integer">
-      <constraint name="range" parameter="0..59"/>
-    </property>
-    <property name="hour" type="Integer">
-      <constraint name="range" parameter="0..23"/>
-    </property>
-    <property name="dayofmonth" type="Integer">
-      <constraint name="range" parameter="1..31"/>
-    </property>
-    <property name="monthofyear" type="Integer">
-      <constraint name="range" parameter="1..12"/>
-    </property>
-    <property name="year" type="Integer">
-      <constraint name="range" parameter="2008..9999"/>
-    </property>
-    <property name="nextrundate" type="DateTime"/>
-    <property name="lastrundate" type="DateTime"/>
-    <property name="parameters" type="LongString"/>
-    <property name="systemtaskclassname" type="String" min-occurs="1"/>
-    <property name="node" type="String"/>
-    <property name="maxduration" type="Integer" default-value="5" min-occurs="1"/>
-    <property name="unlockCount" type="Integer" default-value="0"/>
-    <property name="executionStatus" type="String" default-value="success" from-list="modules_task/executionstatus"/>
-    <property name="executionStatusDate" type="DateTime"/>
-    <property name="runningDate" type="DateTime"/>
-  </properties>
-  <statuses default="ACTIVE"/>
-  <serializedproperties>
-    <property name="totalErrorCount" type="Integer" default-value="0"/>
-    <property name="totalLockCount" type="Integer" default-value="0"/>
-    <property name="totalSuccessCount" type="Integer" default-value="0"/>
-    <property name="durationAvg" type="Double" default-value="0"/>
-    <property name="lastSuccessDate" type="DateTime"/>
-  </serializedproperties>
+	<properties>
+		<property name="minute" type="Integer">
+			<constraint name="range" parameter="0..59" />
+		</property>
+		<property name="hour" type="Integer">
+			<constraint name="range" parameter="0..23" />
+		</property>
+		<property name="dayofmonth" type="Integer">
+			<constraint name="range" parameter="1..31" />
+		</property>
+		<property name="monthofyear" type="Integer">
+			<constraint name="range" parameter="1..12" />
+		</property>
+		<property name="year" type="Integer">
+			<constraint name="range" parameter="2008..9999" />
+		</property>
+		<property name="nextrundate" type="DateTime" />
+		<property name="lastrundate" type="DateTime" />
+		<property name="parameters" type="LongString" />
+		<property name="systemtaskclassname" type="String" min-occurs="1" />
+		<property name="node" type="String" />
+		<property name="maxduration" type="Integer" default-value="5" min-occurs="1" />
+		<property name="unlockCount" type="Integer" default-value="0" />
+		<property name="executionStatus" type="String" default-value="success" from-list="modules_task/executionstatus" />
+		<property name="executionStatusDate" type="DateTime" />
+		<property name="runningDate" type="DateTime" />
+	</properties>
+	<statuses default="ACTIVE" />
+	<serializedproperties>
+		<property name="totalErrorCount" type="Integer" default-value="0" />
+		<property name="totalLockCount" type="Integer" default-value="0" />
+		<property name="totalSuccessCount" type="Integer" default-value="0" />
+		<property name="durationAvg" type="Double" default-value="0" />
+		<property name="lastSuccessDate" type="DateTime" />
+	</serializedproperties>
 </document>

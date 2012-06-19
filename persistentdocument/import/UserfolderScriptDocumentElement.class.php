@@ -5,15 +5,15 @@
  */
 class task_UserfolderScriptDocumentElement extends import_ScriptDocumentElement
 {
-    /**
-     * @return task_persistentdocument_userfolder
-     */
-    protected function initPersistentDocument()
-    {
-    	return task_UserfolderService::getInstance()->getNewDocumentInstance();
-    }
-    
-    /**
+	/**
+	 * @return task_persistentdocument_userfolder
+	 */
+	protected function initPersistentDocument()
+	{
+		return task_UserfolderService::getInstance()->getNewDocumentInstance();
+	}
+	
+	/**
 	 * @return f_persistentdocument_PersistentDocumentModel
 	 */
 	protected function getDocumentModel()

@@ -1,102 +1,98 @@
-<?xml version="1.0"?>
+<?xml version="1.0" encoding="UTF-8"?>
 <perspective>
-  <models>
-    <model name="modules_generic/rootfolder">
-      <children>
-        <child model="modules_generic/systemfolder"/>
-        <child model="modules_task/plannedfolder"/>
-        <child model="modules_task/userfolder"/>
-      </children>
-	<drops>
-		<drop model="modules_task/plannedfolder" action="move"/>
-		<drop model="modules_generic/systemfolder" action="move"/>
-		<drop model="modules_task/userfolder" action="move"/>
-	</drops>
-      <contextactions>
-        <contextaction name="edit"/>
-        <contextaction name="createPlannedfolder"/>
-        <contextaction name="createUserfolder"/>
-        <contextaction name="openTreeNodeOrder"/>
-      </contextactions>
-    </model>
-    <model name="modules_generic/systemfolder">
-      <children>
-        <child model="modules_task/plannedtask"/>
-      </children>
-      <columns>
-        <column name="executionStatusLabel" flex="1"/>
-        <column name="lastrundate" flex="1"/>
-        <column name="nextrundate" flex="1"/>
-      </columns>
-      <contextactions>
-        <contextaction name="edit" />
-        <contextaction name="openFolder"/>
-      </contextactions>
-    </model>
-    <model name="modules_task/usertask">
-      <contextactions>
-        <contextaction name="edit"/>
-        <contextaction name="performUsertask"/>
-      </contextactions>
-    </model>
-    <model name="modules_task/plannedtask">
-      <contextactions>
-        <contextaction name="edit"/>
-        <contextaction name="unlockplannedtask"/>
-        <contextaction name="resetplannedtasktime"/>
-        <contextaction name="reactivate"/>
-        <contextaction name="deactivated"/>
-      </contextactions>
-    </model>
-    
-    <model name="modules_task/plannedfolder">
-      <children>
-        <child model="modules_task/plannedtask" from="function" />
-      </children>
- 	  <columns>
-        <column name="executionStatusLabel" flex="1"/>
-        <column name="lastrundate" flex="1"/>
-        <column name="nextrundate" flex="1"/>
-      </columns>
-      <contextactions>
-        <contextaction name="edit"/>
-        <contextaction name="delete"/>
-      </contextactions>
-    </model>
- 
-    <model name="modules_task/userfolder">
-      <children>
-        <child model="modules_task/usertask" from="function" />
-      </children>
-      
-      <columns>
-        <column name="userLabel" flex="1"/>
-        <column name="creationdate" flex="1"/>
-      </columns>
-      
-      <contextactions>
-        <contextaction name="edit"/>
-        <contextaction name="delete"/>
-      </contextactions>
-    </model>
-  </models>
-  <toolbar>
-    <toolbarbutton name="edit"/>
-    <toolbarbutton name="reactivate"/>
-    <toolbarbutton name="deactivated"/>
-  </toolbar>
-  <actions>
-    <action name="refresh" single="true" icon="refresh" labeli18n="m.uixul.bo.actions.refresh"/>
-    <action name="edit" single="true" permission="Load" icon="edit" labeli18n="m.uixul.bo.actions.edit"/>
-    <action name="openFolder" icon="folder_into" labeli18n="m.uixul.bo.actions.openfolder"/>
-	<action name="openTreeNodeOrder" single="true" permission="Order" icon="sort" labeli18n="m.uixul.bo.actions.set-children-order"/>
-	<action name="move" permission="Move" icon="up_down" labeli18n="m.uixul.bo.actions.move"/>
-    <action name="performUsertask" single="true" icon="task-execute" labeli18n="m.task.bo.actions.perform-usertask"/>
-    <action name="unlockplannedtask" single="true" icon="unlock" labeli18n="m.task.bo.actions.unlockplannedtask"/>
-    <action name="resetplannedtasktime" single="true" icon="plannedtask" labeli18n="m.task.bo.actions.resetplannedtasktime"/>
-    <action name="reactivate" permission="ReActivate" icon="reactivate" labeli18n="m.uixul.bo.actions.reactivate"/>
-    <action name="deactivated" permission="Deactivated" icon="deactivated" labeli18n="m.uixul.bo.actions.deactivate"/>
-    <action name="createPlannedfolder" single="true" permission="Insert_plannedfolder" icon="add"/>
-    <action name="createUserfolder" single="true" permission="Insert_userfolder" icon="add"/>
-  </actions>
+	<models>
+		<model name="modules_generic/rootfolder">
+			<children>
+				<child model="modules_generic/systemfolder" />
+				<child model="modules_task/plannedfolder" />
+				<child model="modules_task/userfolder" />
+			</children>
+			<drops>
+				<drop model="modules_task/plannedfolder" action="move" />
+				<drop model="modules_generic/systemfolder" action="move" />
+				<drop model="modules_task/userfolder" action="move" />
+			</drops>
+			<contextactions>
+				<contextaction name="edit" />
+				<contextaction name="createPlannedfolder" />
+				<contextaction name="createUserfolder" />
+				<contextaction name="openTreeNodeOrder" />
+			</contextactions>
+		</model>
+		<model name="modules_generic/systemfolder">
+			<children>
+				<child model="modules_task/plannedtask" />
+			</children>
+			<columns>
+				<column name="executionStatusLabel" flex="1" />
+				<column name="lastrundate" flex="1" />
+				<column name="nextrundate" flex="1" />
+			</columns>
+			<contextactions>
+				<contextaction name="edit" />
+				<contextaction name="openFolder" />
+			</contextactions>
+		</model>
+		<model name="modules_task/usertask">
+			<contextactions>
+				<contextaction name="edit" />
+				<contextaction name="performUsertask" />
+			</contextactions>
+		</model>
+		<model name="modules_task/plannedtask">
+			<contextactions>
+				<contextaction name="edit" />
+				<contextaction name="unlockplannedtask" />
+				<contextaction name="resetplannedtasktime" />
+				<contextaction name="reactivate" />
+				<contextaction name="deactivated" />
+			</contextactions>
+		</model>
+		<model name="modules_task/plannedfolder">
+			<children>
+				<child model="modules_task/plannedtask" from="function" />
+			</children>
+			<columns>
+				<column name="executionStatusLabel" flex="1" />
+				<column name="lastrundate" flex="1" />
+				<column name="nextrundate" flex="1" />
+			</columns>
+			<contextactions>
+				<contextaction name="edit" />
+				<contextaction name="delete" />
+			</contextactions>
+		</model>
+		<model name="modules_task/userfolder">
+			<children>
+				<child model="modules_task/usertask" from="function" />
+			</children>
+			<columns>
+				<column name="userLabel" flex="1" />
+				<column name="creationdate" flex="1" />
+			</columns>
+			<contextactions>
+				<contextaction name="edit" />
+				<contextaction name="delete" />
+			</contextactions>
+		</model>
+	</models>
+	<toolbar>
+		<toolbarbutton name="edit" />
+		<toolbarbutton name="reactivate" />
+		<toolbarbutton name="deactivated" />
+	</toolbar>
+	<actions>
+		<action name="refresh" single="true" icon="refresh" labeli18n="m.uixul.bo.actions.refresh" />
+		<action name="edit" single="true" permission="Load" icon="edit" labeli18n="m.uixul.bo.actions.edit" />
+		<action name="openFolder" icon="folder_into" labeli18n="m.uixul.bo.actions.openfolder" />
+		<action name="openTreeNodeOrder" single="true" permission="Order" icon="sort" labeli18n="m.uixul.bo.actions.set-children-order" />
+		<action name="move" permission="Move" icon="up_down" labeli18n="m.uixul.bo.actions.move" />
+		<action name="performUsertask" single="true" icon="task-execute" labeli18n="m.task.bo.actions.perform-usertask" />
+		<action name="unlockplannedtask" single="true" icon="unlock" labeli18n="m.task.bo.actions.unlockplannedtask" />
+		<action name="resetplannedtasktime" single="true" icon="plannedtask" labeli18n="m.task.bo.actions.resetplannedtasktime" />
+		<action name="reactivate" permission="ReActivate" icon="reactivate" labeli18n="m.uixul.bo.actions.reactivate" />
+		<action name="deactivated" permission="Deactivated" icon="deactivated" labeli18n="m.uixul.bo.actions.deactivate" />
+		<action name="createPlannedfolder" single="true" permission="Insert_plannedfolder" icon="add" />
+		<action name="createUserfolder" single="true" permission="Insert_userfolder" icon="add" />
+	</actions>
 </perspective>

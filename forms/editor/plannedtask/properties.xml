@@ -7,19 +7,15 @@
 		<field name="monthofyear" />
 		<field name="year" />
 	</section>
-	
 	<section labeli18n="m.task.bo.general.execution">
 		<field name="node" type="dropdownlist" />
 		<field name="maxduration" />
 	</section>
-
 	<xul>
 		<javascript>
 			<constructor><![CDATA[
 				this.extendMethod("fireInitializeComplete", this.initializeCompleteMetaInfo);
 			]]></constructor>
-			
-				
 			<method name="getInitializeParameters">
 				<body><![CDATA[
 					return {
@@ -30,7 +26,6 @@
 					};
 				]]></body>
 			</method>
-						
 			<method name="initializeCompleteMetaInfo">
 				<parameter name="result" />
 				<body><![CDATA[
@@ -63,7 +58,7 @@
 					}
 				}
 				]]></body>
-			</method>				
+			</method>
 		</javascript>
 	</xul>
 </panel>
