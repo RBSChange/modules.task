@@ -7,7 +7,7 @@
 	</block>
 	<block type="modules_task_DashboardPlannedTasksInfos" icon="task" dashboard="true">
 		<parameters>
-			<parameter name="tasksToMonitor" type="modules_task/plannedtask" max-occurs="-1" />
+			<parameter name="tasksToMonitor" type="DocumentArray" document-type="modules_task/plannedtask" />
 		</parameters>
 	</block>
 </blocks>

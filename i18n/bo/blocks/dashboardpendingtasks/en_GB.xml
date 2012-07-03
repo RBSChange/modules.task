@@ -1,6 +1,6 @@
-<?xml version="1.0" encoding="utf-8"?>
+<?xml version="1.0" encoding="UTF-8"?>
 <i18n baseKey="m.task.bo.blocks.dashboardpendingtasks" lcid="en_GB">
-  <key id="title">your pending tasks</key>
-  <key id="showcomments">display the comments</key>
-  <key id="showcomments-help">Show or hide the comments from requesters</key>
+	<key id="title">your pending tasks</key>
+	<key id="showcomments">display the comments</key>
+	<key id="showcomments-help">Show or hide the comments from requesters</key>
 </i18n>

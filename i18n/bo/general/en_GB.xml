@@ -1,28 +1,28 @@
-<?xml version="1.0" encoding="utf-8"?>
+<?xml version="1.0" encoding="UTF-8"?>
 <i18n baseKey="m.task.bo.general" lcid="en_GB">
-  <key id="module-name">tasks</key>
-  <key id="tree-root-name">tasks</key>
-  <key id="system-folder-name">tasks</key>
-  <key id="tab-execute-task">run the task</key>
-  <key id="tab-general-informations">general information</key>
-  <key id="tab-notifications">notifications</key>
-  <key id="your-pending-tasks">your pending tasks</key>
-  <key id="user-task-help">
+	<key id="module-name">tasks</key>
+	<key id="tree-root-name">tasks</key>
+	<key id="system-folder-name">tasks</key>
+	<key id="tab-execute-task">run the task</key>
+	<key id="tab-general-informations">general information</key>
+	<key id="tab-notifications">notifications</key>
+	<key id="your-pending-tasks">your pending tasks</key>
+	<key id="user-task-help">
 You have been asked to accept or refuse the content below.
 Type in a commentary that justifies your decision and click on the ″Accept″ button to accept the document or the ″Refuse″ button to refuse it.
 If you accept, the document will be published on the website and all visitors will be able to view it.</key>
-  <key id="user-task-decision-commentary">decision-justifying comment</key>
-  <key id="details">view details</key>
-  <key id="accept">accept</key>
-  <key id="refuse">refuse</key>
-  <key id="refuse-and-edit">refuse and edit</key>
-  <key id="close">close</key>
-  <key id="commentary">comment (optionnal)</key>
-  <key id="author-comment">author's comment ({author})</key>
-  <key id="synchro-scroll">Synchronise the scrolling</key>
-  <key id="document-informations-to-validate">information to be validated</key>
-  <key id="original-document-informations">currently published version information</key>
-  <key id="user-task-title">document validation</key>
-  <key id="execution">run</key>
-  <key id="planification">scheduling</key>
+	<key id="user-task-decision-commentary">decision-justifying comment</key>
+	<key id="details">view details</key>
+	<key id="accept">accept</key>
+	<key id="refuse">refuse</key>
+	<key id="refuse-and-edit">refuse and edit</key>
+	<key id="close">close</key>
+	<key id="commentary">comment (optionnal)</key>
+	<key id="author-comment">author's comment ({author})</key>
+	<key id="synchro-scroll">Synchronise the scrolling</key>
+	<key id="document-informations-to-validate">information to be validated</key>
+	<key id="original-document-informations">currently published version information</key>
+	<key id="user-task-title">document validation</key>
+	<key id="execution">run</key>
+	<key id="planification">scheduling</key>
 </i18n>

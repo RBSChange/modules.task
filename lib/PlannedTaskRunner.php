@@ -153,7 +153,7 @@ class task_PlannedTaskRunner
 	 */
 	public static function setChangeCronToken($start)
 	{
-		$tokenPath = f_util_FileUtils::buildCachePath('changecron.pid');
+		$tokenPath = f_util_FileUtils::buildChangeCachePath('changecron.pid');
 		f_util_FileUtils::writeAndCreateContainer($tokenPath, $start, f_util_FileUtils::OVERRIDE);
 	}
 
@@ -162,7 +162,7 @@ class task_PlannedTaskRunner
 	 */
 	public static function getChangeCronToken()
 	{
-		$tokenPath = f_util_FileUtils::buildCachePath('changecron.pid');
+		$tokenPath = f_util_FileUtils::buildChangeCachePath('changecron.pid');
 		if (file_exists($tokenPath))
 		{
 			return file_get_contents($tokenPath);

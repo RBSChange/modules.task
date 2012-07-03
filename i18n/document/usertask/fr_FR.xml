@@ -1,23 +1,22 @@
-<?xml version="1.0" encoding="utf-8"?>
+<?xml version="1.0" encoding="UTF-8"?>
 <i18n baseKey="m.task.document.usertask" lcid="fr_FR">
-  <key id="document-name">tâche utilisateur</key>
-  <key id="edition-form-title">propriétés de la tâche utilisateur</key>
-  <key id="label">nom</key>
-  <key id="label-help">nom de la tâche avec entre parenthès l'id du document concerné.</key>
-  <key id="user">utilisateur</key>
-  <key id="user-help">l'utilisateur auquel est affectée la tâche. Lui seul est en mesure de l'exécuter.</key>
-  <key id="workitem">workitem</key>
-  <key id="workitem-help">workitem concerné par la tâche.</key>
-  <key id="creationnotification">notification de création</key>
-  <key id="creationnotification-help">cette notification est envoyée au propriétaire de la tâche à la création de celle-ci.</key>
-  <key id="terminationnotification">notification d'exécution</key>
-  <key id="terminationnotification-help">cette notification est envoyée au propriétaire de la tâche après exécution de celle-ci.</key>
-  <key id="cancellationnotification">notification d'annulation</key>
-  <key id="cancellationnotification-help">cette notification est envoyée au propriétaire de la tâche après annulation de celle-ci.</key>
-  <key id="description">description</key>
-  <key id="description-help">description de la tâche à effectuer.</key>
-  <key id="commentary">commentaire</key>
-  <key id="commentary-help">commentaire concernant la tâche effectuée permettant d'expliciter le choix fait.</key>
-  
-  <key id="anonymous">anonyme</key>
+	<key id="document-name">tâche utilisateur</key>
+	<key id="edition-form-title">propriétés de la tâche utilisateur</key>
+	<key id="label">nom</key>
+	<key id="label-help">nom de la tâche avec entre parenthès l'id du document concerné.</key>
+	<key id="user">utilisateur</key>
+	<key id="user-help">l'utilisateur auquel est affectée la tâche. Lui seul est en mesure de l'exécuter.</key>
+	<key id="workitem">workitem</key>
+	<key id="workitem-help">workitem concerné par la tâche.</key>
+	<key id="creationnotification">notification de création</key>
+	<key id="creationnotification-help">cette notification est envoyée au propriétaire de la tâche à la création de celle-ci.</key>
+	<key id="terminationnotification">notification d'exécution</key>
+	<key id="terminationnotification-help">cette notification est envoyée au propriétaire de la tâche après exécution de celle-ci.</key>
+	<key id="cancellationnotification">notification d'annulation</key>
+	<key id="cancellationnotification-help">cette notification est envoyée au propriétaire de la tâche après annulation de celle-ci.</key>
+	<key id="description">description</key>
+	<key id="description-help">description de la tâche à effectuer.</key>
+	<key id="commentary">commentaire</key>
+	<key id="commentary-help">commentaire concernant la tâche effectuée permettant d'expliciter le choix fait.</key>
+	<key id="anonymous">anonyme</key>
 </i18n>

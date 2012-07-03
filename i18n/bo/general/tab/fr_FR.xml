@@ -1,5 +1,5 @@
-<?xml version="1.0" encoding="utf-8"?>
+<?xml version="1.0" encoding="UTF-8"?>
 <i18n baseKey="m.task.bo.general.tab" lcid="fr_FR">
-  <key id="properties">propriétés</key>
-  <key id="preview">prévisualisation</key>
+	<key id="properties">propriétés</key>
+	<key id="preview">prévisualisation</key>
 </i18n>

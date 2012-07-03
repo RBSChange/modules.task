@@ -1,14 +1,13 @@
-<?xml version="1.0" encoding="utf-8"?>
+<?xml version="1.0" encoding="UTF-8"?>
 <i18n baseKey="m.task.bo.doceditor.property" lcid="fr_FR">
-  <key id="additionalinfo">intitulé du workflow</key>
-  <key id="affected-user">utilisateur affecté</key>
-  <key id="lastrundate">date de la dernière exécution</key>
-  <key id="nextrundate">date de la prochaine exécution</key>
-  <key id="isrunning">en cours d'exécution</key>
-  <key id="node">noeud d'exécution</key>
-  
-  <key id="executioninfos">informations sur les exécutions</key>
-  <key id="durationaverage">durée moyenne des exécutions</key>
-  <key id="lastsuccessdate">dernière exécution en succès</key>
-  <key id="ping">dernier 'ping' de la tâche</key>
+	<key id="additionalinfo">intitulé du workflow</key>
+	<key id="affected-user">utilisateur affecté</key>
+	<key id="lastrundate">date de la dernière exécution</key>
+	<key id="nextrundate">date de la prochaine exécution</key>
+	<key id="isrunning">en cours d'exécution</key>
+	<key id="node">noeud d'exécution</key>
+	<key id="executioninfos">informations sur les exécutions</key>
+	<key id="durationaverage">durée moyenne des exécutions</key>
+	<key id="lastsuccessdate">dernière exécution en succès</key>
+	<key id="ping">dernier 'ping' de la tâche</key>
 </i18n>

@@ -1,7 +1,7 @@
-<?xml version="1.0" encoding="utf-8"?>
+<?xml version="1.0" encoding="UTF-8"?>
 <i18n baseKey="m.task.bo.general.column" lcid="en_GB">
-  <key id="isrunning">Running task</key>
-  <key id="lastrundate">Last run</key>
-  <key id="nextrundate">Next run</key>
-  <key id="executionstatuslabel">Status</key>
+	<key id="isrunning">Running task</key>
+	<key id="lastrundate">Last run</key>
+	<key id="nextrundate">Next run</key>
+	<key id="executionstatuslabel">Status</key>
 </i18n>

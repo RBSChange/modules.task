@@ -1,7 +1,7 @@
 <?php
 /**
- * task_BlockDashboardPlannedTasksInfosAction
- * @package modules.task.lib.blocks
+ * @package modules.task
+ * @method task_BlockDashboardPlannedTasksInfosConfiguration getConfiguration()
  */
 class task_BlockDashboardPlannedTasksInfosAction extends dashboard_BlockDashboardAction
 {	

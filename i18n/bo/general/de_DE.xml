@@ -1,21 +1,21 @@
-<?xml version="1.0" encoding="utf-8"?>
+<?xml version="1.0" encoding="UTF-8"?>
 <i18n baseKey="m.task.bo.general" lcid="de_DE">
-  <key id="module-name">Vorgänge</key>
-  <key id="tree-root-name">Vorgänge</key>
-  <key id="system-folder-name">Vorgänge</key>
-  <key id="tab-execute-task">Vorgang ausführen</key>
-  <key id="tab-general-informations">allgemeine Informationen</key>
-  <key id="tab-notifications">Benachrichtigungen</key>
-  <key id="your-pending-tasks">Ihre Vorgänge in der Warteschlange</key>
-  <key id="user-task-help">Sie werden gebeten folgenden Inhalt freizugeben oder abzulehnen. Nach dem Einfügen eines Kommentars um Ihre Entscheidung 
+	<key id="module-name">Vorgänge</key>
+	<key id="tree-root-name">Vorgänge</key>
+	<key id="system-folder-name">Vorgänge</key>
+	<key id="tab-execute-task">Vorgang ausführen</key>
+	<key id="tab-general-informations">allgemeine Informationen</key>
+	<key id="tab-notifications">Benachrichtigungen</key>
+	<key id="your-pending-tasks">Ihre Vorgänge in der Warteschlange</key>
+	<key id="user-task-help">Sie werden gebeten folgenden Inhalt freizugeben oder abzulehnen. Nach dem Einfügen eines Kommentars um Ihre Entscheidung 
 		zu begründen, clicken Sie bitte den Knopf ″Freigeben″ um das Dokument freizugeben, oder ″Ablehnen″ um das Dokument abzulehnen. Die Freigabe 
 		veröffentlicht das Dokument auf der Webseite und macht es für alle Benutzer sichtbar.</key>
-  <key id="user-task-decision-commentary">Kommentar zur Begründung der Entscheidung</key>
-  <key id="details">Informationen ansehen</key>
-  <key id="accept">freigeben</key>
-  <key id="refuse">ablehnen</key>
-  <key id="close">schliessen</key>
-  <key id="document-informations-to-validate">Informationen, die zu bestätigen sind</key>
-  <key id="original-document-informations">Informationen der im Moment publizierte Version</key>
-  <key id="user-task-title">Freigabe eines Dokuments</key>
+	<key id="user-task-decision-commentary">Kommentar zur Begründung der Entscheidung</key>
+	<key id="details">Informationen ansehen</key>
+	<key id="accept">freigeben</key>
+	<key id="refuse">ablehnen</key>
+	<key id="close">schliessen</key>
+	<key id="document-informations-to-validate">Informationen, die zu bestätigen sind</key>
+	<key id="original-document-informations">Informationen der im Moment publizierte Version</key>
+	<key id="user-task-title">Freigabe eines Dokuments</key>
 </i18n>

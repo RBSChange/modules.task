@@ -186,7 +186,7 @@ class task_UsertaskService extends f_persistentdocument_DocumentService
 		$user = $document->getUser();
 		if ($user !== null)
 		{
-			$data['properties']['affecteduser'] = $user->getLabel() . '  (' . f_Locale::translate($user->getPersistentModel()->getLabel()) . ')';
+			$data['properties']['affecteduser'] = $user->getLabel() . '  (' . LocaleService::getInstance()->trans($user->getPersistentModel()->getLabelKey()) . ')';
 		}
 		else 
 		{

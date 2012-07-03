@@ -1,11 +1,9 @@
-<?xml version="1.0" encoding="utf-8"?>
+<?xml version="1.0" encoding="UTF-8"?>
 <i18n baseKey="m.task.document.plannedfolder" lcid="fr_FR">
-  <include id="m.generic.document.folder"/>
-  <key id="document-name">plannedfolder</key>
-  <key id="statusfilter">Statut d'execution</key>
-  <key id="statusfilter-help">Statut d'execution des tâches plannifiés</key>
-  
-  <key id="all-status">Toutes les tâches planifiés</key>
-  <key id="def-status">Les tâches planifiés : {executionStatus}</key>
-  
+	<include id="m.generic.document.folder" />
+	<key id="document-name">plannedfolder</key>
+	<key id="statusfilter">Statut d'execution</key>
+	<key id="statusfilter-help">Statut d'execution des tâches plannifiés</key>
+	<key id="all-status">Toutes les tâches planifiés</key>
+	<key id="def-status">Les tâches planifiés : {executionStatus}</key>
 </i18n>

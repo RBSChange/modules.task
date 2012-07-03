@@ -1,12 +1,12 @@
-<?xml version="1.0" encoding="utf-8"?>
+<?xml version="1.0" encoding="UTF-8"?>
 <i18n baseKey="m.task.bo.dashboard" lcid="en_GB">
-  <key id="error-task-description">These are tasks that have been running for longer than the delay defined in the task's properties</key>
-  <key id="error-task-title">failed tasks</key>
-  <key id="is-running">in progress</key>
-  <key id="last-run-date">last run date</key>
-  <key id="locate-in-module">locate in the "Tasks" module</key>
-  <key id="monitored-task-description">This task list can be modified in the block's properties.</key>
-  <key id="monitored-task-title">monitored tasks</key>
-  <key id="next-run-date">next run</key>
-  <key id="task-label">task label</key>
+	<key id="error-task-description">These are tasks that have been running for longer than the delay defined in the task's properties</key>
+	<key id="error-task-title">failed tasks</key>
+	<key id="is-running">in progress</key>
+	<key id="last-run-date">last run date</key>
+	<key id="locate-in-module">locate in the "Tasks" module</key>
+	<key id="monitored-task-description">This task list can be modified in the block's properties.</key>
+	<key id="monitored-task-title">monitored tasks</key>
+	<key id="next-run-date">next run</key>
+	<key id="task-label">task label</key>
 </i18n>
