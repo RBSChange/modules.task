@@ -2,6 +2,7 @@
 /**
  * task_BlockDashboardPendingTasksAction
  * @package modules.task.lib.blocks
+ * @method task_BlockDashboardPendingTasksConfiguration getConfiguration()
  */
 class task_BlockDashboardPendingTasksAction extends dashboard_BlockDashboardAction
 {	
