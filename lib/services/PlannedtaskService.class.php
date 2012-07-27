@@ -616,10 +616,11 @@ class task_PlannedtaskService extends f_persistentdocument_DocumentService
 		
 	/**
 	 * @param task_persistentdocument_plannedtask $document
-	 * @param String[] $propertiesName
-	 * @param Array $datas
+	 * @param string[] $propertiesName
+	 * @param array $datas
+	 * @param integer $parentId
 	 */
-	public function addFormProperties($document, $propertiesName, &$datas)
+	public function addFormProperties($document, $propertiesName, &$datas, $parentId = null)
 	{
 		if (in_array('extraeditparamsjson', $propertiesName))
 		{
