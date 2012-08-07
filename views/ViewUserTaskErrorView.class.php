@@ -1,4 +1,7 @@
 <?php
+/**
+ * @deprecated
+ */
 class task_ViewUserTaskErrorView extends generic_DashboardSuccessView
 {
 	/**
