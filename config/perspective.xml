@@ -95,9 +95,11 @@
     <action name="performUsertask" single="true" icon="task-execute" labeli18n="m.task.bo.actions.Perform-Usertask"/>
     <action name="unlockplannedtask" single="true" icon="unlock" labeli18n="m.task.bo.actions.Unlockplannedtask"/>
     <action name="resetplannedtasktime" single="true" icon="plannedtask" labeli18n="m.task.bo.actions.Resetplannedtasktime"/>
+    <action name="activate" single="true" permission="Activate" icon="activate" labeli18n="m.uixul.bo.actions.Activate"/>
     <action name="reactivate" permission="ReActivate" icon="reactivate" labeli18n="m.uixul.bo.actions.ReActivate"/>
     <action name="deactivated" permission="Deactivated" icon="deactivated" labeli18n="m.uixul.bo.actions.Deactivate"/>
     <action name="createPlannedfolder" single="true" permission="Insert_plannedfolder" icon="add"/>
     <action name="createUserfolder" single="true" permission="Insert_userfolder" icon="add"/>
+    <action name="delete" permission="Delete" icon="delete" labeli18n="m.uixul.bo.actions.Delete" />
   </actions>
 </perspective>
