@@ -17,4 +17,5 @@
   <actiondef modulename="task" actionname="update.plannedtask" label="m.task.bo.useractionlogger.update-plannedtask"/>
   <actiondef modulename="task" actionname="move.plannedfolder" label="m.task.bo.useractionlogger.move-plannedfolder"/>
   <actiondef modulename="task" actionname="delete.plannedfolder" label="m.task.bo.useractionlogger.delete-plannedfolder"/>
+  <actiondef modulename="task" actionname="move.systemfolder" label="m.task.bo.useractionlogger.move-systemfolder"/>
 </script>
