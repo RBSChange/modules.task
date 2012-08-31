@@ -107,13 +107,14 @@
 					var taskCommentBox = document.getAnonymousElementByAttribute(this, 'anonid', 'task-comment-box');
 					if (contents.taskComment)
 					{
-						var locale = new wServerLocale('modules.task.bo.general.Author-commentLabel');
-						locale.setAttribute('author', contents.taskDescription);
+						var labelText = "${transui:m.task.bo.general.author-comment,ucf,lab,js,author='#author#'}";
+						labelText = labelText.replace(/#author#/, contents.taskDescription);
 						var taskCommentLabelNode = document.getAnonymousElementByAttribute(this, 'anonid', 'task-comment-label');
-						taskCommentLabelNode.setAttribute('value', locale.toString());
+						taskCommentLabelNode.setAttribute('value', labelText);
 						
 						var taskCommentNode = document.getAnonymousElementByAttribute(this, 'anonid', 'task-comment');
-						taskCommentNode.setAttribute('value', contents.taskComment);
+						taskCommentNode.setAttribute('class', 'allow-text-selection');
+						taskCommentNode.appendChild(document.createTextNode(contents.taskComment));
 						
 						taskCommentBox.removeAttribute('collapsed');
 					}

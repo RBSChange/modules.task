@@ -28,4 +28,6 @@
   <key id="log-update-plannedtask">log update plannedtask</key>
   <key id="move-plannedfolder">move.plannedfolder {destinationlabel} {documentlabel}</key>
   <key id="log-move-plannedfolder">log move plannedfolder</key>
+  <key id="move-systemfolder">move.systemfolder {destinationlabel} {documentlabel}</key>
+  <key id="log-move-systemfolder">log move systemfolder</key>
 </i18n>
