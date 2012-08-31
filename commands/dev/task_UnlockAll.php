@@ -1,14 +1,13 @@
 <?php
 /**
- * commands_task_UnlockAll
- * @package modules.task.command
+ * @package modules.task
  */
 class commands_task_UnlockAll extends c_ChangescriptCommand
 {
 	/**
 	 * @return string
 	 */
-	function getUsage()
+	public function getUsage()
 	{
 		return "[--show]";
 	}
@@ -16,7 +15,7 @@ class commands_task_UnlockAll extends c_ChangescriptCommand
 	/**
 	 * @return string
 	 */
-	function getDescription()
+	public function getDescription()
 	{
 		return "Unlock all tasks --show to only view which tasks is locked";
 	}
@@ -24,7 +23,7 @@ class commands_task_UnlockAll extends c_ChangescriptCommand
 	/**
 	 * @return string[]
 	 */
-	function getOptions()
+	public function getOptions()
 	{
 		return array("--show");
 	}
@@ -34,7 +33,7 @@ class commands_task_UnlockAll extends c_ChangescriptCommand
 	 * @param array<String, String> $options where the option array key is the option name, the potential option value or true
 	 * @see c_ChangescriptCommand::parseArgs($args)
 	 */
-	function _execute($params, $options)
+	public function _execute($params, $options)
 	{
 		$this->message("== Unlock All ==");
 		$this->loadFramework();

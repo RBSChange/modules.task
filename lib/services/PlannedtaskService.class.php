@@ -55,7 +55,6 @@ class task_PlannedtaskService extends f_persistentdocument_DocumentService
 	}
 	
 	/**
-	 * 
 	 * @param task_persistentdocument_plannedtask $className
 	 */
 	public function getRunnableBySystemtaskclassname($className)
@@ -173,7 +172,6 @@ class task_PlannedtaskService extends f_persistentdocument_DocumentService
 		{
 			Framework::info(__METHOD__ . " " . $task->getId()  ." - " .  $task->getSystemtaskclassname());
 		}
-		
 		try 
 		{
 			$this->getTransactionManager()->beginTransaction();
@@ -199,7 +197,6 @@ class task_PlannedtaskService extends f_persistentdocument_DocumentService
 			$this->getTransactionManager()->rollBack($e);
 		}
 	}
-	
 	
 	/**
 	 * @param task_persistentdocument_plannedtask $task
@@ -243,7 +240,6 @@ class task_PlannedtaskService extends f_persistentdocument_DocumentService
 	}
 	
 	/**
-	 * 
 	 * @param task_persistentdocument_plannedtask $task
 	 * @param integer $duration
 	 * @return double
@@ -254,7 +250,6 @@ class task_PlannedtaskService extends f_persistentdocument_DocumentService
 		$avg = ($nb * doubleval($task->getDurationAvg()) + $duration) / ($nb + 1);
 		$task->setDurationAvg($avg);
 	}
-	
 	
 	/**
 	 * @param task_persistentdocument_plannedtask $task
@@ -281,7 +276,6 @@ class task_PlannedtaskService extends f_persistentdocument_DocumentService
 			
 			$this->updateExecutionStatus($task, self::STATUS_LOCKED);
 			
-			
 			$action = 'lock.plannedtask';
 			$user = users_UserService::getInstance()->getCurrentBackEndUser();
 			UserActionLoggerService::getInstance()->addUserDocumentEntry($user, $action, $task, array('unlockCount' => $unlockCount), 'task');
@@ -297,7 +291,6 @@ class task_PlannedtaskService extends f_persistentdocument_DocumentService
 			$this->getTransactionManager()->rollBack($e);
 		}
 	}
-	
 	
 	/**
 	 * @param task_persistentdocument_plannedtask $task
@@ -326,8 +319,6 @@ class task_PlannedtaskService extends f_persistentdocument_DocumentService
 		}
 	}	
 	
-	
-	
 	/**
 	 * @param task_persistentdocument_plannedtask $task
 	 */
@@ -355,7 +346,6 @@ class task_PlannedtaskService extends f_persistentdocument_DocumentService
 		}
 	}		
 	
-	
 	/**
 	 * @param task_persistentdocument_plannedtask $task
 	 */
@@ -365,7 +355,6 @@ class task_PlannedtaskService extends f_persistentdocument_DocumentService
 		{
 			Framework::info(__METHOD__ . " " . $task->getId()  ." - " .  $task->getSystemtaskclassname());
 		}
-		
 		try 
 		{
 			$this->getTransactionManager()->beginTransaction();
@@ -427,7 +416,6 @@ class task_PlannedtaskService extends f_persistentdocument_DocumentService
 		}		
 	}	
 	
-	
 	/**
 	 * @param task_persistentdocument_plannedtask $task
 	 * @param integer $parentId
@@ -469,8 +457,6 @@ class task_PlannedtaskService extends f_persistentdocument_DocumentService
 			}
 		}
 	}
-	
-	
 	
 	/**
 	 * @param task_persistentdocument_plannedtask $document
@@ -517,8 +503,7 @@ class task_PlannedtaskService extends f_persistentdocument_DocumentService
 	 */
 	protected function getNextOccurenceDate($task)
 	{
-		$nextRunDate = date_Calendar::getInstance($task->getLastrundate())
-			->setSecond(rand(0, 59));
+		$nextRunDate = date_Calendar::getInstance($task->getLastrundate())->setSecond(rand(0, 59));
 		
 		$periodUnit = $task->getPeriodUnit();
 		$nextRunDate->add($periodUnit, $task->getPeriodValue());	
@@ -542,14 +527,12 @@ class task_PlannedtaskService extends f_persistentdocument_DocumentService
 		return $nextRunDate->toString();
 	}
 	
-	
 	/**
 	 * @return task_persistentdocument_plannedtask[]
 	 */
 	public function getLockedTasks()
 	{
-		return $this->createQuery()->add(Restrictions::eq('executionStatus', self::STATUS_LOCKED))
-			->find();	
+		return $this->createQuery()->add(Restrictions::eq('executionStatus', self::STATUS_LOCKED))->find();	
 	}
 	
 	/**
@@ -571,7 +554,6 @@ class task_PlannedtaskService extends f_persistentdocument_DocumentService
 		
 		$data['properties']['nextrundate'] = date_Calendar::getInstance($document->getUINextrundate())->toFormattedDateTimeBO();
 		$data['properties']['node'] = $document->getNode();
-		
 		
 		$data['executioninfos']['lastrundate'] = date_Calendar::getInstance($document->getUILastrundate())->toFormattedDateTimeBO();
 		$durationAverage = doubleval($document->getDurationAvg()) / 60;
@@ -599,9 +581,10 @@ class task_PlannedtaskService extends f_persistentdocument_DocumentService
 	/**
 	 * @param task_persistentdocument_plannedtask $document
 	 * @param string[] $propertiesName
-	 * @param Array $datas
+	 * @param array $datas
+	 * @param integer $parentId
 	 */
-	public function addFormProperties($document, $propertiesName, &$datas)
+	public function addFormProperties($document, $propertiesName, &$datas, $parentId = null)
 	{
 		if (in_array('extraeditparamsjson', $propertiesName))
 		{
@@ -622,7 +605,8 @@ class task_PlannedtaskService extends f_persistentdocument_DocumentService
 					->setProjection(Projections::groupProperty('label', 'label'))
 					->findColumn('label');
 				
-				foreach ($nodes as $nodeName) {
+				foreach ($nodes as $nodeName)
+				{
 					$datas['nodes'][$nodeName] = $nodeName;
 				}
 			}

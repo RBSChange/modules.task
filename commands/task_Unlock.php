@@ -1,7 +1,6 @@
 <?php
 /**
- * commands_task_Unlock
- * @package modules.task.command
+ * @package modules.task
  */
 class commands_task_Unlock extends c_ChangescriptCommand
 {

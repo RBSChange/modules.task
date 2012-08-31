@@ -3,7 +3,7 @@
 	<include id="m.generic.document.folder" />
 	<key id="document-name">plannedfolder</key>
 	<key id="statusfilter">Statut d'execution</key>
-	<key id="statusfilter-help">Statut d'execution des tâches plannifiés</key>
-	<key id="all-status">Toutes les tâches planifiés</key>
-	<key id="def-status">Les tâches planifiés : {executionStatus}</key>
+	<key id="statusfilter-help">Statut d'execution des tâches planifiées</key>
+	<key id="all-status">Toutes les tâches planifiées</key>
+	<key id="def-status">Les tâches planifiées : {executionStatus}</key>
 </i18n>
