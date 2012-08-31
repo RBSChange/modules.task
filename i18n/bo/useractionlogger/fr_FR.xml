@@ -32,4 +32,6 @@
 	<key id="log-savepermissions-rootfolder">log savepermissions rootfolder</key>
 	<key id="delete-plannedfolder">delete.plannedfolder {documentlabel}</key>
 	<key id="log-delete-plannedfolder">log delete plannedfolder</key>
+	<key id="move-systemfolder">move.systemfolder {destinationlabel} {documentlabel}</key>
+	<key id="log-move-systemfolder">log move systemfolder</key>
 </i18n>
