@@ -67,18 +67,7 @@ class task_persistentdocument_plannedtask extends task_persistentdocument_planne
 	 */
 	public function getUniqueNextDate()
 	{
-		if ($this->getPeriodUnit() === null)
-		{
-			return date_Calendar::getInstance()
-				->setYear($this->getYear())
-				->setMonth($this->getMonthofyear())
-				->setDay($this->getDayofmonth())
-				->setHour($this->getHour())
-				->setMinute($this->getMinute())
-				->setSecond($this->getDocumentService()->scheduleSeconds($this))
-				->toString();
-		}		
-		return null;
+		return $this->getDocumentService()->getUniqueNextDate($this);
 	}
 
 	/**

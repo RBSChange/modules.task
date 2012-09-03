@@ -662,6 +662,26 @@ class task_PlannedtaskService extends f_persistentdocument_DocumentService
 	
 	/**
 	 * @param task_persistentdocument_plannedtask $task
+	 * @return string|null
+	 */
+	public function getUniqueNextDate($task)
+	{
+		if ($task->getPeriodUnit() === null)
+		{
+			return date_Calendar::getInstance()
+			->setYear($task->getYear())
+			->setMonth($task->getMonthofyear())
+			->setDay($task->getDayofmonth())
+			->setHour($task->getHour())
+			->setMinute($task->getMinute())
+			->setSecond($this->scheduleSeconds($task))
+			->toString();
+		}
+		return null;
+	}
+	
+	/**
+	 * @param task_persistentdocument_plannedtask $task
 	 * @return integer
 	 */
 	protected function scheduleSeconds($task)
