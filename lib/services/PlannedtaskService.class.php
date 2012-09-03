@@ -432,6 +432,7 @@ class task_PlannedtaskService extends f_persistentdocument_DocumentService
 		try 
 		{
 			$this->tm->beginTransaction();
+			$date->setSecond($this->scheduleSeconds($task));
 			$task->setNextrundate($date->toString());
 			if ($task->isModified())
 			{
@@ -536,7 +537,7 @@ class task_PlannedtaskService extends f_persistentdocument_DocumentService
 	protected function getNextOccurenceDate($task)
 	{
 		$nextRunDate = date_Calendar::getInstance($task->getLastrundate())
-			->setSecond(rand(0, 59));
+			->setSecond($this->scheduleSeconds($task));
 		
 		$periodUnit = $task->getPeriodUnit();
 		$nextRunDate->add($periodUnit, $task->getPeriodValue());	
@@ -657,5 +658,18 @@ class task_PlannedtaskService extends f_persistentdocument_DocumentService
 	public function addTreeAttributes($document, $moduleName, $treeType, &$nodeAttributes)
 	{
 		$nodeAttributes['isLocked'] = $document->isLocked() ? '1' : '0';
+	}
+	
+	/**
+	 * @param task_persistentdocument_plannedtask $task
+	 * @return integer
+	 */
+	protected function scheduleSeconds($task)
+	{
+		if (defined('CHANGECRON_EXECUTION') && CHANGECRON_EXECUTION == 'console')
+		{
+			return 0;
+		}
+		return rand(0,59);
 	}
 }

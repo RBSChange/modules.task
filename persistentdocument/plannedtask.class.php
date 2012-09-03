@@ -75,7 +75,7 @@ class task_persistentdocument_plannedtask extends task_persistentdocument_planne
 				->setDay($this->getDayofmonth())
 				->setHour($this->getHour())
 				->setMinute($this->getMinute())
-				->setSecond(rand(0, 59))
+				->setSecond($this->getDocumentService()->scheduleSeconds($this))
 				->toString();
 		}		
 		return null;
