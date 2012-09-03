@@ -107,7 +107,7 @@
 					var taskCommentBox = document.getAnonymousElementByAttribute(this, 'anonid', 'task-comment-box');
 					if (contents.taskComment)
 					{
-						var labelText = "${transui:m.task.bo.general.author-comment,ucf,lab,js,author='#author#'}";
+						var labelText = "${trans:m.task.bo.general.author-comment,ucf,lab,js,author='#author#'}";
 						labelText = labelText.replace(/#author#/, contents.taskDescription);
 						var taskCommentLabelNode = document.getAnonymousElementByAttribute(this, 'anonid', 'task-comment-label');
 						taskCommentLabelNode.setAttribute('value', labelText);

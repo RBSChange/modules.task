@@ -403,6 +403,7 @@ class task_PlannedtaskService extends f_persistentdocument_DocumentService
 		try 
 		{
 			$this->getTransactionManager()->beginTransaction();
+			$date->setSecond($this->scheduleSeconds($task));
 			$task->setNextrundate($date->toString());
 			if ($task->isModified())
 			{
@@ -503,7 +504,7 @@ class task_PlannedtaskService extends f_persistentdocument_DocumentService
 	 */
 	protected function getNextOccurenceDate($task)
 	{
-		$nextRunDate = date_Calendar::getInstance($task->getLastrundate())->setSecond(rand(0, 59));
+		$nextRunDate = date_Calendar::getInstance($task->getLastrundate())->setSecond($this->scheduleSeconds($task));
 		
 		$periodUnit = $task->getPeriodUnit();
 		$nextRunDate->add($periodUnit, $task->getPeriodValue());	
@@ -622,5 +623,38 @@ class task_PlannedtaskService extends f_persistentdocument_DocumentService
 	public function completeBOAttributes($document, &$attributes, $mode, $moduleName)
 	{
 		$attributes['isLocked'] = $document->isLocked() ? '1' : '0';
+	}
+	
+	/**
+	 * @param task_persistentdocument_plannedtask $task
+	 * @return string|null
+	 */
+	public function getUniqueNextDate($task)
+	{
+		if ($task->getPeriodUnit() === null)
+		{
+			return date_Calendar::getInstance()
+			->setYear($task->getYear())
+			->setMonth($task->getMonthofyear())
+			->setDay($task->getDayofmonth())
+			->setHour($task->getHour())
+			->setMinute($task->getMinute())
+			->setSecond($this->scheduleSeconds($task))
+			->toString();
+		}
+		return null;
+	}
+	
+	/**
+	 * @param task_persistentdocument_plannedtask $task
+	 * @return integer
+	 */
+	protected function scheduleSeconds($task)
+	{
+		if (defined('CHANGECRON_EXECUTION') && CHANGECRON_EXECUTION == 'console')
+		{
+			return 0;
+		}
+		return rand(0,59);
 	}
 }
