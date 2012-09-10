@@ -101,7 +101,7 @@ class task_PlannedTaskRunner
 		$client->setHeaders(array('Cache-Control: no-store, no-cache, no-transform', 'Pragma: no-cache', 'Connection: close'));
 		$client->setUri($URL);
 		$adapter = $client->getAdapter();
-		if ($adapter instanceof Zend_Http_Client_Adapter_Curl)
+		if ($adapter instanceof \Zend\Http\Client\Adapter\Curl)
 		{
 			$selfRequestProxy = Framework::getConfigurationValue('general/selfRequestProxy');
 			if (!empty($selfRequestProxy))
@@ -112,7 +112,8 @@ class task_PlannedTaskRunner
 				
 		try 
 		{
-			$client->request(Zend_Http_Client::POST);
+			$client->setMethod(\Zend\Http\Request::METHOD_POST);
+			$client->send();
 		} 
 		catch (Exception $e)
 		{
@@ -129,7 +130,7 @@ class task_PlannedTaskRunner
 		$client->setHeaders(array('Cache-Control: no-store, no-cache, no-transform', 'Pragma: no-cache', 'Connection: close'));
 		$client->setUri($pingURL);
 		$adapter = $client->getAdapter();
-		if ($adapter instanceof Zend_Http_Client_Adapter_Curl)
+		if ($adapter instanceof \Zend\Http\Client\Adapter\Curl)
 		{
 			$selfRequestProxy = Framework::getConfigurationValue('general/selfRequestProxy');
 			if (!empty($selfRequestProxy))
@@ -140,7 +141,8 @@ class task_PlannedTaskRunner
 		
 		try 
 		{
-			$client->request(Zend_Http_Client::POST);
+			$client->setMethod(\Zend\Http\Request::METHOD_POST);
+			$client->send();
 		} 
 		catch (Exception $e)
 		{
