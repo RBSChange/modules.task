@@ -93,19 +93,19 @@ class task_ListMonitoringURLSAction extends change_Action
 	
 	private function formatToTXT($urls, $filename)
 	{
-		
-		if($file = fopen($filename, "w"))
+		$file = fopen($filename, "w");
+		if ($file)
 		{
-		foreach ($urls as $url)
-		{
-			fwrite($file, $url . "\n");
-		}
-		fclose($file);
-		return $file;
+			foreach ($urls as $url)
+			{
+				fwrite($file, $url . "\n");
+			}
+			fclose($file);
+			return $file;
 		}
 		else
 		{
-		Framework::warn("couldn't create file for TXT format to provide List Monitoring URLs");
+			Framework::warn("couldn't create file for TXT format to provide List Monitoring URLs");
 		}
 	}
 	

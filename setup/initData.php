@@ -3,16 +3,8 @@ class task_Setup extends object_InitDataSetup
 {
 	public function install()
 	{
-		try
-		{
-			$this->executeModuleScript('lists.xml');
-			$this->addCronTask();
-		}
-		catch (Exception $e)
-		{
-			echo "ERROR: " . $e->getMessage() . "\n";
-			Framework::exception($e);
-		}
+		$this->executeModuleScript('init.xml');
+		$this->addCronTask();
 	}
 	
 	private function addCronTask()
