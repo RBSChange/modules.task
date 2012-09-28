@@ -1,0 +1,6 @@
+{
+	"name": "rbschange/task",
+	"description": "RBS Change Task module",
+	"type": "rbschange-compatibility-module",
+	"license":"AGPL-3.0"
+}
