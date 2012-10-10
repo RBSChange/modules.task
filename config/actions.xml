@@ -25,7 +25,7 @@
   <action name="performUsertaskIsActive">
 	<parameter name="itemdata"/>
 	<body><![CDATA[
-			return itemdata.status == 'PUBLICATED'; 
+			return itemdata.status == 'PUBLISHED'; 
 		]]></body>
   </action>
   <action name="unlockplannedtask">
@@ -56,7 +56,7 @@
   <method name="deactivatedIsActive">
 	<parameter name="itemData"/>
 	<body><![CDATA[
-			return  ((itemData.status === 'ACTIVE') || (itemData.status === 'PUBLICATED'));
+			return  ((itemData.status === 'ACTIVE') || (itemData.status === 'PUBLISHED'));
 		]]></body>
   </method>
   <method name="reactivateIsActive">

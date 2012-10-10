@@ -25,6 +25,10 @@ class task_BlockDashboardPendingTasksAction extends dashboard_BlockDashboardActi
 			/* @var $task task_persistentdocument_usertask */
 			try 
 			{
+				if ($task->getWorkitem() === null)
+				{
+					continue;
+				}
 				$document = DocumentHelper::getDocumentInstance($task->getWorkitem()->getDocumentid());
 			}
 			catch (Exception $e)

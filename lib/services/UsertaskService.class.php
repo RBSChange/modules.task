@@ -68,7 +68,7 @@ class task_UsertaskService extends f_persistentdocument_DocumentService
 			$workitem = $usertask->getWorkitem();
 			$query = $this->createQuery();
 			$query->createCriteria('workitem')->add(Restrictions::eq('id', $workitem->getId()));
-			$query->add(Restrictions::in('publicationstatus', array('ACTIVE', 'PUBLICATED')));
+			$query->add(Restrictions::in('publicationstatus', array('ACTIVE', 'PUBLISHED')));
 			$query->add(Restrictions::ne('id', $usertask->getId()));
 			$tasksToCancel = $query->find();
 			foreach ($tasksToCancel as $task)

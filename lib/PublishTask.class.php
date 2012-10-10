@@ -63,7 +63,7 @@ class task_PublishTask extends task_SimpleSystemTask
 					{
 						$rc->beginI18nWork($lang);
 						$query = f_persistentdocument_PersistentProvider::getInstance()->createQuery($modelName, false);
-						$query->add(Restrictions::in('publicationstatus', array('ACTIVE', 'PUBLICATED')))
+						$query->add(Restrictions::in('publicationstatus', array('ACTIVE', 'PUBLISHED')))
 								->add(Restrictions::orExp(Restrictions::between('startpublicationdate', $start, $end), 
 										Restrictions::between('endpublicationdate', $start, $end)))
 								->setProjection(Projections::property('id', 'id'));
