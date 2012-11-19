@@ -106,7 +106,7 @@ class task_UsertaskService extends f_persistentdocument_DocumentService
 	 */
 	private function sendNotification($usertask, $notification, $notifType)
 	{
-		if (!$notification)
+		if (!$notification || !$notification->isPublished())
 		{
 			if (Framework::isInfoEnabled())
 			{
@@ -117,7 +117,7 @@ class task_UsertaskService extends f_persistentdocument_DocumentService
 		
 		// Get the user.
 		$user = $usertask->getUser();
-		if ($user === null)
+		if (!$user || !$user->isPublished())
 		{
 			Framework::warn(__METHOD__ . ' : There is no user associated to the task ' . $usertask->getId() . '.');
 			return false;
@@ -127,17 +127,22 @@ class task_UsertaskService extends f_persistentdocument_DocumentService
 		$websiteId = null;
 		$lang = null;
 		$suffix = null;
+		$actionNotificationCallback = false;
 		$action = $usertask->getWorkitem()->getExecAction();
-		if ($action !== null)
+		if ($action === null)
 		{
-			list($websiteId, $lang) = $action->getNotificationWebsiteIdAndLang($codeName);
-			$method = 'get' . ucfirst($notifType) . 'NotifSuffix';
-			if (f_util_ClassUtils::methodExists($action, $method))
-			{
-				$suffix = $action->{$method}($usertask);
-			}
+			Framework::warn(__METHOD__ . ' : There is no workflowAction associated to the task ' . $usertask->getId() . '.');
+			return false;
 		}
 		
+		list($websiteId, $lang) = $action->getNotificationWebsiteIdAndLang($codeName);
+		
+		$method = 'get' . ucfirst($notifType) . 'NotifSuffix';
+		if (method_exists($action, $method))
+		{
+			$suffix = call_user_func(array($action, $method, $usertask));
+		}
+	
 		if ($suffix)
 		{
 			$notification = notification_NotificationService::getInstance()->getConfiguredByCodeNameAndSuffix($codeName, $suffix, $websiteId, $lang);
@@ -147,18 +152,20 @@ class task_UsertaskService extends f_persistentdocument_DocumentService
 			$notification = notification_NotificationService::getInstance()->getConfiguredByCodeName($codeName, $websiteId, $lang);
 		}
 	
-		if ($notification === null)
+		if (!$notification || !$notification->isPublished())
 		{
-			if (Framework::isInfoEnabled())
-			{
-				Framework::info(__METHOD__ . ' : No published notification found for codeName = ' . $codeName);
-			}
+			Framework::info(__METHOD__ . " : No published notification found for codeName = $codeName, suffix = $suffix, websiteId = $websiteId, and lang = $lang");
 			return false;
 		}
 		$notification->setSendingModuleName('workflow');
-		$callback = array($this, 'getNotificationParameters');
-		$params = array('usertask' => $usertask, 'action' => $action, 'notifType' => $notifType);
-		return $user->getDocumentService()->sendNotificationToUserCallback($notification, $user, $callback, $params);
+		$notification->registerCallback($this, 'getNotificationParameters',  array('usertask' => $usertask, 'action' => $action, 'notifType' => $notifType));
+		
+		$method = 'get' . ucfirst($notifType) . 'NotifParameters';
+		if (method_exists($action, $method))
+		{
+			$notification->registerCallback($action, $method, $usertask);
+		}		
+		return $notification->sendToUser($user);
 	}
 	
 	/**
@@ -168,19 +175,13 @@ class task_UsertaskService extends f_persistentdocument_DocumentService
 	public function getNotificationParameters($params)
 	{
 		$usertask = $params['usertask'];
-		$action = $params['action'];
-		$method = 'get' . ucfirst($params['notifType']) . 'NotifParameters';
-		$parameters = array();
-		if ($action && f_util_ClassUtils::methodExists($action, $method))
-		{
-			$parameters = $action->{$method}($usertask);
-		}
+		$action = $params['action'];		
 		$workItem = $usertask->getWorkitem();
 		$document = DocumentHelper::getDocumentInstance($workItem->getDocumentid());
 		$wes = workflow_WorkflowEngineService::getInstance();
 		$defaultParameters = $wes->getDefaultNotificationParameters($document, $workItem, $usertask);
 		$caseParameters = workflow_CaseService::getInstance()->getParametersArray($usertask->getWorkitem()->getCase());
-		return array_merge($defaultParameters, $caseParameters, $parameters);
+		return array_merge($defaultParameters, $caseParameters);
 	}
 
 	/**
