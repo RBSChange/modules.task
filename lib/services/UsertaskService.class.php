@@ -140,7 +140,7 @@ class task_UsertaskService extends f_persistentdocument_DocumentService
 		$method = 'get' . ucfirst($notifType) . 'NotifSuffix';
 		if (method_exists($action, $method))
 		{
-			$suffix = call_user_func(array($action, $method, $usertask));
+			$suffix = call_user_func(array($action, $method), $usertask);
 		}
 	
 		if ($suffix)
